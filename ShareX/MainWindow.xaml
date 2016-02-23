@@ -1,0 +1,25 @@
+﻿<Window x:Class="ShareX.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ShareX"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="48" Width="48"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+        WindowStyle="None">
+    <Window.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="Capture">
+                <MenuItem Header="Screen">
+                </MenuItem>
+                <MenuItem Header="Active monitor">
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Exit" x:Name="miFileExit" Click="miFileExit_Click">
+            </MenuItem>
+        </ContextMenu>
+    </Window.ContextMenu>
+</Window>
