@@ -13,7 +13,7 @@
     <Window.ContextMenu>
         <ContextMenu>
             <MenuItem Header="Capture">
-                <MenuItem Header="Screen">
+                <MenuItem Header="Screen" x:Name="miCaptureScreen" Click="miCaptureScreen_Click">
                 </MenuItem>
                 <MenuItem Header="Active monitor">
                 </MenuItem>

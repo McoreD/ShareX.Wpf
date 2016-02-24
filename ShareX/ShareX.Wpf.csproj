@@ -109,6 +109,10 @@
       <Project>{43b77ceb-6410-43ad-842e-726a129fa4bb}</Project>
       <Name>HelpersLib.Wpf</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ShareX.ScreenCaptureLib\ShareX.ScreenCaptureLib.Wpf.csproj">
+      <Project>{49f6f807-b37d-4eba-be66-b9df51ea32a1}</Project>
+      <Name>ShareX.ScreenCaptureLib.Wpf</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

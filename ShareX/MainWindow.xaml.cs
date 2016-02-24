@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShareX.ScreenCaptureLib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,6 +29,11 @@ namespace ShareX
         private void miFileExit_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void miCaptureScreen_Click(object sender, RoutedEventArgs e)
+        {
+            Screenshot.CaptureFullscreen();
         }
     }
 }
