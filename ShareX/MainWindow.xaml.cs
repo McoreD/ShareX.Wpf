@@ -1,18 +1,11 @@
-﻿using ShareX.ScreenCaptureLib;
+﻿using HelpersLib;
+using Microsoft.Win32;
+using ShareX.ScreenCaptureLib;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ShareX
 {
@@ -28,7 +21,7 @@ namespace ShareX
 
         #region Capture
 
-        private void btnCaptureRectange_Click(object sender, RoutedEventArgs e)
+        private void btnCaptureArea_Click(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
         }
@@ -53,6 +46,28 @@ namespace ShareX
         #endregion Editor
 
         #region Release
+
+        private void btnCopyToClipboard_Click(object sender, RoutedEventArgs e)
+        {
+            ClipboardHelper.SetImage(image.Source as BitmapSource);
+        }
+
+        private void btnSaveToFile_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.Filter = "Png files (*.png)|*.png";
+            dlg.FileName = DateTime.Now.ToString("yyyy-MM-dd");
+
+            if (dlg.ShowDialog() == true)
+            {
+                using (var fs = new FileStream(dlg.FileName, FileMode.OpenOrCreate))
+                {
+                    BitmapEncoder encoder = new PngBitmapEncoder();
+                    encoder.Frames.Add(BitmapFrame.Create(image.Source as BitmapSource));
+                    encoder.Save(fs);
+                }
+            }
+        }
 
         private void btnUpload_Click(object sender, RoutedEventArgs e)
         {
