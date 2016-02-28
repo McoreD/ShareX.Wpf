@@ -8,7 +8,7 @@
         Title="MainWindow"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" Width="507" MinWidth="500" MinHeight="400">
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" Width="507" MinWidth="500" MinHeight="400" Icon="ShareX_Icon.ico">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -24,7 +24,7 @@
         <Image Grid.Row="1" Grid.Column="0" x:Name="image" Source="Resources/ShareX_Logo.png" StretchDirection="DownOnly" Margin="10" />
 
         <!--Capture commands-->
-        <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical">
+        <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" x:Name="capturePanel">
             <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}" HorizontalAlignment="Center">Capture</TextBlock>
             <Button x:Name="btnCaptureRectange" Margin="10" Click="btnCaptureArea_Click">Area</Button>
             <Button x:Name="btnCaptureWindow" Margin="10">Window</Button>
@@ -33,8 +33,9 @@
 
         <!--Image editor buttons-->
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
-            <Button x:Name="btnEditHighlight"  Margin="10,10,0,10" Click="btnEditHighlight_Click">H</Button>
-            <Button x:Name="btnEditRotate"  Margin="10" Click="btnEditRotate_Click">R</Button>
+            <Button x:Name="btnEditHighlight" Margin="10,10,0,10" Click="btnEditHighlight_Click">H</Button>
+            <Button x:Name="btnEditObfuscate" Margin="10,10,0,10" Click="btnEditHighlight_Click">O</Button>
+            <Button x:Name="btnEditRotate" Margin="10" Click="btnEditRotate_Click">R</Button>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal">

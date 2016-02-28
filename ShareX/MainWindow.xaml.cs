@@ -17,6 +17,7 @@ namespace ShareX
         public MainWindow()
         {
             InitializeComponent();
+            this.Title = $"ShareX 11.0";
         }
 
         #region Capture
@@ -28,7 +29,7 @@ namespace ShareX
 
         private void btnCaptureScreen_Click(object sender, RoutedEventArgs e)
         {
-            image.Source = Screenshot.CaptureFullscreen();
+            image.Source = ScreenshotHelper.CaptureFullscreen();
         }
 
         #endregion Capture

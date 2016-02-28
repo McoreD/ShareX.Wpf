@@ -45,7 +45,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Annotations\Highlight.cs" />
+    <Compile Include="Capture.cs" />
+    <Compile Include="Screencast.cs" />
     <Compile Include="Screenshot.cs" />
+    <Compile Include="ScreenshotHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
