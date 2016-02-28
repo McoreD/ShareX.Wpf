@@ -26,14 +26,38 @@ namespace ShareX
             InitializeComponent();
         }
 
-        private void miFileExit_Click(object sender, RoutedEventArgs e)
+        #region Capture
+
+        private void btnCaptureScreen_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            image.Source = Screenshot.CaptureFullscreen();
         }
 
-        private void miCaptureScreen_Click(object sender, RoutedEventArgs e)
+        #endregion Capture
+
+        #region Editor
+
+        private void btnEditHighlight_Click(object sender, RoutedEventArgs e)
         {
-            Screenshot.CaptureFullscreen();
         }
+
+        private void btnEditRotate_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        #endregion Editor
+
+        #region Release
+
+        private void btnUpload_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            ContextMenu cm = btn.ContextMenu;
+            cm.PlacementTarget = btn;
+            cm.IsOpen = true;
+            e.Handled = true;
+        }
+
+        #endregion Release
     }
 }

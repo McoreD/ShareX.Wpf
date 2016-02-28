@@ -5,21 +5,45 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShareX"
         mc:Ignorable="d"
-        Title="MainWindow" Height="48" Width="48"
+        Title="MainWindow"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-        WindowStyle="None">
-    <Window.ContextMenu>
-        <ContextMenu>
-            <MenuItem Header="Capture">
-                <MenuItem Header="Screen" x:Name="miCaptureScreen" Click="miCaptureScreen_Click">
-                </MenuItem>
-                <MenuItem Header="Active monitor">
-                </MenuItem>
-            </MenuItem>
-            <MenuItem Header="Exit" x:Name="miFileExit" Click="miFileExit_Click">
-            </MenuItem>
-        </ContextMenu>
-    </Window.ContextMenu>
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" Width="507">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <Image Grid.Row="0" Grid.Column="0" x:Name="image" Source="Resources/ShareX_Logo.png" Stretch="UniformToFill" StretchDirection="DownOnly" />
+
+        <!--Capture commands-->
+        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical">
+            <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}" HorizontalAlignment="Center">Capture</TextBlock>
+            <Button x:Name="btnCaptureRectange" Margin="10">Region</Button>
+            <Button x:Name="btnCaptureActiveMonitor" Margin="10">Active monitor</Button>
+            <Button x:Name="btnCaptureScreen" Margin="10" Click="btnCaptureScreen_Click">Screen</Button>
+        </StackPanel>
+
+        <!--Image editor buttons-->
+        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
+            <Button x:Name="btnEditHighlight"  Margin="10" Click="btnEditHighlight_Click">H</Button>
+            <Button x:Name="btnEditRotate"  Margin="10" Click="btnEditRotate_Click">R</Button>
+        </StackPanel>
+
+        <Button Grid.Row="1" Grid.Column="1"  Margin="10"
+            x:Name="btnUpload" Content="Upload" Click="btnUpload_Click">
+            <Button.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Dropbox"></MenuItem>
+                    <MenuItem Header="Imgur"></MenuItem>
+                </ContextMenu>
+            </Button.ContextMenu>
+        </Button>
+    </Grid>
 </Window>
