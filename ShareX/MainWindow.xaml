@@ -20,13 +20,13 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
-        <Image Grid.Row="0" Grid.Column="0" x:Name="image" Source="Resources/ShareX_Logo.png" Stretch="UniformToFill" StretchDirection="DownOnly" />
+        <Image Grid.Row="0" Grid.Column="0" x:Name="image" Source="Resources/ShareX_Logo.png" StretchDirection="DownOnly" Margin="10" />
 
         <!--Capture commands-->
         <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical">
             <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}" HorizontalAlignment="Center">Capture</TextBlock>
-            <Button x:Name="btnCaptureRectange" Margin="10">Region</Button>
-            <Button x:Name="btnCaptureActiveMonitor" Margin="10">Active monitor</Button>
+            <Button x:Name="btnCaptureRectange" Margin="10" Click="btnCaptureRectange_Click">Region</Button>
+            <Button x:Name="btnCaptureWindow" Margin="10">Window</Button>
             <Button x:Name="btnCaptureScreen" Margin="10" Click="btnCaptureScreen_Click">Screen</Button>
         </StackPanel>
 

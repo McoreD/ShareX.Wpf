@@ -28,6 +28,11 @@ namespace ShareX
 
         #region Capture
 
+        private void btnCaptureRectange_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
         private void btnCaptureScreen_Click(object sender, RoutedEventArgs e)
         {
             image.Source = Screenshot.CaptureFullscreen();
