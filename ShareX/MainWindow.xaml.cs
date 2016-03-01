@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace ShareX
@@ -25,6 +26,12 @@ namespace ShareX
         private void btnCaptureArea_Click(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
+
+            RectangleLight rectangleLight = new RectangleLight();
+            if (rectangleLight.ShowDialog() == true)
+            {
+                image.Source = rectangleLight.GetAreaImage();
+            }
         }
 
         private void btnCaptureScreen_Click(object sender, RoutedEventArgs e)
@@ -80,5 +87,10 @@ namespace ShareX
         }
 
         #endregion Release
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }
