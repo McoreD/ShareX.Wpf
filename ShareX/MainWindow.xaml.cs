@@ -32,6 +32,8 @@ namespace ShareX
             {
                 image.Source = rectangleLight.GetAreaImage();
             }
+
+            this.WindowState = WindowState.Normal;
         }
 
         private void btnCaptureScreen_Click(object sender, RoutedEventArgs e)

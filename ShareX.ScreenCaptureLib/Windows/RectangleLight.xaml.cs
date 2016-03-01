@@ -55,6 +55,7 @@ namespace ShareX.ScreenCaptureLib
             borderDotPen2.DashStyle = DashStyles.Dash;
             penTimer = Stopwatch.StartNew();
             ScreenRectangle = CaptureHelpers.GetScreenBounds();
+            this.Background = backgroundBrush;
 
             InitializeComponent();
 
@@ -73,11 +74,7 @@ namespace ShareX.ScreenCaptureLib
         protected override void OnInitialized(EventArgs e)
         {
             this.WindowStartupLocation = WindowStartupLocation.Manual;
-            this.Left = ScreenRectangle.Left;
-            this.Top = ScreenRectangle.Top;
-            this.Width = ScreenRectangle.Width;
-            this.Height = ScreenRectangle.Height;
-            this.Background = backgroundBrush;
+            this.Bounds(ScreenRectangle);
 
             this.WindowStyle = WindowStyle.None;
             this.ShowInTaskbar = false;
