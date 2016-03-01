@@ -50,12 +50,13 @@ namespace ShareX.ScreenCaptureLib
         {
             backgroundImage = ScreenshotHelper.CaptureFullscreen();
             backgroundBrush = new ImageBrush(backgroundImage);
+            this.Background = backgroundBrush;
+
             borderDotPen = new Pen(Brushes.Black, 1);
             borderDotPen2 = new Pen(Brushes.White, 1);
             borderDotPen2.DashStyle = DashStyles.Dash;
             penTimer = Stopwatch.StartNew();
             ScreenRectangle = CaptureHelpers.GetScreenBounds();
-            this.Background = backgroundBrush;
 
             InitializeComponent();
 
@@ -79,6 +80,7 @@ namespace ShareX.ScreenCaptureLib
             this.WindowStyle = WindowStyle.None;
             this.ShowInTaskbar = false;
             this.Topmost = true;
+
             base.OnInitialized(e);
         }
 
@@ -168,8 +170,11 @@ namespace ShareX.ScreenCaptureLib
         {
             if (isMouseDown)
             {
+                borderDotPen2.DashStyle.Offset = (float)penTimer.Elapsed.TotalSeconds * -15;
                 drawingContext.DrawRectangle(backgroundBrush, borderDotPen, SelectionRectangle0Based);
                 drawingContext.DrawRectangle(backgroundBrush, borderDotPen2, SelectionRectangle0Based);
+
+                base.OnRender(drawingContext);
             }
         }
     }
