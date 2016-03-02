@@ -55,12 +55,12 @@ namespace ShareX.ScreenCaptureLib
 
         protected override void OnInitialized(EventArgs e)
         {
-            this.WindowStartupLocation = WindowStartupLocation.Manual;
+            WindowStartupLocation = WindowStartupLocation.Manual;
             this.Bounds(ScreenRectangle);
 
-            this.WindowStyle = WindowStyle.None;
-            this.ShowInTaskbar = false;
-            this.Topmost = true;
+            WindowStyle = WindowStyle.None;
+            ShowInTaskbar = false;
+            Topmost = true;
 
             base.OnInitialized(e);
         }
@@ -71,27 +71,26 @@ namespace ShareX.ScreenCaptureLib
             base.OnContentRendered(e);
         }
 
-        private void Window_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        private void Window_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == System.Windows.Input.Key.Escape)
+            if (e.Key == Key.Escape)
             {
                 Close();
             }
         }
 
-        private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 positionOnClick = CaptureHelpers.GetCursorPosition();
                 isMouseDown = true;
+                canvas.Children.Add(CropArea);
             }
             else if (e.RightButton == MouseButtonState.Pressed)
             {
-                Close();
+                // canvas.Children.Remove(CropArea);
             }
-
-            canvas.Children.Add(CropArea);
         }
 
         private void Window_MouseMove(object sender, MouseEventArgs e)
@@ -101,14 +100,14 @@ namespace ShareX.ScreenCaptureLib
                 currentPosition = CaptureHelpers.GetCursorPosition();
                 SelectionRectangle = CaptureHelpers.CreateRectangle(positionOnClick.X, positionOnClick.Y, currentPosition.X, currentPosition.Y);
 
-                CropArea.SetValue(Canvas.LeftProperty, Math.Min(currentPosition.X, positionOnClick.X));
-                CropArea.SetValue(Canvas.TopProperty, Math.Min(currentPosition.Y, positionOnClick.Y));
-                CropArea.Width = Math.Abs(currentPosition.X - positionOnClick.X);
-                CropArea.Height = Math.Abs(currentPosition.Y - positionOnClick.Y);
+                CropArea.SetValue(Canvas.LeftProperty, SelectionRectangle0Based.Left);
+                CropArea.SetValue(Canvas.TopProperty, SelectionRectangle0Based.Top);
+                CropArea.Width = SelectionRectangle0Based.Width;
+                CropArea.Height = SelectionRectangle0Based.Height;
             }
         }
 
-        private void Window_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void Window_MouseUp(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Released)
             {
