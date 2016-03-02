@@ -5,9 +5,11 @@ using System.Diagnostics;
 using System.IO;
 using System.Timers;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace ShareX.ScreenCaptureLib
@@ -38,38 +40,22 @@ namespace ShareX.ScreenCaptureLib
             }
         }
 
-        private Timer timer;
         private BitmapSource backgroundImage;
-        private ImageBrush backgroundBrush;
-        private Pen borderDotPen, borderDotPen2;
         private Point currentPosition, positionOnClick;
         private bool isMouseDown;
-        private Stopwatch penTimer;
+        private Rectangle DrawRectangle = new Rectangle();
 
         public RectangleLight()
         {
             backgroundImage = ScreenshotHelper.CaptureFullscreen();
-            backgroundBrush = new ImageBrush(backgroundImage);
-            this.Background = backgroundBrush;
+            Background = new ImageBrush(backgroundImage);
 
-            borderDotPen = new Pen(Brushes.Black, 1);
-            borderDotPen2 = new Pen(Brushes.White, 1);
-            borderDotPen2.DashStyle = DashStyles.Dash;
-            penTimer = Stopwatch.StartNew();
             ScreenRectangle = CaptureHelpers.GetScreenBounds();
 
             InitializeComponent();
 
-            //using (MemoryStream cursorStream = new MemoryStream((byte)TryFindResource("Crosshair.cur")))
-            //{
-            //    Cursor = new Cursor(cursorStream);
-            //}
-
-            timer = new Timer { Interval = 10 };
-            timer.Elapsed += Timer_Elapsed;
-            timer.Start();
-
-            this.Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
+            DrawRectangle.Stroke = Brushes.Red;
+            DrawRectangle.Fill = new SolidColorBrush() { Color = Color.FromArgb(50, 132, 112, 255) };
         }
 
         protected override void OnInitialized(EventArgs e)
@@ -82,11 +68,6 @@ namespace ShareX.ScreenCaptureLib
             this.Topmost = true;
 
             base.OnInitialized(e);
-        }
-
-        private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
-        {
-            if (timer != null) timer.Dispose();
         }
 
         protected override void OnContentRendered(EventArgs e)
@@ -105,16 +86,36 @@ namespace ShareX.ScreenCaptureLib
 
         private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (e.LeftButton == System.Windows.Input.MouseButtonState.Pressed)
+            if (e.LeftButton == MouseButtonState.Pressed)
             {
                 positionOnClick = CaptureHelpers.GetCursorPosition();
                 isMouseDown = true;
+            }
+            else if (e.RightButton == MouseButtonState.Pressed)
+            {
+                Close();
+            }
+
+            canvas.Children.Add(DrawRectangle);
+        }
+
+        private void Window_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isMouseDown)
+            {
+                currentPosition = CaptureHelpers.GetCursorPosition();
+                SelectionRectangle = CaptureHelpers.CreateRectangle(positionOnClick.X, positionOnClick.Y, currentPosition.X, currentPosition.Y);
+
+                DrawRectangle.SetValue(Canvas.LeftProperty, Math.Min(currentPosition.X, positionOnClick.X));
+                DrawRectangle.SetValue(Canvas.TopProperty, Math.Min(currentPosition.Y, positionOnClick.Y));
+                DrawRectangle.Width = Math.Abs(currentPosition.X - positionOnClick.X);
+                DrawRectangle.Height = Math.Abs(currentPosition.Y - positionOnClick.Y);
             }
         }
 
         private void Window_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (e.LeftButton == System.Windows.Input.MouseButtonState.Released)
+            if (e.LeftButton == MouseButtonState.Released)
             {
                 if (isMouseDown)
                 {
@@ -156,26 +157,6 @@ namespace ShareX.ScreenCaptureLib
             }
 
             return null;
-        }
-
-        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            currentPosition = CaptureHelpers.GetCursorPosition();
-            SelectionRectangle = CaptureHelpers.CreateRectangle(positionOnClick.X, positionOnClick.Y, currentPosition.X, currentPosition.Y);
-
-            this.Refresh();
-        }
-
-        protected override void OnRender(DrawingContext drawingContext)
-        {
-            if (isMouseDown)
-            {
-                borderDotPen2.DashStyle.Offset = (float)penTimer.Elapsed.TotalSeconds * -15;
-                drawingContext.DrawRectangle(backgroundBrush, borderDotPen, SelectionRectangle0Based);
-                drawingContext.DrawRectangle(backgroundBrush, borderDotPen2, SelectionRectangle0Based);
-
-                base.OnRender(drawingContext);
-            }
         }
     }
 }

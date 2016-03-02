@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareX.Wpf", "ShareX.Wpf.csproj", "{256C6EFE-A6C0-4357-B4B8-8DC0D893ED22}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareX.Wpf", "ShareX\ShareX.Wpf.csproj", "{256C6EFE-A6C0-4357-B4B8-8DC0D893ED22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareX.HelpersLib.Wpf", "..\..\..\WpfHelpersLib\HelpersLib\ShareX.HelpersLib.Wpf.csproj", "{43B77CEB-6410-43AD-842E-726A129FA4BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareX.HelpersLib.Wpf", "..\..\HelpersLib.Wpf\HelpersLib\ShareX.HelpersLib.Wpf.csproj", "{43B77CEB-6410-43AD-842E-726A129FA4BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareX.ScreenCaptureLib.Wpf", "..\ShareX.ScreenCaptureLib\ShareX.ScreenCaptureLib.Wpf.csproj", "{49F6F807-B37D-4EBA-BE66-B9DF51EA32A1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareX.ScreenCaptureLib.Wpf", "ShareX.ScreenCaptureLib\ShareX.ScreenCaptureLib.Wpf.csproj", "{49F6F807-B37D-4EBA-BE66-B9DF51EA32A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareX.UploadersLib.Wpf", "..\ShareX.UploadersLib\ShareX.UploadersLib.Wpf.csproj", "{2DEDAA33-86FD-4068-AB8F-450560C8EF41}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareX.UploadersLib.Wpf", "ShareX.UploadersLib\ShareX.UploadersLib.Wpf.csproj", "{2DEDAA33-86FD-4068-AB8F-450560C8EF41}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -26,6 +26,7 @@ namespace ShareX
         private void btnCaptureArea_Click(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
+            System.Threading.Thread.Sleep(500);
 
             RectangleLight rectangleLight = new RectangleLight();
             if (rectangleLight.ShowDialog() == true)

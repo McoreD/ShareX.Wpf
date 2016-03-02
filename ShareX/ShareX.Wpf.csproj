@@ -109,7 +109,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\WpfHelpersLib\HelpersLib\ShareX.HelpersLib.Wpf.csproj">
+    <ProjectReference Include="..\..\..\HelpersLib.Wpf\HelpersLib\ShareX.HelpersLib.Wpf.csproj">
       <Project>{43b77ceb-6410-43ad-842e-726a129fa4bb}</Project>
       <Name>ShareX.HelpersLib.Wpf</Name>
     </ProjectReference>
