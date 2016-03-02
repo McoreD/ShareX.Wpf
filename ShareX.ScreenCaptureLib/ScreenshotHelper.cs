@@ -1,5 +1,4 @@
 ﻿using HelpersLib;
-using ShareX.HelpersLib;
 using System;
 using System.Windows;
 using System.Windows.Interop;
