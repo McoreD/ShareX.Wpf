@@ -31,7 +31,7 @@ namespace ShareX
             RectangleLight rectangleLight = new RectangleLight();
             if (rectangleLight.ShowDialog() == true)
             {
-                image.Source = rectangleLight.GetAreaImage();
+                editor.Image = rectangleLight.GetAreaImage();
             }
 
             this.WindowState = WindowState.Normal;
@@ -39,7 +39,7 @@ namespace ShareX
 
         private void btnCaptureScreen_Click(object sender, RoutedEventArgs e)
         {
-            image.Source = ScreenshotHelper.CaptureFullscreen();
+            editor.Image = ScreenshotHelper.CaptureFullscreen();
         }
 
         #endregion Capture
@@ -47,6 +47,17 @@ namespace ShareX
         #region Editor
 
         private void btnEditHighlight_Click(object sender, RoutedEventArgs e)
+        {
+            editor.AnnotationMode = AnnotationMode.Highlight;
+            editor.HighlightColor = "Yellow";
+        }
+
+        private void btnEditObfuscate_Click(object sender, RoutedEventArgs e)
+        {
+            editor.AnnotationMode = AnnotationMode.Obfuscate;
+        }
+
+        private void editor_HighlightAdded(object sender, AddHighlightEventArgs args)
         {
         }
 
@@ -60,7 +71,7 @@ namespace ShareX
 
         private void btnCopyToClipboard_Click(object sender, RoutedEventArgs e)
         {
-            ClipboardHelper.SetImage(image.Source as BitmapSource);
+            ClipboardHelper.SetImage(editor.Image as BitmapSource);
         }
 
         private void btnSaveToFile_Click(object sender, RoutedEventArgs e)
@@ -74,7 +85,7 @@ namespace ShareX
                 using (var fs = new FileStream(dlg.FileName, FileMode.OpenOrCreate))
                 {
                     BitmapEncoder encoder = new PngBitmapEncoder();
-                    encoder.Frames.Add(BitmapFrame.Create(image.Source as BitmapSource));
+                    encoder.Frames.Add(BitmapFrame.Create(editor.Image as BitmapSource));
                     encoder.Save(fs);
                 }
             }

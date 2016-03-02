@@ -1,9 +1,10 @@
-﻿<Window x:Class="ShareX.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShareX"
+        xmlns:ScreenCaptureLib="clr-namespace:ShareX.ScreenCaptureLib;assembly=ShareX.ScreenCaptureLib" x:Class="ShareX.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -21,34 +22,34 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
-        <Image Grid.Row="1" Grid.Column="0" x:Name="image" Source="Resources/ShareX_Logo.png" StretchDirection="DownOnly" Margin="10" />
+        <ScreenCaptureLib:CanvasEx x:Name="editor" Grid.Row="1" Grid.Column="0" Image="Resources/ShareX_Logo.png" Margin="10,0,0,0" />
 
         <!--Capture commands-->
         <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" x:Name="capturePanel">
-            <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}" HorizontalAlignment="Center">Capture</TextBlock>
-            <Button x:Name="btnCaptureRectange" Margin="10" Click="btnCaptureArea_Click">Area</Button>
-            <Button x:Name="btnCaptureWindow" Margin="10">Window</Button>
-            <Button x:Name="btnCaptureScreen" Margin="10" Click="btnCaptureScreen_Click">Screen</Button>
+            <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}" HorizontalAlignment="Center"><Run Text="Capture" /></TextBlock>
+            <Button x:Name="btnCaptureRectange" Margin="10" Click="btnCaptureArea_Click" Content="Area" />
+            <Button x:Name="btnCaptureWindow" Margin="10" Content="Window" />
+            <Button x:Name="btnCaptureScreen" Margin="10" Click="btnCaptureScreen_Click" Content="Screen" />
         </StackPanel>
 
         <!--Image editor buttons-->
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
-            <Button x:Name="btnEditHighlight" Margin="10,10,0,10" Click="btnEditHighlight_Click">H</Button>
-            <Button x:Name="btnEditObfuscate" Margin="10,10,0,10" Click="btnEditHighlight_Click">O</Button>
-            <Button x:Name="btnEditRotate" Margin="10" Click="btnEditRotate_Click">R</Button>
+            <Button x:Name="btnEditHighlight" Margin="10,10,0,10" Click="btnEditHighlight_Click" Content="Highlight" />
+            <Button x:Name="btnEditObfuscate" Margin="10,10,0,10" Click="btnEditObfuscate_Click" Content="Obfuscate" />
+            <Button x:Name="btnEditRotate" Margin="10" Click="btnEditRotate_Click" Visibility="Collapsed" Content="R" />
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal">
             <Button Margin="10,10,0,10"
-                    x:Name="btnCopyToClipboard" Content="Copy to clipboard" Click="btnCopyToClipboard_Click"></Button>
+				x:Name="btnCopyToClipboard" Content="Copy to clipboard" Click="btnCopyToClipboard_Click" />
             <Button Margin="10,10,0,10"
-                    x:Name="btnSaveToFile" Content="Save to file" Click="btnSaveToFile_Click"></Button>
+				x:Name="btnSaveToFile" Content="Save to file" Click="btnSaveToFile_Click" />
             <Button Margin="10"
-                    x:Name="btnUpload" Content="Upload" Click="btnUpload_Click">
+				x:Name="btnUpload" Content="Upload" Click="btnUpload_Click">
                 <Button.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="Dropbox"></MenuItem>
-                        <MenuItem Header="Imgur"></MenuItem>
+                        <MenuItem Header="Dropbox" />
+                        <MenuItem Header="Imgur" />
                     </ContextMenu>
                 </Button.ContextMenu>
             </Button>
