@@ -43,7 +43,7 @@ namespace ShareX.ScreenCaptureLib
         private BitmapSource backgroundImage;
         private Point currentPosition, positionOnClick;
         private bool isMouseDown;
-        private Rectangle DrawRectangle = new Rectangle();
+        private Rectangle CropArea = new Rectangle();
 
         public RectangleLight()
         {
@@ -54,8 +54,8 @@ namespace ShareX.ScreenCaptureLib
 
             InitializeComponent();
 
-            DrawRectangle.Stroke = Brushes.Red;
-            DrawRectangle.Fill = new SolidColorBrush() { Color = Color.FromArgb(50, 132, 112, 255) };
+            CropArea.Stroke = Brushes.Red;
+            CropArea.Fill = new SolidColorBrush() { Color = Color.FromArgb(50, 132, 112, 255) };
         }
 
         protected override void OnInitialized(EventArgs e)
@@ -96,7 +96,7 @@ namespace ShareX.ScreenCaptureLib
                 Close();
             }
 
-            canvas.Children.Add(DrawRectangle);
+            canvas.Children.Add(CropArea);
         }
 
         private void Window_MouseMove(object sender, MouseEventArgs e)
@@ -106,10 +106,10 @@ namespace ShareX.ScreenCaptureLib
                 currentPosition = CaptureHelpers.GetCursorPosition();
                 SelectionRectangle = CaptureHelpers.CreateRectangle(positionOnClick.X, positionOnClick.Y, currentPosition.X, currentPosition.Y);
 
-                DrawRectangle.SetValue(Canvas.LeftProperty, Math.Min(currentPosition.X, positionOnClick.X));
-                DrawRectangle.SetValue(Canvas.TopProperty, Math.Min(currentPosition.Y, positionOnClick.Y));
-                DrawRectangle.Width = Math.Abs(currentPosition.X - positionOnClick.X);
-                DrawRectangle.Height = Math.Abs(currentPosition.Y - positionOnClick.Y);
+                CropArea.SetValue(Canvas.LeftProperty, Math.Min(currentPosition.X, positionOnClick.X));
+                CropArea.SetValue(Canvas.TopProperty, Math.Min(currentPosition.Y, positionOnClick.Y));
+                CropArea.Width = Math.Abs(currentPosition.X - positionOnClick.X);
+                CropArea.Height = Math.Abs(currentPosition.Y - positionOnClick.Y);
             }
         }
 
