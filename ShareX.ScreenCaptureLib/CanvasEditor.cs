@@ -120,7 +120,13 @@ namespace ShareX.ScreenCaptureLib
                     };
                     break;
                 case AnnotationMode.Obfuscate:
-                    throw new NotImplementedException();
+                    currentAnnotation = new Obfuscate
+                    {
+                        Width = currentShape.Width,
+                        Height = currentShape.Height,
+                        TopLeft = startPoint
+                    };
+                    break;
                 default:
                     throw new NotImplementedException();
             }
