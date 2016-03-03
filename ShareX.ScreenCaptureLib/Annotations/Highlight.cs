@@ -22,7 +22,7 @@ namespace ShareX.ScreenCaptureLib
         {
             return new Rectangle
             {
-                Stroke = Brushes.LightBlue,
+                Stroke = Brushes.Yellow,
                 StrokeThickness = 1,
                 Fill = Color,
                 Opacity = 0.5

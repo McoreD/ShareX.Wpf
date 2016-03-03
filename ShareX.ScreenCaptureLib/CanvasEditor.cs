@@ -114,16 +114,12 @@ namespace ShareX.ScreenCaptureLib
                 case AnnotationMode.Highlight:
                     currentAnnotation = new Highlight
                     {
-                        Width = currentShape.Width,
-                        Height = currentShape.Height,
                         TopLeft = startPoint
                     };
                     break;
                 case AnnotationMode.Obfuscate:
                     currentAnnotation = new Obfuscate
                     {
-                        Width = currentShape.Width,
-                        Height = currentShape.Height,
                         TopLeft = startPoint
                     };
                     break;
@@ -157,8 +153,8 @@ namespace ShareX.ScreenCaptureLib
                 w = sml;
                 h = sml;
             }
-            currentShape.Width = w;
-            currentShape.Height = h;
+            currentAnnotation.Width = currentShape.Width = w;
+            currentAnnotation.Height = currentShape.Height = h;
 
             SetLeft(currentShape, x);
             SetTop(currentShape, y);
