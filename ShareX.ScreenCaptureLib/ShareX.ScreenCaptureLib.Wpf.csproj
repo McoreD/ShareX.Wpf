@@ -50,7 +50,7 @@
   <ItemGroup>
     <Compile Include="Annotations\Annotate.cs" />
     <Compile Include="Annotations\Highlight.cs" />
-    <Compile Include="CanvasEx.cs">
+    <Compile Include="CanvasEditor.cs">
     </Compile>
     <Compile Include="Capture.cs" />
     <Compile Include="Enums.cs" />

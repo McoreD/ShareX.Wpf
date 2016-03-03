@@ -31,7 +31,7 @@ namespace ShareX
             RectangleLight crop = new RectangleLight();
             if (crop.ShowDialog() == true)
             {
-                editor.Image = crop.GetScreenshot();
+                editor.CapturedImage = crop.GetScreenshot();
             }
 
             this.WindowState = WindowState.Normal;
@@ -39,7 +39,7 @@ namespace ShareX
 
         private void btnCaptureScreen_Click(object sender, RoutedEventArgs e)
         {
-            editor.Image = ScreenshotHelper.CaptureFullscreen();
+            editor.CapturedImage = ScreenshotHelper.CaptureFullscreen();
         }
 
         #endregion Capture
@@ -48,7 +48,7 @@ namespace ShareX
 
         private void btnEditHighlight_Click(object sender, RoutedEventArgs e)
         {
-            if (editor.Image != null)
+            if (editor.CapturedImage != null)
             {
                 editor.SetAnnotationMode(AnnotationMode.Highlight);
             }
@@ -56,7 +56,7 @@ namespace ShareX
 
         private void btnEditObfuscate_Click(object sender, RoutedEventArgs e)
         {
-            if (editor.Image != null)
+            if (editor.CapturedImage != null)
             {
                 editor.SetAnnotationMode(AnnotationMode.Obfuscate);
             }
@@ -64,7 +64,7 @@ namespace ShareX
 
         private void btnEditRotate_Click(object sender, RoutedEventArgs e)
         {
-            if (editor.Image != null)
+            if (editor.CapturedImage != null)
             {
                 // stuff
             }
@@ -76,8 +76,8 @@ namespace ShareX
 
         private void btnCopyToClipboard_Click(object sender, RoutedEventArgs e)
         {
-            if (editor.Image != null)
-                ClipboardHelper.SetImage(editor.Image.Export());
+            if (editor.CapturedImage != null)
+                ClipboardHelper.SetImage(editor.CapturedImage.Export());
         }
 
         private void btnSaveToFile_Click(object sender, RoutedEventArgs e)
@@ -88,7 +88,7 @@ namespace ShareX
 
             if (dlg.ShowDialog() == true)
             {
-                using (var ms = editor.Image.ExportAsMemoryStream())
+                using (var ms = editor.CapturedImage.ExportAsMemoryStream())
                 using (var fs = new FileStream(dlg.FileName, FileMode.OpenOrCreate))
                 {
                     ms.CopyTo(fs);

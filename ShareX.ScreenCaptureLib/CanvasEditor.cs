@@ -10,31 +10,26 @@ using System.Windows.Shapes;
 
 namespace ShareX.ScreenCaptureLib
 {
-    public class CanvasEx : Canvas
+    public class CanvasEditor : Canvas
     {
         public AnnotationMode AnnotationMode { get; private set; } = AnnotationMode.None;
 
-        public static readonly DependencyProperty ImageProperty;
+        public static readonly DependencyProperty SourceProperty = DependencyProperty.Register("Source", typeof(ImageEx), typeof(CanvasEditor), new FrameworkPropertyMetadata(ImagePropertyChangedCallback));
 
         [Category("Editor")]
-        public ImageEx Image
+        public ImageEx CapturedImage
         {
-            get { return (ImageEx)GetValue(ImageProperty); }
-            set { SetValue(ImageProperty, value); }
+            get { return (ImageEx)GetValue(SourceProperty); }
+            set { SetValue(SourceProperty, value); }
         }
 
         private Point _startPoint;
         private Rectangle _currentRectangle;
         private Annotate _annotationBeingAdded;
 
-        static CanvasEx()
-        {
-            ImageProperty = DependencyProperty.Register("Image", typeof(ImageEx), typeof(CanvasEx), new FrameworkPropertyMetadata(ImagePropertyChangedCallback));
-        }
-
         private static void ImagePropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CanvasEx obj = d as CanvasEx;
+            CanvasEditor obj = d as CanvasEditor;
             ImageEx img = e.NewValue as ImageEx;
             if (img == null)
             {
@@ -64,11 +59,11 @@ namespace ShareX.ScreenCaptureLib
 
         private void RedrawAnnotations()
         {
-            if (Image.Annotations == null) { return; }
+            if (CapturedImage.Annotations == null) { return; }
 
             RemoveAllAnnotations();
 
-            foreach (var ann in Image.Annotations)
+            foreach (var ann in CapturedImage.Annotations)
             {
                 if (ann.GetType() == typeof(Highlight))
                 {
@@ -80,7 +75,7 @@ namespace ShareX.ScreenCaptureLib
 
         public void RemoveAllAnnotations()
         {
-            if (Image.Annotations == null) { return; }
+            if (CapturedImage.Annotations == null) { return; }
             Children.RemoveRange(0, Children.Count);
         }
 
@@ -129,7 +124,7 @@ namespace ShareX.ScreenCaptureLib
                     throw new NotImplementedException();
             }
 
-            Image.Annotations.Add(_annotationBeingAdded);
+            CapturedImage.Annotations.Add(_annotationBeingAdded);
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
