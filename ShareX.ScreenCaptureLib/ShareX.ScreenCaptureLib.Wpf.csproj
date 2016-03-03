@@ -55,6 +55,8 @@
     <Compile Include="Capture.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Annotations\Obfuscate.cs" />
+    <Compile Include="Annotations\Arrow.cs" />
+    <Compile Include="Annotations\Line.cs" />
     <Compile Include="Screencast.cs" />
     <Compile Include="ImageEx.cs" />
     <Compile Include="ScreenshotHelper.cs" />
