@@ -18,7 +18,7 @@ namespace ShareX.ScreenCaptureLib
             }
         }
 
-        public override Rectangle Render()
+        public override Shape Render()
         {
             return new Rectangle
             {

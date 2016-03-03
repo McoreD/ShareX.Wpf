@@ -24,8 +24,8 @@ namespace ShareX.ScreenCaptureLib
         }
 
         private Point _startPoint;
-        private Rectangle _currentRectangle;
-        private Annotate _annotationBeingAdded;
+        private Shape _currentRectangle;
+        private Annotate _currentAnnotation;
 
         private static void ImagePropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -49,10 +49,10 @@ namespace ShareX.ScreenCaptureLib
             switch (mode)
             {
                 case AnnotationMode.Highlight:
-                    _annotationBeingAdded = new Highlight();
+                    _currentAnnotation = new Highlight();
                     break;
                 case AnnotationMode.Obfuscate:
-                    _annotationBeingAdded = new Obfuscate();
+                    _currentAnnotation = new Obfuscate();
                     break;
             }
         }
@@ -68,7 +68,7 @@ namespace ShareX.ScreenCaptureLib
                 if (ann.GetType() == typeof(Highlight))
                 {
                     Highlight hl = ann as Highlight;
-                    AddRectangle(hl, hl.TopLeft.X, hl.TopLeft.Y, hl.Width, hl.Height);
+                    AddShape(hl, hl.TopLeft.X, hl.TopLeft.Y, hl.Width, hl.Height);
                 }
             }
         }
@@ -79,17 +79,18 @@ namespace ShareX.ScreenCaptureLib
             Children.RemoveRange(0, Children.Count);
         }
 
-        private Rectangle AddRectangle(Annotate ann, double x, double y, double w = 0, double h = 0)
+        private Shape AddShape(Annotate ann, double x, double y, double w = 0, double h = 0)
         {
-            var r = ann.Render();
+            Shape shape = ann.Render();
 
-            SetLeft(r, x);
-            SetTop(r, y);
-            r.Width = w;
-            r.Height = h;
-            Children.Add(r);
+            SetLeft(shape, x);
+            SetTop(shape, y);
+            shape.Width = w;
+            shape.Height = h;
 
-            return r;
+            Children.Add(shape);
+
+            return shape;
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
@@ -99,7 +100,7 @@ namespace ShareX.ScreenCaptureLib
             base.OnMouseLeftButtonDown(e);
             _startPoint = e.GetPosition(this);
 
-            _currentRectangle = AddRectangle(_annotationBeingAdded, _startPoint.X, _startPoint.Y);
+            _currentRectangle = AddShape(_currentAnnotation, _startPoint.X, _startPoint.Y);
         }
 
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
@@ -111,7 +112,7 @@ namespace ShareX.ScreenCaptureLib
             switch (AnnotationMode)
             {
                 case AnnotationMode.Highlight:
-                    _annotationBeingAdded = new Highlight
+                    _currentAnnotation = new Highlight
                     {
                         Width = _currentRectangle.Width,
                         Height = _currentRectangle.Height,
@@ -124,7 +125,7 @@ namespace ShareX.ScreenCaptureLib
                     throw new NotImplementedException();
             }
 
-            CapturedImage.Annotations.Add(_annotationBeingAdded);
+            CapturedImage.Annotations.Add(_currentAnnotation);
         }
 
         protected override void OnMouseMove(MouseEventArgs e)

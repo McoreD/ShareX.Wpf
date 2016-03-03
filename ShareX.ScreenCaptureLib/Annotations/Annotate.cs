@@ -9,7 +9,7 @@ namespace ShareX.ScreenCaptureLib
 {
     public abstract class Annotate : Shape
     {
-        public virtual Rectangle Render()
+        public virtual Shape Render()
         {
             throw new NotImplementedException();
         }
