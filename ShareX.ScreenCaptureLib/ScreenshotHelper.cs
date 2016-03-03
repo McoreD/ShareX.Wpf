@@ -1,9 +1,9 @@
 ﻿using HelpersLib;
 using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace ShareX.ScreenCaptureLib
 {
@@ -16,7 +16,7 @@ namespace ShareX.ScreenCaptureLib
         public static int ShadowOffset = 20;
         public static bool AutoHideTaskbar = false;
 
-        public static BitmapSource CaptureRectangle(Rect rect)
+        public static BitmapImage CaptureRectangle(Rect rect)
         {
             if (RemoveOutsideScreenArea)
             {
@@ -24,10 +24,26 @@ namespace ShareX.ScreenCaptureLib
                 rect = Rect.Intersect(bounds, rect);
             }
 
-            return CaptureRectangleNative(rect, CaptureCursor);
+            // TODO: Move to Screenshot and return Screenshot
+            // TODO: CanvasEx to support Screenshot instead of Image
+            BitmapImage img = new BitmapImage();
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                PngBitmapEncoder encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(CaptureRectangleNative(rect, CaptureCursor)));
+                encoder.Save(ms);
+
+                ms.Position = 0;
+                img.BeginInit();
+                img.StreamSource = new MemoryStream(ms.ToArray());
+                img.EndInit();
+            }
+
+            return img;
         }
 
-        public static BitmapSource CaptureFullscreen()
+        public static BitmapImage CaptureFullscreen()
         {
             Rect bounds = CaptureHelpers.GetScreenBounds();
 
@@ -72,10 +88,10 @@ namespace ShareX.ScreenCaptureLib
             NativeMethods.SelectObject(hdcDest, hOld);
             NativeMethods.DeleteDC(hdcDest);
             NativeMethods.ReleaseDC(handle, hdcSrc);
-            BitmapSource img = Imaging.CreateBitmapSourceFromHBitmap(hBitmap, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            BitmapSource bmp = Imaging.CreateBitmapSourceFromHBitmap(hBitmap, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
             NativeMethods.DeleteObject(hBitmap);
 
-            return img;
+            return bmp;
         }
     }
 }

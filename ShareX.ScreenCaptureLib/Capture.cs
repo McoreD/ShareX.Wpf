@@ -8,6 +8,6 @@ namespace ShareX.ScreenCaptureLib
 {
     public abstract class Capture
     {
-        public DateTime DateCaptured { get; private set; }
+        public DateTime DateTimeCaptured { get; protected set; }
     }
 }
