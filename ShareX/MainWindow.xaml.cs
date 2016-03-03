@@ -63,12 +63,12 @@ namespace ShareX
             }
         }
 
-        private void editor_HighlightAdded(object sender, AddHighlightEventArgs args)
-        {
-        }
-
         private void btnEditRotate_Click(object sender, RoutedEventArgs e)
         {
+            if (editor.Image != null)
+            {
+                // stuff
+            }
         }
 
         #endregion Editor
@@ -88,11 +88,10 @@ namespace ShareX
 
             if (dlg.ShowDialog() == true)
             {
+                using (var ms = editor.Image.ExportAsMemoryStream())
                 using (var fs = new FileStream(dlg.FileName, FileMode.OpenOrCreate))
                 {
-                    BitmapEncoder encoder = new PngBitmapEncoder();
-                    encoder.Frames.Add(BitmapFrame.Create(editor.Image.Source as BitmapSource));
-                    encoder.Save(fs);
+                    ms.CopyTo(fs);
                 }
             }
         }
