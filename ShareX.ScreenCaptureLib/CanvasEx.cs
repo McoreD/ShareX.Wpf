@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace ShareX.ScreenCaptureLib
@@ -27,31 +28,16 @@ namespace ShareX.ScreenCaptureLib
         public event AddHighlightEventHandler HighlightAdded = delegate { };
 
         public static readonly DependencyProperty ImageProperty;
-        public static readonly DependencyProperty HighlightColorProperty;
-        public static readonly DependencyProperty HighlightsProperty;
 
         [Category("Source")]
-        public ImageSource Image
+        public ImageEx Image
         {
-            get { return (ImageSource)GetValue(ImageProperty); }
+            get { return (ImageEx)GetValue(ImageProperty); }
             set { SetValue(ImageProperty, value); }
         }
 
-        [Category("Annotations")]
-        public string HighlightColor
-        {
-            get { return (string)GetValue(HighlightColorProperty); }
-            set { SetValue(HighlightColorProperty, value); }
-        }
+        public string HighlightColor { get; set; }
 
-        [Category("Annotations")]
-        public ObservableCollection<Highlight> Highlights
-        {
-            get { return (ObservableCollection<Highlight>)GetValue(HighlightsProperty); }
-            set { SetValue(HighlightsProperty, value); }
-        }
-
-        [Category("Annotations")]
         private Brush HighlightColorBrush
         {
             get { return (SolidColorBrush)new BrushConverter().ConvertFromString(HighlightColor); }
@@ -63,39 +49,32 @@ namespace ShareX.ScreenCaptureLib
 
         static CanvasEx()
         {
-            ImageProperty = DependencyProperty.Register("Image", typeof(ImageSource), typeof(CanvasEx), new FrameworkPropertyMetadata(ImagePropertyChangedCallback));
-            HighlightColorProperty = DependencyProperty.Register("HighlightColor", typeof(string), typeof(CanvasEx));
-            HighlightsProperty = DependencyProperty.Register("Highlights", typeof(ObservableCollection<Highlight>), typeof(CanvasEx));
-        }
-
-        public CanvasEx()
-        {
-            Highlights = new ObservableCollection<Highlight>();
+            ImageProperty = DependencyProperty.Register("Image", typeof(ImageEx), typeof(CanvasEx), new FrameworkPropertyMetadata(ImagePropertyChangedCallback));
         }
 
         private static void ImagePropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             CanvasEx obj = d as CanvasEx;
-            ImageSource img = e.NewValue as ImageSource;
+            ImageEx img = e.NewValue as ImageEx;
             if (img == null)
             {
                 obj.Background = null;
                 return;
             }
-            obj.Width = img.Width;
-            obj.Height = img.Height;
-            obj.Background = new ImageBrush(img);
+            obj.Width = img.Source.Width;
+            obj.Height = img.Source.Height;
+            obj.Background = new ImageBrush(img.Source);
             obj.RedrawHighlights();
         }
 
         private void RedrawHighlights()
         {
             RemoveAllHighlights();
-            if (Highlights == null)
+            if (Image.Highlights == null)
             {
                 return;
             }
-            foreach (var hl in Highlights)
+            foreach (var hl in Image.Highlights)
             {
                 AddNewRectangle(hl.Color, hl.TopLeft.X, hl.TopLeft.Y, hl.Rectangle.Width, hl.Rectangle.Height);
             }
@@ -103,7 +82,7 @@ namespace ShareX.ScreenCaptureLib
 
         public void RemoveAllHighlights()
         {
-            if (Highlights == null) { return; }
+            if (Image.Highlights == null) { return; }
             Children.RemoveRange(0, Children.Count);
         }
 
@@ -150,6 +129,7 @@ namespace ShareX.ScreenCaptureLib
 
             base.OnMouseUp(e);
             HighlightAdded(this, new AddHighlightEventArgs(_highlightBeingAdded));
+            Image.Highlights.Add(_highlightBeingAdded);
             _highlightBeingAdded = null;
         }
 

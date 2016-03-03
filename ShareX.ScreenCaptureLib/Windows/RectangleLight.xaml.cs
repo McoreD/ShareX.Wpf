@@ -42,7 +42,7 @@ namespace ShareX.ScreenCaptureLib
 
         public RectangleLight()
         {
-            backgroundImage = ScreenshotHelper.CaptureFullscreen();
+            backgroundImage = ScreenshotHelper.CaptureFullscreen().Source;
             Background = new ImageBrush(backgroundImage);
 
             ScreenRectangle = CaptureHelpers.GetScreenBounds();
@@ -136,7 +136,7 @@ namespace ShareX.ScreenCaptureLib
             }
         }
 
-        public BitmapSource GetAreaImage()
+        public ImageEx GetScreenshot()
         {
             Rect rect = SelectionRectangle0Based;
 
@@ -144,10 +144,10 @@ namespace ShareX.ScreenCaptureLib
             {
                 if (rect.X == 0 && rect.Y == 0 && rect.Width == backgroundImage.Width && rect.Height == backgroundImage.Height)
                 {
-                    return backgroundImage.Clone();
+                    return new ImageEx(backgroundImage.Clone());
                 }
 
-                return ImageHelpers.CropImage(backgroundImage, rect);
+                return new ImageEx(ImageHelpers.CropImage(backgroundImage, rect));
             }
 
             return null;

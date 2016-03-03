@@ -16,7 +16,7 @@ namespace ShareX.ScreenCaptureLib
         public static int ShadowOffset = 20;
         public static bool AutoHideTaskbar = false;
 
-        public static BitmapImage CaptureRectangle(Rect rect)
+        public static ImageEx CaptureRectangle(Rect rect)
         {
             if (RemoveOutsideScreenArea)
             {
@@ -24,26 +24,10 @@ namespace ShareX.ScreenCaptureLib
                 rect = Rect.Intersect(bounds, rect);
             }
 
-            // TODO: Move to Screenshot and return Screenshot
-            // TODO: CanvasEx to support Screenshot instead of Image
-            BitmapImage img = new BitmapImage();
-
-            using (MemoryStream ms = new MemoryStream())
-            {
-                PngBitmapEncoder encoder = new PngBitmapEncoder();
-                encoder.Frames.Add(BitmapFrame.Create(CaptureRectangleNative(rect, CaptureCursor)));
-                encoder.Save(ms);
-
-                ms.Position = 0;
-                img.BeginInit();
-                img.StreamSource = new MemoryStream(ms.ToArray());
-                img.EndInit();
-            }
-
-            return img;
+            return new ImageEx(CaptureRectangleNative(rect, CaptureCursor));
         }
 
-        public static BitmapImage CaptureFullscreen()
+        public static ImageEx CaptureFullscreen()
         {
             Rect bounds = CaptureHelpers.GetScreenBounds();
 

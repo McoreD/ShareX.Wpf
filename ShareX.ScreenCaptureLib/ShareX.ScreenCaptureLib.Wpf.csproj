@@ -54,7 +54,7 @@
     <Compile Include="Capture.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Screencast.cs" />
-    <Compile Include="Screenshot.cs" />
+    <Compile Include="ImageEx.cs" />
     <Compile Include="ScreenshotHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Windows\RectangleLight.xaml.cs">

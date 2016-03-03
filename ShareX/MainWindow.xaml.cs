@@ -28,10 +28,10 @@ namespace ShareX
             this.WindowState = WindowState.Minimized;
             System.Threading.Thread.Sleep(500);
 
-            RectangleLight rectangleLight = new RectangleLight();
-            if (rectangleLight.ShowDialog() == true)
+            RectangleLight crop = new RectangleLight();
+            if (crop.ShowDialog() == true)
             {
-                editor.Image = rectangleLight.GetAreaImage();
+                editor.Image = crop.GetScreenshot();
             }
 
             this.WindowState = WindowState.Normal;
@@ -71,7 +71,7 @@ namespace ShareX
 
         private void btnCopyToClipboard_Click(object sender, RoutedEventArgs e)
         {
-            ClipboardHelper.SetImage(editor.Image as BitmapSource);
+            ClipboardHelper.SetImage(editor.Image.Export());
         }
 
         private void btnSaveToFile_Click(object sender, RoutedEventArgs e)
@@ -85,7 +85,7 @@ namespace ShareX
                 using (var fs = new FileStream(dlg.FileName, FileMode.OpenOrCreate))
                 {
                     BitmapEncoder encoder = new PngBitmapEncoder();
-                    encoder.Frames.Add(BitmapFrame.Create(editor.Image as BitmapSource));
+                    encoder.Frames.Add(BitmapFrame.Create(editor.Image.Source as BitmapSource));
                     encoder.Save(fs);
                 }
             }

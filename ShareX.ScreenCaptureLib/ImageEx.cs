@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Media;
@@ -7,13 +8,15 @@ using System.Windows.Media.Imaging;
 
 namespace ShareX.ScreenCaptureLib
 {
-    public class Screenshot : Capture
+    // Class to hold Screenshots or other images
+
+    public class ImageEx : Capture
     {
-        public BitmapImage Source { get; private set; } = new BitmapImage();
+        public BitmapSource Source { get; private set; }
 
         public ObservableCollection<Highlight> Highlights { get; set; } = new ObservableCollection<Highlight>();
 
-        public Screenshot(BitmapImage img)
+        public ImageEx(BitmapSource img)
         {
             Source = img;
             DateTimeCaptured = DateTime.Now;
@@ -34,16 +37,17 @@ namespace ShareX.ScreenCaptureLib
             }
 
             dc.Close();
+
             RenderTargetBitmap rtb = new RenderTargetBitmap((int)Source.Width, (int)Source.Height, Source.DpiX, Source.DpiY, PixelFormats.Pbgra32);
             rtb.Render(dv);
 
             PngBitmapEncoder encoder = new PngBitmapEncoder();
-            MemoryStream stream = new MemoryStream();
+            MemoryStream ms = new MemoryStream();
             encoder.Frames.Add(BitmapFrame.Create(rtb));
-            encoder.Save(stream);
-            stream.Position = 0;
+            encoder.Save(ms);
+            ms.Position = 0;
 
-            return stream;
+            return ms;
         }
 
         public BitmapImage Export()
@@ -52,7 +56,7 @@ namespace ShareX.ScreenCaptureLib
             using (MemoryStream ms = ExportAsMemoryStream())
             {
                 img.BeginInit();
-                img.StreamSource = ms;
+                img.StreamSource = new MemoryStream(ms.ToArray());
                 img.EndInit();
             }
             return img;

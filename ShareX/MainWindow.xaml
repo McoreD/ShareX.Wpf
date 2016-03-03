@@ -22,7 +22,7 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
-        <ScreenCaptureLib:CanvasEx x:Name="editor" Grid.Row="1" Grid.Column="0" Image="Resources/ShareX_Logo.png" Margin="10,0,0,0" />
+        <ScreenCaptureLib:CanvasEx x:Name="editor" Grid.Row="1" Grid.Column="0" Margin="10,0,0,0" />
 
         <!--Capture commands-->
         <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" x:Name="capturePanel">
