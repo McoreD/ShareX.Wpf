@@ -5,6 +5,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace ShareX.ScreenCaptureLib
 {
@@ -14,7 +15,7 @@ namespace ShareX.ScreenCaptureLib
     {
         public BitmapSource Source { get; private set; }
 
-        public ObservableCollection<Highlight> Highlights { get; set; } = new ObservableCollection<Highlight>();
+        public ObservableCollection<Shape> Annotations { get; set; } = new ObservableCollection<Shape>();
 
         public ImageEx(BitmapSource img)
         {
@@ -30,10 +31,9 @@ namespace ShareX.ScreenCaptureLib
 
             dc.PushOpacity(0.5);
 
-            foreach (Highlight highlight in Highlights)
+            foreach (Highlight highlight in Annotations)
             {
-                var rect = highlight.Rectangle;
-                dc.DrawRectangle(highlight.Color, null, new Rect(highlight.TopLeft.X, highlight.TopLeft.Y, rect.Width, rect.Height));
+                dc.DrawRectangle(highlight.Color, null, new Rect(highlight.TopLeft.X, highlight.TopLeft.Y, highlight.Width, highlight.Height));
             }
 
             dc.Close();

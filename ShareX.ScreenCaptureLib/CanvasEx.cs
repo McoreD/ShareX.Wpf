@@ -10,22 +10,9 @@ using System.Windows.Shapes;
 
 namespace ShareX.ScreenCaptureLib
 {
-    public delegate void AddHighlightEventHandler(object sender, AddHighlightEventArgs args);
-
-    public class AddHighlightEventArgs : EventArgs
-    {
-        public Highlight TheHighlight { get; private set; }
-
-        public AddHighlightEventArgs(Highlight theHighlight)
-        {
-            TheHighlight = theHighlight;
-        }
-    }
-
     public class CanvasEx : Canvas
     {
-        public AnnotationMode AnnotationMode { get; set; } = AnnotationMode.None;
-        public event AddHighlightEventHandler HighlightAdded = delegate { };
+        public AnnotationMode AnnotationMode { get; private set; } = AnnotationMode.None;
 
         public static readonly DependencyProperty ImageProperty;
 
@@ -36,16 +23,9 @@ namespace ShareX.ScreenCaptureLib
             set { SetValue(ImageProperty, value); }
         }
 
-        public string HighlightColor { get; set; }
-
-        private Brush HighlightColorBrush
-        {
-            get { return (SolidColorBrush)new BrushConverter().ConvertFromString(HighlightColor); }
-        }
-
         private Point _startPoint;
         private Rectangle _currentRectangle;
-        private Highlight _highlightBeingAdded;
+        private Annotate _annotationBeingAdded;
 
         static CanvasEx()
         {
@@ -64,73 +44,92 @@ namespace ShareX.ScreenCaptureLib
             obj.Width = img.Source.Width;
             obj.Height = img.Source.Height;
             obj.Background = new ImageBrush(img.Source);
-            obj.RedrawHighlights();
+            obj.RedrawAnnotations();
         }
 
-        private void RedrawHighlights()
+        public void SetAnnotationMode(AnnotationMode mode)
         {
-            RemoveAllHighlights();
-            if (Image.Highlights == null)
+            AnnotationMode = mode;
+
+            switch (mode)
             {
-                return;
-            }
-            foreach (var hl in Image.Highlights)
-            {
-                AddNewRectangle(hl.Color, hl.TopLeft.X, hl.TopLeft.Y, hl.Rectangle.Width, hl.Rectangle.Height);
+                case AnnotationMode.Highlight:
+                    _annotationBeingAdded = new Highlight();
+                    break;
+                case AnnotationMode.Obfuscate:
+                    _annotationBeingAdded = new Obfuscate();
+                    break;
             }
         }
 
-        public void RemoveAllHighlights()
+        private void RedrawAnnotations()
         {
-            if (Image.Highlights == null) { return; }
+            if (Image.Annotations == null) { return; }
+
+            RemoveAllAnnotations();
+
+            foreach (var ann in Image.Annotations)
+            {
+                if (ann.GetType() == typeof(Highlight))
+                {
+                    Highlight hl = ann as Highlight;
+                    AddRectangle(hl, hl.TopLeft.X, hl.TopLeft.Y, hl.Width, hl.Height);
+                }
+            }
+        }
+
+        public void RemoveAllAnnotations()
+        {
+            if (Image.Annotations == null) { return; }
             Children.RemoveRange(0, Children.Count);
         }
 
-        private Rectangle AddNewRectangle(Brush color, double x, double y, double w = 0, double h = 0)
+        private Rectangle AddRectangle(Annotate ann, double x, double y, double w = 0, double h = 0)
         {
-            var r = new Rectangle
-            {
-                Stroke = Brushes.LightBlue,
-                StrokeThickness = 1,
-                Fill = color,
-                Opacity = 0.5
-            };
+            var r = ann.Render();
 
             SetLeft(r, x);
             SetTop(r, y);
             r.Width = w;
             r.Height = h;
             Children.Add(r);
+
             return r;
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            if (AnnotationMode == AnnotationMode.None)
-                return;
+            if (AnnotationMode == AnnotationMode.None) { return; };
 
             base.OnMouseLeftButtonDown(e);
             _startPoint = e.GetPosition(this);
 
-            _currentRectangle = AddNewRectangle(HighlightColorBrush, _startPoint.X, _startPoint.Y);
-
-            _highlightBeingAdded = new Highlight
-            {
-                Rectangle = _currentRectangle,
-                TopLeft = _startPoint,
-                Color = HighlightColorBrush
-            };
+            _currentRectangle = AddRectangle(_annotationBeingAdded, _startPoint.X, _startPoint.Y);
         }
 
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
-            if (AnnotationMode == AnnotationMode.None)
-                return;
+            if (AnnotationMode == AnnotationMode.None) { return; };
 
             base.OnMouseUp(e);
-            HighlightAdded(this, new AddHighlightEventArgs(_highlightBeingAdded));
-            Image.Highlights.Add(_highlightBeingAdded);
-            _highlightBeingAdded = null;
+
+            switch (AnnotationMode)
+            {
+                case AnnotationMode.Highlight:
+                    _annotationBeingAdded = new Highlight
+                    {
+                        Width = _currentRectangle.Width,
+                        Height = _currentRectangle.Height,
+                        TopLeft = _startPoint
+                    };
+                    break;
+                case AnnotationMode.Obfuscate:
+                    throw new NotImplementedException();
+                default:
+                    throw new NotImplementedException();
+            }
+
+            Image.Annotations.Add(_annotationBeingAdded);
         }
 
         protected override void OnMouseMove(MouseEventArgs e)

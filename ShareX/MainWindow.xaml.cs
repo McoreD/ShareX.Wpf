@@ -50,8 +50,7 @@ namespace ShareX
         {
             if (editor.Image != null)
             {
-                editor.AnnotationMode = AnnotationMode.Highlight;
-                editor.HighlightColor = "Yellow";
+                editor.SetAnnotationMode(AnnotationMode.Highlight);
             }
         }
 
@@ -59,7 +58,7 @@ namespace ShareX
         {
             if (editor.Image != null)
             {
-                editor.AnnotationMode = AnnotationMode.Obfuscate;
+                editor.SetAnnotationMode(AnnotationMode.Obfuscate);
             }
         }
 
@@ -77,7 +76,8 @@ namespace ShareX
 
         private void btnCopyToClipboard_Click(object sender, RoutedEventArgs e)
         {
-            ClipboardHelper.SetImage(editor.Image.Export());
+            if (editor.Image != null)
+                ClipboardHelper.SetImage(editor.Image.Export());
         }
 
         private void btnSaveToFile_Click(object sender, RoutedEventArgs e)

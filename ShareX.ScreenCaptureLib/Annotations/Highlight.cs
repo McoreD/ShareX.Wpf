@@ -1,13 +1,32 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace ShareX.ScreenCaptureLib
 {
-    public class Highlight
+    public sealed class Highlight : Annotate
     {
-        public Rectangle Rectangle { get; set; }
         public Point TopLeft { get; set; }
-        public Brush Color { get; set; }
+        public Brush Color { get; set; } = Brushes.Yellow;
+
+        protected override Geometry DefiningGeometry
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public override Rectangle Render()
+        {
+            return new Rectangle
+            {
+                Stroke = Brushes.LightBlue,
+                StrokeThickness = 1,
+                Fill = Color,
+                Opacity = 0.5
+            };
+        }
     }
 }
