@@ -29,7 +29,7 @@ namespace ShareX.ScreenCaptureLib
 
         public static readonly DependencyProperty ImageProperty;
 
-        [Category("Source")]
+        [Category("Editor")]
         public ImageEx Image
         {
             get { return (ImageEx)GetValue(ImageProperty); }

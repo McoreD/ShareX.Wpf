@@ -48,13 +48,19 @@ namespace ShareX
 
         private void btnEditHighlight_Click(object sender, RoutedEventArgs e)
         {
-            editor.AnnotationMode = AnnotationMode.Highlight;
-            editor.HighlightColor = "Yellow";
+            if (editor.Image != null)
+            {
+                editor.AnnotationMode = AnnotationMode.Highlight;
+                editor.HighlightColor = "Yellow";
+            }
         }
 
         private void btnEditObfuscate_Click(object sender, RoutedEventArgs e)
         {
-            editor.AnnotationMode = AnnotationMode.Obfuscate;
+            if (editor.Image != null)
+            {
+                editor.AnnotationMode = AnnotationMode.Obfuscate;
+            }
         }
 
         private void editor_HighlightAdded(object sender, AddHighlightEventArgs args)
