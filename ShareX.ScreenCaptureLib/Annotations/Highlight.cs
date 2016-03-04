@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace ShareX.ScreenCaptureLib
@@ -8,7 +9,6 @@ namespace ShareX.ScreenCaptureLib
     public sealed class Highlight : Annotate
     {
         public Point TopLeft { get; set; }
-        public Brush Color { get; set; } = Brushes.Yellow;
 
         protected override Geometry DefiningGeometry
         {
@@ -20,13 +20,20 @@ namespace ShareX.ScreenCaptureLib
 
         public override Shape Render()
         {
+            Brush = Brushes.Yellow;
+
             return new Rectangle
             {
                 Stroke = Brushes.Yellow,
                 StrokeThickness = 1,
-                Fill = Color,
+                Fill = Brush,
                 Opacity = 0.5
             };
+        }
+
+        private static WriteableBitmap ColorChange(WriteableBitmap wbmi, Color color)
+        {
+            return wbmi;
         }
     }
 }

@@ -160,6 +160,7 @@ namespace ShareX.ScreenCaptureLib
                 w = sml;
                 h = sml;
             }
+
             currentShape.Width = w;
             currentShape.Height = h;
 

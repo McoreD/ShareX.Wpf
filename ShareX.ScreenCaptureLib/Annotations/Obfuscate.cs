@@ -12,7 +12,6 @@ namespace ShareX.ScreenCaptureLib
     public sealed class Obfuscate : Annotate
     {
         public Point TopLeft { get; set; }
-        public Brush Color { get; set; } = Brushes.Black;
 
         protected override Geometry DefiningGeometry
         {
@@ -24,11 +23,13 @@ namespace ShareX.ScreenCaptureLib
 
         public override Shape Render()
         {
+            Brush = Brushes.Black;
+
             return new Rectangle
             {
                 Stroke = Brushes.Black,
                 StrokeThickness = 1,
-                Fill = Color,
+                Fill = Brush,
                 Opacity = 1
             };
         }
