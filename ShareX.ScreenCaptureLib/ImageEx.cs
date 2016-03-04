@@ -31,9 +31,19 @@ namespace ShareX.ScreenCaptureLib
 
             dc.PushOpacity(0.5);
 
-            foreach (Highlight highlight in Annotations)
+            foreach (var ann in Annotations)
             {
-                dc.DrawRectangle(highlight.Color, null, new Rect(highlight.TopLeft.X, highlight.TopLeft.Y, highlight.Width, highlight.Height));
+                if (ann.GetType() == typeof(Highlight))
+                {
+                    Highlight highlight = ann as Highlight;
+                    dc.DrawRectangle(highlight.Color, null, new Rect(highlight.TopLeft.X, highlight.TopLeft.Y, highlight.Width, highlight.Height));
+                }
+                else if (ann.GetType() == typeof(Obfuscate))
+                {
+                    Obfuscate obfuscate = ann as Obfuscate;
+                    dc.DrawRectangle(obfuscate.Color, null, new Rect(obfuscate.TopLeft.X, obfuscate.TopLeft.Y, obfuscate.Width, obfuscate.Height));
+
+                }
             }
 
             dc.Close();

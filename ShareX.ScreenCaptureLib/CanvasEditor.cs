@@ -70,6 +70,11 @@ namespace ShareX.ScreenCaptureLib
                     Highlight hl = ann as Highlight;
                     AddShape(hl, hl.TopLeft.X, hl.TopLeft.Y, hl.Width, hl.Height);
                 }
+                else if (ann.GetType() == typeof(Obfuscate))
+                {
+                    Obfuscate obf = ann as Obfuscate;
+                    AddShape(obf, obf.TopLeft.X, obf.TopLeft.Y, obf.Width, obf.Height);
+                }
             }
         }
 
@@ -127,6 +132,8 @@ namespace ShareX.ScreenCaptureLib
                     throw new NotImplementedException();
             }
 
+            currentAnnotation.Width = currentShape.Width;
+            currentAnnotation.Height = currentShape.Height;
             CapturedImage.Annotations.Add(currentAnnotation);
         }
 
@@ -153,8 +160,8 @@ namespace ShareX.ScreenCaptureLib
                 w = sml;
                 h = sml;
             }
-            currentAnnotation.Width = currentShape.Width = w;
-            currentAnnotation.Height = currentShape.Height = h;
+            currentShape.Width = w;
+            currentShape.Height = h;
 
             SetLeft(currentShape, x);
             SetTop(currentShape, y);
