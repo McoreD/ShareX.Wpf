@@ -11,8 +11,6 @@ namespace ShareX.ScreenCaptureLib
 {
     public sealed class Obfuscate : Annotate
     {
-        public Point TopLeft { get; set; }
-
         protected override Geometry DefiningGeometry
         {
             get

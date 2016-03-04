@@ -45,16 +45,6 @@ namespace ShareX.ScreenCaptureLib
         public void SetAnnotationMode(AnnotationMode mode)
         {
             AnnotationMode = mode;
-
-            switch (mode)
-            {
-                case AnnotationMode.Highlight:
-                    currentAnnotation = new Highlight();
-                    break;
-                case AnnotationMode.Obfuscate:
-                    currentAnnotation = new Obfuscate();
-                    break;
-            }
         }
 
         private void RedrawAnnotations()
@@ -68,12 +58,12 @@ namespace ShareX.ScreenCaptureLib
                 if (ann.GetType() == typeof(Highlight))
                 {
                     Highlight hl = ann as Highlight;
-                    AddShape(hl, hl.TopLeft.X, hl.TopLeft.Y, hl.Width, hl.Height);
+                    AddShape(hl, hl.X1, hl.Y1, hl.Width, hl.Height);
                 }
                 else if (ann.GetType() == typeof(Obfuscate))
                 {
                     Obfuscate obf = ann as Obfuscate;
-                    AddShape(obf, obf.TopLeft.X, obf.TopLeft.Y, obf.Width, obf.Height);
+                    AddShape(obf, obf.X1, obf.Y1, obf.Width, obf.Height);
                 }
             }
         }
@@ -105,6 +95,21 @@ namespace ShareX.ScreenCaptureLib
             base.OnMouseLeftButtonDown(e);
             startPoint = e.GetPosition(this);
 
+            switch (AnnotationMode)
+            {
+                case AnnotationMode.Highlight:
+                    currentAnnotation = new Highlight();
+                    break;
+                case AnnotationMode.Obfuscate:
+                    currentAnnotation = new Obfuscate();
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+
+            currentAnnotation.X1 = startPoint.X;
+            currentAnnotation.Y1 = startPoint.Y;
+
             currentShape = AddShape(currentAnnotation, startPoint.X, startPoint.Y);
         }
 
@@ -114,26 +119,9 @@ namespace ShareX.ScreenCaptureLib
 
             base.OnMouseUp(e);
 
-            switch (AnnotationMode)
-            {
-                case AnnotationMode.Highlight:
-                    currentAnnotation = new Highlight
-                    {
-                        TopLeft = startPoint
-                    };
-                    break;
-                case AnnotationMode.Obfuscate:
-                    currentAnnotation = new Obfuscate
-                    {
-                        TopLeft = startPoint
-                    };
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }
-
             currentAnnotation.Width = currentShape.Width;
             currentAnnotation.Height = currentShape.Height;
+
             CapturedImage.Annotations.Add(currentAnnotation);
         }
 
@@ -142,9 +130,10 @@ namespace ShareX.ScreenCaptureLib
             if (AnnotationMode == AnnotationMode.None)
                 return;
 
-            base.OnMouseMove(e);
             if (e.LeftButton == MouseButtonState.Released || currentShape == null)
                 return;
+
+            base.OnMouseMove(e);
 
             bool controlkey = (Keyboard.Modifiers & ModifierKeys.Control) > 0;
             var pos = e.GetPosition(this);
@@ -155,7 +144,6 @@ namespace ShareX.ScreenCaptureLib
 
             if (controlkey)
             {
-                //make square based on the smallest
                 var sml = Math.Min(w, h);
                 w = sml;
                 h = sml;

@@ -8,8 +8,6 @@ namespace ShareX.ScreenCaptureLib
 {
     public sealed class Highlight : Annotate
     {
-        public Point TopLeft { get; set; }
-
         protected override Geometry DefiningGeometry
         {
             get
