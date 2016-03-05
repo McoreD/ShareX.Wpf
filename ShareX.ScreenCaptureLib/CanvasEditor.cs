@@ -42,9 +42,10 @@ namespace ShareX.ScreenCaptureLib
             obj.RedrawAnnotations();
         }
 
-        public void SetAnnotationMode(AnnotationMode mode)
+        public void Init(AnnotationMode mode)
         {
             AnnotationMode = mode;
+            AnnotationHelper.LoadCapturedImage(CapturedImage);
         }
 
         private void RedrawAnnotations()
@@ -84,10 +85,10 @@ namespace ShareX.ScreenCaptureLib
             switch (AnnotationMode)
             {
                 case AnnotationMode.Highlight:
-                    currentAnnotation = new HighlightAnnotation(CapturedImage);
+                    currentAnnotation = new HighlightAnnotation();
                     break;
                 case AnnotationMode.Obfuscate:
-                    currentAnnotation = new ObfuscateAnnotation(CapturedImage);
+                    currentAnnotation = new ObfuscateAnnotation();
                     break;
                 default:
                     throw new NotImplementedException();

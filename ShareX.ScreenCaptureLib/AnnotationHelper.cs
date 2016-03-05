@@ -12,6 +12,13 @@ namespace ShareX.ScreenCaptureLib
 {
     public static class AnnotationHelper
     {
+        public static ImageEx CapturedImage { get; private set; }
+
+        public static void LoadCapturedImage(ImageEx src)
+        {
+            CapturedImage = src;
+        }
+
         public static WriteableBitmap ChangeColor(BitmapSource source, Color highlightColor)
         {
             WriteableBitmap wbmp = new WriteableBitmap(source);
@@ -40,9 +47,9 @@ namespace ShareX.ScreenCaptureLib
             return wbmp;
         }
 
-        public static Rect CreateIntersectRect(Size applySize, Rect rect)
+        public static Rect CreateIntersectRect(Rect rect)
         {
-            Rect applyRect = new Rect(0, 0, applySize.Width, applySize.Height);
+            Rect applyRect = new Rect(0, 0, CapturedImage.Source.Width, CapturedImage.Source.Height);
             Rect myRect = new Rect(rect.X, rect.Y, rect.Width, rect.Height);
             myRect.Intersect(applyRect);
             return myRect;

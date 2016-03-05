@@ -50,7 +50,7 @@ namespace ShareX
         {
             if (editor.CapturedImage != null)
             {
-                editor.SetAnnotationMode(AnnotationMode.Highlight);
+                editor.Init(AnnotationMode.Highlight);
             }
         }
 
@@ -58,7 +58,7 @@ namespace ShareX
         {
             if (editor.CapturedImage != null)
             {
-                editor.SetAnnotationMode(AnnotationMode.Obfuscate);
+                editor.Init(AnnotationMode.Obfuscate);
             }
         }
 

@@ -23,14 +23,6 @@ namespace ShareX.ScreenCaptureLib
             DateTimeCaptured = DateTime.Now;
         }
 
-        public Size Size
-        {
-            get
-            {
-                return new Size(Source.Width, Source.Height);
-            }
-        }
-
         public MemoryStream ExportAsMemoryStream()
         {
             DrawingVisual dv = new DrawingVisual();

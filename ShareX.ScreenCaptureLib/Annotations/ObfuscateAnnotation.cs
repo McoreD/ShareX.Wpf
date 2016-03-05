@@ -12,14 +12,17 @@ namespace ShareX.ScreenCaptureLib
 {
     public sealed class ObfuscateAnnotation : RectangleAnnotation
     {
-        public ObfuscateAnnotation(ImageEx src)
+        public ObfuscateAnnotation()
         {
-            CapturedImage = src;
+            Brush = Brushes.Black;
+        }
 
-            Stroke = Brushes.Black;
+        public override void Render()
+        {
+            Stroke = Brush;
             StrokeThickness = 1;
-            Fill = Brushes.Black;
             Opacity = 1;
+            Fill = Brush;
         }
     }
 }

@@ -1,29 +1,25 @@
 ﻿using HelpersLib;
-using System;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace ShareX.ScreenCaptureLib
 {
     public sealed class HighlightAnnotation : RectangleAnnotation
     {
-        public Color highlightColor { get; set; } = Brushes.Yellow.Color;
-
-        public HighlightAnnotation(ImageEx src)
+        public HighlightAnnotation()
         {
-            CapturedImage = src;
+            Brush = Brushes.Yellow;
 
-            Stroke = Brushes.Yellow;
+            Stroke = Brush;
             StrokeThickness = 1;
         }
 
         public override void Render()
         {
-            Rect applyRect = AnnotationHelper.CreateIntersectRect(CapturedImage.Size, Area);
-            BitmapSource bmp = ImageHelper.CropImage(CapturedImage.Source, applyRect);
-            WriteableBitmap wbmp = AnnotationHelper.ChangeColor(bmp, Brushes.Yellow.Color);
+            Rect applyRect = AnnotationHelper.CreateIntersectRect(Area);
+            BitmapSource bmp = ImageHelper.CropImage(AnnotationHelper.CapturedImage.Source, applyRect);
+            WriteableBitmap wbmp = AnnotationHelper.ChangeColor(bmp, ((SolidColorBrush)Brush).Color);
             Fill = new ImageBrush(wbmp);
         }
     }
