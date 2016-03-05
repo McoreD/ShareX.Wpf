@@ -53,20 +53,6 @@ namespace ShareX.ScreenCaptureLib
             if (CapturedImage.Annotations == null) { return; }
 
             RemoveAllAnnotations();
-
-            foreach (var ann in CapturedImage.Annotations)
-            {
-                if (ann.GetType() == typeof(HighlightAnnotation))
-                {
-                    HighlightAnnotation hl = ann as HighlightAnnotation;
-                    // AddShape(hl, hl.X1, hl.Y1, hl.Width, hl.Height);
-                }
-                else if (ann.GetType() == typeof(ObfuscateAnnotation))
-                {
-                    ObfuscateAnnotation obf = ann as ObfuscateAnnotation;
-                    //  AddShape(obf, obf.X1, obf.Y1, obf.Width, obf.Height);
-                }
-            }
         }
 
         public void RemoveAllAnnotations()

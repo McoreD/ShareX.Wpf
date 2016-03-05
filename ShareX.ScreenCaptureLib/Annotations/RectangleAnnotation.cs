@@ -20,7 +20,12 @@ namespace ShareX.ScreenCaptureLib
 
         public override void Render()
         {
-            throw new NotImplementedException();
+            // do nothing
+        }
+
+        public override void Render(DrawingContext dc)
+        {
+            dc.DrawRectangle(Fill, null, Area);
         }
     }
 }

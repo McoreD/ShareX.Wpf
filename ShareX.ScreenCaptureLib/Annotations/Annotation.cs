@@ -23,6 +23,8 @@ namespace ShareX.ScreenCaptureLib
 
         public abstract void Render();
 
+        public abstract void Render(DrawingContext dc);
+
         public static readonly DependencyProperty X1Property = DependencyProperty.Register("X1", typeof(double), typeof(Annotation),
             new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender),
             new ValidateValueCallback(IsDoubleFinite));
@@ -67,11 +69,24 @@ namespace ShareX.ScreenCaptureLib
             set { SetValue(Y2Property, value); }
         }
 
+        public Point Point1
+        {
+            get { return new Point(X1, Y1); }
+        }
+
+        public Point Point2
+        {
+            get
+            {
+                return new Point(X2, Y2);
+            }
+        }
+
         public Rect Area
         {
             get
             {
-                return new Rect(new Point(X1, Y1), new Point(X2, Y2));
+                return new Rect(Point1, Point2);
             }
         }
     }

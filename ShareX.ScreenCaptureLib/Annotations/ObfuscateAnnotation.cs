@@ -10,7 +10,7 @@ using System.Windows.Shapes;
 
 namespace ShareX.ScreenCaptureLib
 {
-    public sealed class ObfuscateAnnotation : RectangleAnnotation
+    public sealed class ObfuscateAnnotation : Annotation
     {
         public ObfuscateAnnotation()
         {
@@ -20,10 +20,24 @@ namespace ShareX.ScreenCaptureLib
             StrokeThickness = 1;
         }
 
+        protected override Geometry DefiningGeometry
+        {
+            get
+            {
+                return new RectangleGeometry(new Rect(0, 0, Width, Height));
+            }
+        }
+
         public override void Render()
         {
             Opacity = 1;
             Fill = Brush;
+        }
+
+        public override void Render(DrawingContext dc)
+        {
+            Render();
+            dc.DrawRectangle(Fill, null, Area);
         }
     }
 }

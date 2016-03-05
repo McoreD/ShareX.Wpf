@@ -31,8 +31,7 @@ namespace ShareX.ScreenCaptureLib
 
             foreach (var ann in Annotations)
             {
-                ann.Render();
-                dc.DrawRectangle(ann.Fill, null, ann.Area);
+                ann.Render(dc);
             }
 
             dc.Close();

@@ -15,7 +15,19 @@ namespace ShareX.ScreenCaptureLib
     {
         protected Geometry cachedGeometry;
 
-        public Line()
+        protected override Geometry DefiningGeometry
+        {
+            get
+            {
+                if (cachedGeometry == null)
+                {
+                    CacheDefiningGeometry();
+                }
+                return cachedGeometry;
+            }
+        }
+
+        public override void Render()
         {
             Stroke = Brushes.Blue;
             StrokeThickness = 3;
@@ -34,29 +46,14 @@ namespace ShareX.ScreenCaptureLib
             };
         }
 
-        protected override Geometry DefiningGeometry
+        public override void Render(DrawingContext dc)
         {
-            get
-            {
-                if (cachedGeometry == null)
-                {
-                    CacheDefiningGeometry();
-                }
-                return cachedGeometry;
-            }
-        }
-
-        public override void Render()
-        {
-            throw new NotImplementedException();
+            dc.DrawLine(new Pen(Stroke, StrokeThickness), Point1, Point2);
         }
 
         internal virtual void CacheDefiningGeometry()
         {
-            Point point1 = new Point(X1, Y1);
-            Point point2 = new Point(X2, Y2);
-
-            cachedGeometry = new LineGeometry(point1, point2);
+            cachedGeometry = new LineGeometry(Point1, Point2);
         }
     }
 }
