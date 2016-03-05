@@ -8,7 +8,7 @@ using System.Windows.Media;
 
 namespace ShareX.ScreenCaptureLib
 {
-    public class RectangleAnnotation : Annotatation
+    public class RectangleAnnotation : Annotation
     {
         protected override Geometry DefiningGeometry
         {

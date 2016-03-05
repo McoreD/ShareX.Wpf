@@ -15,7 +15,7 @@ namespace ShareX.ScreenCaptureLib
     {
         public BitmapSource Source { get; private set; }
 
-        public ObservableCollection<Shape> Annotations { get; set; } = new ObservableCollection<Shape>();
+        public ObservableCollection<Annotation> Annotations { get; set; } = new ObservableCollection<Annotation>();
 
         public ImageEx(BitmapSource img)
         {
@@ -29,20 +29,10 @@ namespace ShareX.ScreenCaptureLib
             DrawingContext dc = dv.RenderOpen();
             dc.DrawImage(Source, new Rect(0, 0, Source.Width, Source.Height));
 
-            dc.PushOpacity(0.5);
-
             foreach (var ann in Annotations)
             {
-                if (ann.GetType() == typeof(HighlightAnnotation))
-                {
-                    HighlightAnnotation highlight = ann as HighlightAnnotation;
-                    dc.DrawRectangle(highlight.Brush, null, highlight.Area);
-                }
-                else if (ann.GetType() == typeof(ObfuscateAnnotation))
-                {
-                    ObfuscateAnnotation obfuscate = ann as ObfuscateAnnotation;
-                    dc.DrawRectangle(obfuscate.Brush, null, obfuscate.Area); ;
-                }
+                ann.Render();
+                dc.DrawRectangle(ann.Fill, null, ann.Area);
             }
 
             dc.Close();

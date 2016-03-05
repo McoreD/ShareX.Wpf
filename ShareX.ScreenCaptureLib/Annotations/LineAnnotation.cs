@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 
 namespace ShareX.ScreenCaptureLib
 {
-    public class Line : Annotatation
+    public class Line : Annotation
     {
         protected Geometry cachedGeometry;
 

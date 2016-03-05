@@ -25,7 +25,7 @@ namespace ShareX.ScreenCaptureLib
         }
 
         private Point pStart;
-        private Annotatation currentAnnotation;
+        private Annotation currentAnnotation;
 
         private static void ImagePropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {

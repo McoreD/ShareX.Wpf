@@ -15,12 +15,13 @@ namespace ShareX.ScreenCaptureLib
         public ObfuscateAnnotation()
         {
             Brush = Brushes.Black;
+
+            Stroke = Brush;
+            StrokeThickness = 1;
         }
 
         public override void Render()
         {
-            Stroke = Brush;
-            StrokeThickness = 1;
             Opacity = 1;
             Fill = Brush;
         }
