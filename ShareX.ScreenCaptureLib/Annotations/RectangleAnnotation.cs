@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 
 namespace ShareX.ScreenCaptureLib
 {
@@ -18,9 +19,24 @@ namespace ShareX.ScreenCaptureLib
             }
         }
 
+        public RectangleAnnotation()
+        {
+            Brush = Brushes.Red;
+
+            Stroke = Brush;
+            StrokeThickness = 1;
+        }
+
         public override void Render()
         {
-            // do nothing
+            Effect = new DropShadowEffect
+            {
+                RenderingBias = RenderingBias.Quality,
+                Opacity = 0.8d,
+                Color = Color.FromRgb(10, 10, 10),
+                ShadowDepth = 7,
+                BlurRadius = 5
+            };
         }
 
         public override void Render(DrawingContext dc)

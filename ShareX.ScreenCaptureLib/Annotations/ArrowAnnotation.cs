@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,28 +9,79 @@ using System.Windows.Media;
 
 namespace ShareX.ScreenCaptureLib
 {
-    public class Arrow : Line
+    public class ArrowAnnotation : Annotation
     {
-        internal override void CacheDefiningGeometry()
+        public static readonly DependencyProperty HeadWidthProperty = DependencyProperty.Register("HeadWidth", typeof(double), typeof(ArrowAnnotation), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
+        public static readonly DependencyProperty HeadHeightProperty = DependencyProperty.Register("HeadHeight", typeof(double), typeof(ArrowAnnotation), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
+
+        [TypeConverter(typeof(LengthConverter))]
+        public double HeadWidth
         {
-            Point startPoint = new Point(X1, Y1);
-            Point endPoint = new Point(X2, Y2);
+            get { return (double)base.GetValue(HeadWidthProperty); }
+            set { base.SetValue(HeadWidthProperty, value); }
+        }
 
-            var length = Math.Sqrt(Math.Pow(endPoint.Y - startPoint.Y, 2) + Math.Pow(endPoint.X - startPoint.X, 2));
-            var f = length / 15d;
-            var f2 = length / 30d;
+        [TypeConverter(typeof(LengthConverter))]
+        public double HeadHeight
+        {
+            get { return (double)base.GetValue(HeadHeightProperty); }
+            set { base.SetValue(HeadHeightProperty, value); }
+        }
 
-            var arrowBase = new Point(endPoint.X - (endPoint.X - startPoint.X) / f2, endPoint.Y - (endPoint.Y - startPoint.Y) / f2);
-            var arrowTip1 = new Point(arrowBase.X + (endPoint.Y - startPoint.Y) / f, arrowBase.Y - (endPoint.X - startPoint.X) / f);
-            var arrowTip2 = new Point(arrowBase.X - (endPoint.Y - startPoint.Y) / f, arrowBase.Y + (endPoint.X - startPoint.X) / f);
-            var arrowTipExt1 = new Point(arrowBase.X + (endPoint.Y - startPoint.Y) / f2, arrowBase.Y - (endPoint.X - startPoint.X) / f2);
-            var arrowTipExt2 = new Point(arrowBase.X - (endPoint.Y - startPoint.Y) / f2, arrowBase.Y + (endPoint.X - startPoint.X) / f2);
+        private void InternalDrawArrowGeometry(StreamGeometryContext context)
+        {
+            double theta = Math.Atan2(Y1 - Y2, X1 - X2);
+            double sint = Math.Sin(theta);
+            double cost = Math.Cos(theta);
 
-            var arrow = new PathFigure(startPoint, new[] { new PolyLineSegment(new[] { arrowTip1, arrowTipExt1, endPoint, arrowTipExt2, arrowTip2 }, true), }, true)
+            Point pt1 = new Point(X1, this.Y1);
+            Point pt2 = new Point(X2, this.Y2);
+
+            Point pt3 = new Point(
+                X2 + (HeadWidth * cost - HeadHeight * sint),
+                Y2 + (HeadWidth * sint + HeadHeight * cost));
+
+            Point pt4 = new Point(
+                X2 + (HeadWidth * cost + HeadHeight * sint),
+                Y2 - (HeadHeight * cost - HeadWidth * sint));
+
+            context.BeginFigure(pt1, true, false);
+            context.LineTo(pt2, true, true);
+            context.LineTo(pt3, true, true);
+            context.LineTo(pt2, true, true);
+            context.LineTo(pt4, true, true);
+        }
+
+        public override void Render()
+        {
+            HeadWidth = 15;
+            HeadHeight = 5;
+            Stroke = Brushes.Red;
+            StrokeThickness = 2;
+        }
+
+        public override void Render(DrawingContext dc)
+        {
+            Render();
+            dc.DrawRectangle(Fill, null, Area);
+        }
+
+        protected override Geometry DefiningGeometry
+        {
+            get
             {
-                IsFilled = true
-            };
-            cachedGeometry = new PathGeometry(new[] { arrow }, FillRule.Nonzero, null);
+                StreamGeometry geometry = new StreamGeometry();
+                geometry.FillRule = FillRule.EvenOdd;
+
+                using (StreamGeometryContext context = geometry.Open())
+                {
+                    InternalDrawArrowGeometry(context);
+                }
+
+                geometry.Freeze();
+
+                return geometry;
+            }
         }
     }
 }

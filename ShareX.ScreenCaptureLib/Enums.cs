@@ -10,6 +10,7 @@ namespace ShareX.ScreenCaptureLib
     {
         None,
         Highlight,
-        Obfuscate
+        Obfuscate,
+        Arrow
     }
 }

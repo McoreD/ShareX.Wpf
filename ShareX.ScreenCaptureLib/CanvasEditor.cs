@@ -58,6 +58,7 @@ namespace ShareX.ScreenCaptureLib
         public void RemoveAllAnnotations()
         {
             if (CapturedImage.Annotations == null) { return; }
+
             Children.RemoveRange(0, Children.Count);
         }
 
@@ -76,12 +77,14 @@ namespace ShareX.ScreenCaptureLib
                 case AnnotationMode.Obfuscate:
                     currentAnnotation = new ObfuscateAnnotation();
                     break;
+                case AnnotationMode.Arrow:
+                    currentAnnotation = new RectangleAnnotation();
+                    break;
                 default:
                     throw new NotImplementedException();
             }
 
-            currentAnnotation.X1 = pStart.X;
-            currentAnnotation.Y1 = pStart.Y;
+            currentAnnotation.PointStart = pStart;
 
             SetLeft(currentAnnotation, pStart.X);
             SetTop(currentAnnotation, pStart.Y);
@@ -95,12 +98,9 @@ namespace ShareX.ScreenCaptureLib
 
             base.OnMouseUp(e);
 
-            Point pFinish = e.GetPosition(this);
-            currentAnnotation.X2 = pFinish.X;
-            currentAnnotation.Y2 = pFinish.Y;
+            currentAnnotation.PointFinish = e.GetPosition(this);
 
             currentAnnotation.Render();
-
             CapturedImage.Annotations.Add(currentAnnotation);
         }
 

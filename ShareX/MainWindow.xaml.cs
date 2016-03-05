@@ -70,6 +70,14 @@ namespace ShareX
             }
         }
 
+        private void btnEditArrow_Click(object sender, RoutedEventArgs e)
+        {
+            if (editor.CapturedImage != null)
+            {
+                editor.Init(AnnotationMode.Arrow);
+            }
+        }
+
         #endregion Editor
 
         #region Release

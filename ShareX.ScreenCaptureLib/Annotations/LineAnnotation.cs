@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 
 namespace ShareX.ScreenCaptureLib
 {
-    public class Line : Annotation
+    public class LineAnnotation : Annotation
     {
         protected Geometry cachedGeometry;
 
@@ -25,6 +25,11 @@ namespace ShareX.ScreenCaptureLib
                 }
                 return cachedGeometry;
             }
+        }
+
+        public LineAnnotation()
+        {
+            Render();
         }
 
         public override void Render()
@@ -48,12 +53,12 @@ namespace ShareX.ScreenCaptureLib
 
         public override void Render(DrawingContext dc)
         {
-            dc.DrawLine(new Pen(Stroke, StrokeThickness), Point1, Point2);
+            dc.DrawLine(new Pen(Stroke, StrokeThickness), PointStart, PointFinish);
         }
 
         internal virtual void CacheDefiningGeometry()
         {
-            cachedGeometry = new LineGeometry(Point1, Point2);
+            cachedGeometry = new LineGeometry(PointStart, PointFinish);
         }
     }
 }

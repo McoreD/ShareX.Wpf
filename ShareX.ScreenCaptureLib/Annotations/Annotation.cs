@@ -69,24 +69,23 @@ namespace ShareX.ScreenCaptureLib
             set { SetValue(Y2Property, value); }
         }
 
-        public Point Point1
+        public Point PointStart
         {
             get { return new Point(X1, Y1); }
+            set { X1 = value.X; Y1 = value.Y; }
         }
 
-        public Point Point2
+        public Point PointFinish
         {
-            get
-            {
-                return new Point(X2, Y2);
-            }
+            get { return new Point(X2, Y2); }
+            set { X2 = value.X; Y2 = value.Y; }
         }
 
         public Rect Area
         {
             get
             {
-                return new Rect(Point1, Point2);
+                return new Rect(PointStart, PointFinish);
             }
         }
     }

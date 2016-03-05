@@ -36,6 +36,7 @@
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
             <Button x:Name="btnEditHighlight" Margin="10,10,0,10" Click="btnEditHighlight_Click" Content="Highlight" />
             <Button x:Name="btnEditObfuscate" Margin="10,10,0,10" Click="btnEditObfuscate_Click" Content="Obfuscate" />
+            <Button x:Name="btnEditArrow" Margin="10,10,0,10" Content="Rectangle" Click="btnEditArrow_Click" />
             <Button x:Name="btnEditRotate" Margin="10" Click="btnEditRotate_Click" Visibility="Collapsed" Content="R" />
         </StackPanel>
 
