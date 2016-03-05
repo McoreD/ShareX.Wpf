@@ -68,5 +68,13 @@ namespace ShareX.ScreenCaptureLib
         {
             throw new NotImplementedException();
         }
+
+        public Rect Area
+        {
+            get
+            {
+                return new Rect(new Point(X1, Y1), new Point(X2, Y2));
+            }
+        }
     }
 }

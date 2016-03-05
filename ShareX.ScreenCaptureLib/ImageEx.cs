@@ -23,6 +23,14 @@ namespace ShareX.ScreenCaptureLib
             DateTimeCaptured = DateTime.Now;
         }
 
+        public Size Size
+        {
+            get
+            {
+                return new Size(Source.Width, Source.Height);
+            }
+        }
+
         public MemoryStream ExportAsMemoryStream()
         {
             DrawingVisual dv = new DrawingVisual();
@@ -36,12 +44,12 @@ namespace ShareX.ScreenCaptureLib
                 if (ann.GetType() == typeof(Highlight))
                 {
                     Highlight highlight = ann as Highlight;
-                    dc.DrawRectangle(highlight.Brush, null, new Rect(new Point(highlight.X1, highlight.Y1), new Point(highlight.X2, highlight.Y2)));
+                    dc.DrawRectangle(highlight.Brush, null, highlight.Area);
                 }
                 else if (ann.GetType() == typeof(Obfuscate))
                 {
                     Obfuscate obfuscate = ann as Obfuscate;
-                    dc.DrawRectangle(obfuscate.Brush, null, new Rect(new Point(obfuscate.X1, obfuscate.Y1), new Point(obfuscate.X2, obfuscate.Y2))); ;
+                    dc.DrawRectangle(obfuscate.Brush, null, obfuscate.Area); ;
                 }
             }
 

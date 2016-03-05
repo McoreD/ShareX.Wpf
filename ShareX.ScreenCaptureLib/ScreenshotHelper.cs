@@ -20,7 +20,7 @@ namespace ShareX.ScreenCaptureLib
         {
             if (RemoveOutsideScreenArea)
             {
-                Rect bounds = CaptureHelpers.GetScreenBounds();
+                Rect bounds = CaptureHelper.GetScreenBounds();
                 rect = Rect.Intersect(bounds, rect);
             }
 
@@ -29,7 +29,7 @@ namespace ShareX.ScreenCaptureLib
 
         public static ImageEx CaptureFullscreen()
         {
-            Rect bounds = CaptureHelpers.GetScreenBounds();
+            Rect bounds = CaptureHelper.GetScreenBounds();
 
             return CaptureRectangle(bounds);
         }
@@ -54,7 +54,7 @@ namespace ShareX.ScreenCaptureLib
 
             if (captureCursor)
             {
-                Point cursorOffset = CaptureHelpers.ScreenToClient(rect.Location);
+                Point cursorOffset = CaptureHelper.ScreenToClient(rect.Location);
 
                 try
                 {

@@ -45,7 +45,7 @@ namespace ShareX.ScreenCaptureLib
             backgroundImage = ScreenshotHelper.CaptureFullscreen().Source;
             Background = new ImageBrush(backgroundImage);
 
-            ScreenRectangle = CaptureHelpers.GetScreenBounds();
+            ScreenRectangle = CaptureHelper.GetScreenBounds();
 
             InitializeComponent();
 
@@ -83,7 +83,7 @@ namespace ShareX.ScreenCaptureLib
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                positionOnClick = CaptureHelpers.GetCursorPosition();
+                positionOnClick = CaptureHelper.GetCursorPosition();
                 isMouseDown = true;
                 canvas.Children.Add(CropArea);
             }
@@ -97,8 +97,8 @@ namespace ShareX.ScreenCaptureLib
         {
             if (isMouseDown)
             {
-                currentPosition = CaptureHelpers.GetCursorPosition();
-                SelectionRectangle = CaptureHelpers.CreateRectangle(positionOnClick.X, positionOnClick.Y, currentPosition.X, currentPosition.Y);
+                currentPosition = CaptureHelper.GetCursorPosition();
+                SelectionRectangle = CaptureHelper.CreateRectangle(positionOnClick.X, positionOnClick.Y, currentPosition.X, currentPosition.Y);
 
                 CropArea.SetValue(Canvas.LeftProperty, SelectionRectangle0Based.Left);
                 CropArea.SetValue(Canvas.TopProperty, SelectionRectangle0Based.Top);
@@ -147,7 +147,7 @@ namespace ShareX.ScreenCaptureLib
                     return new ImageEx(backgroundImage.Clone());
                 }
 
-                return new ImageEx(ImageHelpers.CropImage(backgroundImage, rect));
+                return new ImageEx(ImageHelper.CropImage(backgroundImage, rect));
             }
 
             return null;

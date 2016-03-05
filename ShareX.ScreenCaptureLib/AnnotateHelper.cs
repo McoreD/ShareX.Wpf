@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace ShareX.ScreenCaptureLib
 {
@@ -36,6 +38,14 @@ namespace ShareX.ScreenCaptureLib
             }
 
             return wbmp;
+        }
+
+        public static Rect CreateIntersectRect(Size applySize, Rect rect)
+        {
+            Rect applyRect = new Rect(0, 0, applySize.Width, applySize.Height);
+            Rect myRect = new Rect(rect.X, rect.Y, rect.Width, rect.Height);
+            myRect.Intersect(applyRect);
+            return myRect;
         }
     }
 }

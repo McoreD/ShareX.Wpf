@@ -26,8 +26,8 @@ namespace ShareX.ScreenCaptureLib
             {
                 Stroke = Brushes.Yellow,
                 StrokeThickness = 1,
-                Fill = Brush,
-                Opacity = 0.5
+                // Fill = Brush,
+                // Opacity = 0.5
             };
         }
     }

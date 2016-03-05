@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HelpersLib;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
@@ -23,7 +24,7 @@ namespace ShareX.ScreenCaptureLib
             set { SetValue(SourceProperty, value); }
         }
 
-        private Point startPoint;
+        private Point pStart;
         private Shape currentShape;
         private Annotate currentAnnotation;
 
@@ -93,7 +94,7 @@ namespace ShareX.ScreenCaptureLib
             if (AnnotationMode == AnnotationMode.None) { return; };
 
             base.OnMouseLeftButtonDown(e);
-            startPoint = e.GetPosition(this);
+            pStart = e.GetPosition(this);
 
             switch (AnnotationMode)
             {
@@ -107,10 +108,10 @@ namespace ShareX.ScreenCaptureLib
                     throw new NotImplementedException();
             }
 
-            currentAnnotation.X1 = startPoint.X;
-            currentAnnotation.Y1 = startPoint.Y;
+            currentAnnotation.X1 = pStart.X;
+            currentAnnotation.Y1 = pStart.Y;
 
-            currentShape = AddShape(currentAnnotation, startPoint.X, startPoint.Y);
+            currentShape = AddShape(currentAnnotation, pStart.X, pStart.Y);
         }
 
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
@@ -119,9 +120,14 @@ namespace ShareX.ScreenCaptureLib
 
             base.OnMouseUp(e);
 
-            Point finishPoint = e.GetPosition(this);
-            currentAnnotation.X2 = finishPoint.X;
-            currentAnnotation.Y2 = finishPoint.Y;
+            Point pFinish = e.GetPosition(this);
+            currentAnnotation.X2 = pFinish.X;
+            currentAnnotation.Y2 = pFinish.Y;
+
+            Rect applyRect = AnnotateHelper.CreateIntersectRect(CapturedImage.Size, currentAnnotation.Area);
+            BitmapSource bmp = ImageHelper.CropImage(CapturedImage.Source, applyRect);
+            WriteableBitmap wbmp = AnnotateHelper.ChangeColor(bmp, Brushes.Yellow.Color);
+            currentShape.Fill = new ImageBrush(wbmp);
 
             CapturedImage.Annotations.Add(currentAnnotation);
         }
@@ -136,19 +142,11 @@ namespace ShareX.ScreenCaptureLib
 
             base.OnMouseMove(e);
 
-            bool controlkey = (Keyboard.Modifiers & ModifierKeys.Control) > 0;
             var pos = e.GetPosition(this);
-            var x = Math.Min(pos.X, startPoint.X);
-            var y = Math.Min(pos.Y, startPoint.Y);
-            var w = Math.Max(pos.X, startPoint.X) - x;
-            var h = Math.Max(pos.Y, startPoint.Y) - y;
-
-            if (controlkey)
-            {
-                var sml = Math.Min(w, h);
-                w = sml;
-                h = sml;
-            }
+            var x = Math.Min(pos.X, pStart.X);
+            var y = Math.Min(pos.Y, pStart.Y);
+            var w = Math.Max(pos.X, pStart.X) - x;
+            var h = Math.Max(pos.Y, pStart.Y) - y;
 
             currentShape.Width = w;
             currentShape.Height = h;
