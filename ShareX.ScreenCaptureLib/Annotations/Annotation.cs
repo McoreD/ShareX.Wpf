@@ -10,7 +10,7 @@ using System.Windows.Shapes;
 
 namespace ShareX.ScreenCaptureLib
 {
-    public abstract class Annotatation : Shape
+    public abstract class Annotatation : Shape, IAnnotation
     {
         public Brush Brush { get; set; }
 

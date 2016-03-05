@@ -10,7 +10,7 @@ using System.Windows.Shapes;
 
 namespace ShareX.ScreenCaptureLib
 {
-    public static class AnnotateHelper
+    public static class AnnotationHelper
     {
         public static WriteableBitmap ChangeColor(BitmapSource source, Color highlightColor)
         {

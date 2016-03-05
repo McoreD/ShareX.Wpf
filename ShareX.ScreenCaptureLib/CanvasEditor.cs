@@ -124,9 +124,9 @@ namespace ShareX.ScreenCaptureLib
             currentAnnotation.X2 = pFinish.X;
             currentAnnotation.Y2 = pFinish.Y;
 
-            Rect applyRect = AnnotateHelper.CreateIntersectRect(CapturedImage.Size, currentAnnotation.Area);
+            Rect applyRect = AnnotationHelper.CreateIntersectRect(CapturedImage.Size, currentAnnotation.Area);
             BitmapSource bmp = ImageHelper.CropImage(CapturedImage.Source, applyRect);
-            WriteableBitmap wbmp = AnnotateHelper.ChangeColor(bmp, Brushes.Yellow.Color);
+            WriteableBitmap wbmp = AnnotationHelper.ChangeColor(bmp, Brushes.Yellow.Color);
             currentShape.Fill = new ImageBrush(wbmp);
 
             CapturedImage.Annotations.Add(currentAnnotation);
