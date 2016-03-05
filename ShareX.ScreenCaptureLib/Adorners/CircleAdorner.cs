@@ -21,8 +21,7 @@ namespace ShareX.ScreenCaptureLib
             Rect adornedElementRect = new Rect(this.AdornedElement.DesiredSize);
 
             // Some arbitrary drawing implements.
-            SolidColorBrush brush = new SolidColorBrush(Colors.Green);
-            brush.Opacity = 0.2;
+            SolidColorBrush brush = new SolidColorBrush(Colors.Black);
             Pen pen = new Pen(new SolidColorBrush(Colors.Navy), 1.5);
             double r = 5.0;
 

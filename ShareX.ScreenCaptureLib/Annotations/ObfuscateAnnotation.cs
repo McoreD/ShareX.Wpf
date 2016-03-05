@@ -14,9 +14,9 @@ namespace ShareX.ScreenCaptureLib
     {
         public ObfuscateAnnotation()
         {
-            Brush = Brushes.Black;
+            brush = Brushes.Black;
 
-            Stroke = Brush;
+            Stroke = brush;
             StrokeThickness = 1;
         }
 
@@ -31,7 +31,7 @@ namespace ShareX.ScreenCaptureLib
         public override void Render()
         {
             Opacity = 1;
-            Fill = Brush;
+            Fill = brush;
         }
 
         public override void Render(DrawingContext dc)

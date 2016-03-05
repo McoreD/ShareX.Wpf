@@ -10,10 +10,17 @@ namespace ShareX.ScreenCaptureLib
     {
         public HighlightAnnotation()
         {
-            Brush = Brushes.Yellow;
+            brush = Brushes.Yellow;
 
-            Stroke = Brush;
+            Stroke = brush;
             StrokeThickness = 1;
+
+            this.MouseUp += HighlightAnnotation_MouseUp;
+        }
+
+        private void HighlightAnnotation_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Render();
         }
 
         protected override Geometry DefiningGeometry
@@ -28,7 +35,7 @@ namespace ShareX.ScreenCaptureLib
         {
             Rect applyRect = AnnotationHelper.CreateIntersectRect(Area);
             BitmapSource bmp = ImageHelper.CropImage(AnnotationHelper.CapturedImage.Source, applyRect);
-            WriteableBitmap wbmp = AnnotationHelper.ChangeColor(bmp, ((SolidColorBrush)Brush).Color);
+            WriteableBitmap wbmp = AnnotationHelper.ChangeColor(bmp, ((SolidColorBrush)brush).Color);
             Fill = new ImageBrush(wbmp);
         }
 

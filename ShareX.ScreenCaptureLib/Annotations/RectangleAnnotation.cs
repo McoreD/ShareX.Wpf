@@ -19,9 +19,9 @@ namespace ShareX.ScreenCaptureLib
 
         public RectangleAnnotation()
         {
-            Brush = Brushes.Red;
+            brush = Brushes.Red;
 
-            Stroke = Brush;
+            Stroke = brush;
             StrokeThickness = 1;
         }
 

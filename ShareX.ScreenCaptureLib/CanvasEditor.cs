@@ -106,6 +106,13 @@ namespace ShareX.ScreenCaptureLib
             CapturedImage.Annotations.Add(currentAnnotation);
             adornerLayer = AdornerLayer.GetAdornerLayer(currentAnnotation);
             adornerLayer.Add(new CircleAdorner(currentAnnotation));
+            adornerLayer.MouseUp += AdornerLayer_MouseUp;
+        }
+
+        private void AdornerLayer_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            currentAnnotation.PointFinish = e.GetPosition(this);
+            currentAnnotation.Render();
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
