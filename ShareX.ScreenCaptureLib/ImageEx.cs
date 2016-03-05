@@ -41,14 +41,14 @@ namespace ShareX.ScreenCaptureLib
 
             foreach (var ann in Annotations)
             {
-                if (ann.GetType() == typeof(Highlight))
+                if (ann.GetType() == typeof(HighlightAnnotation))
                 {
-                    Highlight highlight = ann as Highlight;
+                    HighlightAnnotation highlight = ann as HighlightAnnotation;
                     dc.DrawRectangle(highlight.Brush, null, highlight.Area);
                 }
-                else if (ann.GetType() == typeof(Obfuscate))
+                else if (ann.GetType() == typeof(ObfuscateAnnotation))
                 {
-                    Obfuscate obfuscate = ann as Obfuscate;
+                    ObfuscateAnnotation obfuscate = ann as ObfuscateAnnotation;
                     dc.DrawRectangle(obfuscate.Brush, null, obfuscate.Area); ;
                 }
             }

@@ -9,16 +9,8 @@ using System.Windows.Shapes;
 
 namespace ShareX.ScreenCaptureLib
 {
-    public sealed class Obfuscate : Annotate
+    public sealed class ObfuscateAnnotation : RectangleAnnotation
     {
-        protected override Geometry DefiningGeometry
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
         public override Shape Render()
         {
             Brush = Brushes.Black;

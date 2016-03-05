@@ -52,15 +52,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Annotations\Annotate.cs" />
-    <Compile Include="Annotations\Highlight.cs" />
+    <Compile Include="Annotations\Annotation.cs" />
+    <Compile Include="Annotations\HighlightAnnotation.cs" />
     <Compile Include="CanvasEditor.cs">
     </Compile>
     <Compile Include="Capture.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="Annotations\Obfuscate.cs" />
-    <Compile Include="Annotations\Arrow.cs" />
-    <Compile Include="Annotations\Line.cs" />
+    <Compile Include="Annotations\ObfuscateAnnotation.cs" />
+    <Compile Include="Annotations\ArrowAnnotation.cs" />
+    <Compile Include="Annotations\LineAnnotation.cs" />
+    <Compile Include="Annotations\RectangleAnnotation.cs" />
     <Compile Include="Screencast.cs" />
     <Compile Include="ImageEx.cs" />
     <Compile Include="ScreenshotHelper.cs" />

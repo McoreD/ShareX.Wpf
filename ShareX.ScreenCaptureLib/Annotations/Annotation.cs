@@ -10,7 +10,7 @@ using System.Windows.Shapes;
 
 namespace ShareX.ScreenCaptureLib
 {
-    public abstract class Annotate : Shape
+    public abstract class Annotatation : Shape
     {
         public Brush Brush { get; set; }
 
@@ -20,19 +20,19 @@ namespace ShareX.ScreenCaptureLib
             return (!double.IsInfinity(d) && !double.IsNaN(d));
         }
 
-        public static readonly DependencyProperty X1Property = DependencyProperty.Register("X1", typeof(double), typeof(Annotate),
+        public static readonly DependencyProperty X1Property = DependencyProperty.Register("X1", typeof(double), typeof(Annotatation),
             new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender),
             new ValidateValueCallback(IsDoubleFinite));
 
-        public static readonly DependencyProperty Y1Property = DependencyProperty.Register("Y1", typeof(double), typeof(Annotate),
+        public static readonly DependencyProperty Y1Property = DependencyProperty.Register("Y1", typeof(double), typeof(Annotatation),
             new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender),
             new ValidateValueCallback(IsDoubleFinite));
 
-        public static readonly DependencyProperty X2Property = DependencyProperty.Register("X2", typeof(double), typeof(Annotate),
+        public static readonly DependencyProperty X2Property = DependencyProperty.Register("X2", typeof(double), typeof(Annotatation),
             new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender),
             new ValidateValueCallback(IsDoubleFinite));
 
-        public static readonly DependencyProperty Y2Property = DependencyProperty.Register("Y2", typeof(double), typeof(Annotate),
+        public static readonly DependencyProperty Y2Property = DependencyProperty.Register("Y2", typeof(double), typeof(Annotatation),
             new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender),
             new ValidateValueCallback(IsDoubleFinite));
 

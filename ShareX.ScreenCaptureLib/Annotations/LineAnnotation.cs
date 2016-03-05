@@ -10,7 +10,7 @@ using System.Windows.Media.Effects;
 
 namespace ShareX.ScreenCaptureLib
 {
-    public class Line : Annotate
+    public class Line : Annotatation
     {
         protected Geometry cachedGeometry;
 

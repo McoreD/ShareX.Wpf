@@ -6,17 +6,9 @@ using System.Windows.Shapes;
 
 namespace ShareX.ScreenCaptureLib
 {
-    public sealed class Highlight : Annotate
+    public sealed class HighlightAnnotation : RectangleAnnotation
     {
         public Color highlightColor { get; set; } = Brushes.Yellow.Color;
-
-        protected override Geometry DefiningGeometry
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
 
         public override Shape Render()
         {
@@ -26,8 +18,6 @@ namespace ShareX.ScreenCaptureLib
             {
                 Stroke = Brushes.Yellow,
                 StrokeThickness = 1,
-                // Fill = Brush,
-                // Opacity = 0.5
             };
         }
     }

@@ -26,7 +26,7 @@ namespace ShareX.ScreenCaptureLib
 
         private Point pStart;
         private Shape currentShape;
-        private Annotate currentAnnotation;
+        private Annotatation currentAnnotation;
 
         private static void ImagePropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -56,14 +56,14 @@ namespace ShareX.ScreenCaptureLib
 
             foreach (var ann in CapturedImage.Annotations)
             {
-                if (ann.GetType() == typeof(Highlight))
+                if (ann.GetType() == typeof(HighlightAnnotation))
                 {
-                    Highlight hl = ann as Highlight;
+                    HighlightAnnotation hl = ann as HighlightAnnotation;
                     AddShape(hl, hl.X1, hl.Y1, hl.Width, hl.Height);
                 }
-                else if (ann.GetType() == typeof(Obfuscate))
+                else if (ann.GetType() == typeof(ObfuscateAnnotation))
                 {
-                    Obfuscate obf = ann as Obfuscate;
+                    ObfuscateAnnotation obf = ann as ObfuscateAnnotation;
                     AddShape(obf, obf.X1, obf.Y1, obf.Width, obf.Height);
                 }
             }
@@ -75,7 +75,7 @@ namespace ShareX.ScreenCaptureLib
             Children.RemoveRange(0, Children.Count);
         }
 
-        private Shape AddShape(Annotate ann, double x, double y, double w = 0, double h = 0)
+        private Shape AddShape(Annotatation ann, double x, double y, double w = 0, double h = 0)
         {
             Shape shape = ann.Render();
 
@@ -99,10 +99,10 @@ namespace ShareX.ScreenCaptureLib
             switch (AnnotationMode)
             {
                 case AnnotationMode.Highlight:
-                    currentAnnotation = new Highlight();
+                    currentAnnotation = new HighlightAnnotation();
                     break;
                 case AnnotationMode.Obfuscate:
-                    currentAnnotation = new Obfuscate();
+                    currentAnnotation = new ObfuscateAnnotation();
                     break;
                 default:
                     throw new NotImplementedException();
