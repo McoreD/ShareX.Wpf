@@ -8,6 +8,8 @@ namespace ShareX.ScreenCaptureLib
 {
     public sealed class Highlight : Annotate
     {
+        public Color highlightColor { get; set; } = Brushes.Yellow.Color;
+
         protected override Geometry DefiningGeometry
         {
             get
@@ -27,11 +29,6 @@ namespace ShareX.ScreenCaptureLib
                 Fill = Brush,
                 Opacity = 0.5
             };
-        }
-
-        private static WriteableBitmap ColorChange(WriteableBitmap wbmi, Color color)
-        {
-            return wbmi;
         }
     }
 }

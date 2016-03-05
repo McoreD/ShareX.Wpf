@@ -119,8 +119,9 @@ namespace ShareX.ScreenCaptureLib
 
             base.OnMouseUp(e);
 
-            currentAnnotation.Width = currentShape.Width;
-            currentAnnotation.Height = currentShape.Height;
+            Point finishPoint = e.GetPosition(this);
+            currentAnnotation.X2 = finishPoint.X;
+            currentAnnotation.Y2 = finishPoint.Y;
 
             CapturedImage.Annotations.Add(currentAnnotation);
         }

@@ -36,12 +36,12 @@ namespace ShareX.ScreenCaptureLib
                 if (ann.GetType() == typeof(Highlight))
                 {
                     Highlight highlight = ann as Highlight;
-                    dc.DrawRectangle(highlight.Brush, null, new Rect(highlight.X1, highlight.Y1, highlight.Width, highlight.Height));
+                    dc.DrawRectangle(highlight.Brush, null, new Rect(new Point(highlight.X1, highlight.Y1), new Point(highlight.X2, highlight.Y2)));
                 }
                 else if (ann.GetType() == typeof(Obfuscate))
                 {
                     Obfuscate obfuscate = ann as Obfuscate;
-                    dc.DrawRectangle(obfuscate.Brush, null, new Rect(obfuscate.X1, obfuscate.Y1, obfuscate.Width, obfuscate.Height));
+                    dc.DrawRectangle(obfuscate.Brush, null, new Rect(new Point(obfuscate.X1, obfuscate.Y1), new Point(obfuscate.X2, obfuscate.Y2))); ;
                 }
             }
 

@@ -69,6 +69,7 @@
       <DependentUpon>RectangleLight.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="AnnotateHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\HelpersLib.Wpf\HelpersLib\ShareX.HelpersLib.Wpf.csproj">
