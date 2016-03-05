@@ -106,13 +106,32 @@ namespace ShareX.ScreenCaptureLib
             CapturedImage.Annotations.Add(currentAnnotation);
             adornerLayer = AdornerLayer.GetAdornerLayer(currentAnnotation);
             adornerLayer.Add(new CircleAdorner(currentAnnotation));
-            adornerLayer.MouseUp += AdornerLayer_MouseUp;
+
+            if (CapturedImage.Annotations.Count == 1)
+            {
+                adornerLayer.MouseUp += AdornerLayer_MouseUp;
+                adornerLayer.Cursor = Cursors.SizeAll;
+            }
         }
 
         private void AdornerLayer_MouseUp(object sender, MouseButtonEventArgs e)
         {
             currentAnnotation.PointFinish = e.GetPosition(this);
             currentAnnotation.Render();
+        }
+
+        private void UpdateDimensions(Point pos)
+        {
+            var x = Math.Min(pos.X, pStart.X);
+            var y = Math.Min(pos.Y, pStart.Y);
+            var w = Math.Max(pos.X, pStart.X) - x;
+            var h = Math.Max(pos.Y, pStart.Y) - y;
+
+            currentAnnotation.Width = w;
+            currentAnnotation.Height = h;
+
+            SetLeft(currentAnnotation, x);
+            SetTop(currentAnnotation, y);
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
@@ -125,17 +144,7 @@ namespace ShareX.ScreenCaptureLib
 
             base.OnMouseMove(e);
 
-            var pos = e.GetPosition(this);
-            var x = Math.Min(pos.X, pStart.X);
-            var y = Math.Min(pos.Y, pStart.Y);
-            var w = Math.Max(pos.X, pStart.X) - x;
-            var h = Math.Max(pos.Y, pStart.Y) - y;
-
-            currentAnnotation.Width = w;
-            currentAnnotation.Height = h;
-
-            SetLeft(currentAnnotation, x);
-            SetTop(currentAnnotation, y);
+            UpdateDimensions(e.GetPosition(this));
         }
     }
 }

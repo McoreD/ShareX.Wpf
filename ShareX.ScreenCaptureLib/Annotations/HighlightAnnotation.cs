@@ -14,13 +14,6 @@ namespace ShareX.ScreenCaptureLib
 
             Stroke = brush;
             StrokeThickness = 1;
-
-            this.MouseUp += HighlightAnnotation_MouseUp;
-        }
-
-        private void HighlightAnnotation_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            Render();
         }
 
         protected override Geometry DefiningGeometry
