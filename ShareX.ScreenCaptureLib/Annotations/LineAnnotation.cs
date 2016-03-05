@@ -46,7 +46,7 @@ namespace ShareX.ScreenCaptureLib
                 RenderingBias = RenderingBias.Quality,
                 Opacity = 0.8d,
                 Color = Color.FromRgb(10, 10, 10),
-                ShadowDepth = 20,
+                ShadowDepth = 0,
                 BlurRadius = 10
             };
         }

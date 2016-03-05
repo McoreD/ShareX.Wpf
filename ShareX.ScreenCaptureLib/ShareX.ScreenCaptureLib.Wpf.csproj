@@ -57,6 +57,7 @@
     <Compile Include="CanvasEditor.cs">
     </Compile>
     <Compile Include="Capture.cs" />
+    <Compile Include="Adorners\CircleAdorner.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Annotations\ObfuscateAnnotation.cs" />
     <Compile Include="Annotations\ArrowAnnotation.cs" />

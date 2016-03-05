@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
@@ -11,11 +7,13 @@ namespace ShareX.ScreenCaptureLib
 {
     public class RectangleAnnotation : Annotation
     {
+        public int ShadowSize = 10;
+
         protected override Geometry DefiningGeometry
         {
             get
             {
-                return new RectangleGeometry(new Rect(0, 0, Width, Height));
+                return new RectangleGeometry(new Rect(0, 0, Math.Max(0, Width - ShadowSize), Math.Max(0, Height - ShadowSize)));
             }
         }
 
@@ -33,14 +31,16 @@ namespace ShareX.ScreenCaptureLib
             {
                 RenderingBias = RenderingBias.Quality,
                 Opacity = 0.8d,
-                Color = Color.FromRgb(10, 10, 10),
-                ShadowDepth = 7,
-                BlurRadius = 5
+                Color = Colors.Black,
+                ShadowDepth = 0,
+                BlurRadius = ShadowSize,
+                Direction = 45
             };
         }
 
         public override void Render(DrawingContext dc)
         {
+            Render();
             dc.DrawRectangle(Fill, null, Area);
         }
     }

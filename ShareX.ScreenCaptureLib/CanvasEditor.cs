@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -26,6 +27,7 @@ namespace ShareX.ScreenCaptureLib
 
         private Point pStart;
         private Annotation currentAnnotation;
+        private AdornerLayer adornerLayer;
 
         private static void ImagePropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -102,6 +104,8 @@ namespace ShareX.ScreenCaptureLib
 
             currentAnnotation.Render();
             CapturedImage.Annotations.Add(currentAnnotation);
+            adornerLayer = AdornerLayer.GetAdornerLayer(currentAnnotation);
+            adornerLayer.Add(new CircleAdorner(currentAnnotation));
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
