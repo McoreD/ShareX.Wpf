@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
+using System.Windows.Media.Imaging;
 
 namespace ShareX.ScreenCaptureLib
 {
@@ -43,6 +44,11 @@ namespace ShareX.ScreenCaptureLib
                 }
                 return cachedGeometry;
             }
+        }
+
+        public override void Render()
+        {
+            throw new NotImplementedException();
         }
 
         internal virtual void CacheDefiningGeometry()

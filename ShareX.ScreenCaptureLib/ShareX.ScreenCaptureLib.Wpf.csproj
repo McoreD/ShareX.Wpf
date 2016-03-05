@@ -62,6 +62,7 @@
     <Compile Include="Annotations\ArrowAnnotation.cs" />
     <Compile Include="Annotations\LineAnnotation.cs" />
     <Compile Include="Annotations\RectangleAnnotation.cs" />
+    <Compile Include="IAnnotation.cs" />
     <Compile Include="Screencast.cs" />
     <Compile Include="ImageEx.cs" />
     <Compile Include="ScreenshotHelper.cs" />
@@ -70,7 +71,7 @@
       <DependentUpon>RectangleLight.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="AnnotateHelper.cs" />
+    <Compile Include="AnnotationHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\HelpersLib.Wpf\HelpersLib\ShareX.HelpersLib.Wpf.csproj">

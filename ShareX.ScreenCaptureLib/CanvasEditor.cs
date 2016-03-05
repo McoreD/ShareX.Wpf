@@ -25,7 +25,6 @@ namespace ShareX.ScreenCaptureLib
         }
 
         private Point pStart;
-        private Shape currentShape;
         private Annotatation currentAnnotation;
 
         private static void ImagePropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -59,12 +58,12 @@ namespace ShareX.ScreenCaptureLib
                 if (ann.GetType() == typeof(HighlightAnnotation))
                 {
                     HighlightAnnotation hl = ann as HighlightAnnotation;
-                    AddShape(hl, hl.X1, hl.Y1, hl.Width, hl.Height);
+                    // AddShape(hl, hl.X1, hl.Y1, hl.Width, hl.Height);
                 }
                 else if (ann.GetType() == typeof(ObfuscateAnnotation))
                 {
                     ObfuscateAnnotation obf = ann as ObfuscateAnnotation;
-                    AddShape(obf, obf.X1, obf.Y1, obf.Width, obf.Height);
+                    //  AddShape(obf, obf.X1, obf.Y1, obf.Width, obf.Height);
                 }
             }
         }
@@ -73,20 +72,6 @@ namespace ShareX.ScreenCaptureLib
         {
             if (CapturedImage.Annotations == null) { return; }
             Children.RemoveRange(0, Children.Count);
-        }
-
-        private Shape AddShape(Annotatation ann, double x, double y, double w = 0, double h = 0)
-        {
-            Shape shape = ann.Render();
-
-            SetLeft(shape, x);
-            SetTop(shape, y);
-            shape.Width = w;
-            shape.Height = h;
-
-            Children.Add(shape);
-
-            return shape;
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
@@ -99,10 +84,10 @@ namespace ShareX.ScreenCaptureLib
             switch (AnnotationMode)
             {
                 case AnnotationMode.Highlight:
-                    currentAnnotation = new HighlightAnnotation();
+                    currentAnnotation = new HighlightAnnotation(CapturedImage);
                     break;
                 case AnnotationMode.Obfuscate:
-                    currentAnnotation = new ObfuscateAnnotation();
+                    currentAnnotation = new ObfuscateAnnotation(CapturedImage);
                     break;
                 default:
                     throw new NotImplementedException();
@@ -111,7 +96,10 @@ namespace ShareX.ScreenCaptureLib
             currentAnnotation.X1 = pStart.X;
             currentAnnotation.Y1 = pStart.Y;
 
-            currentShape = AddShape(currentAnnotation, pStart.X, pStart.Y);
+            SetLeft(currentAnnotation, pStart.X);
+            SetTop(currentAnnotation, pStart.Y);
+
+            Children.Add(currentAnnotation);
         }
 
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
@@ -124,10 +112,7 @@ namespace ShareX.ScreenCaptureLib
             currentAnnotation.X2 = pFinish.X;
             currentAnnotation.Y2 = pFinish.Y;
 
-            Rect applyRect = AnnotationHelper.CreateIntersectRect(CapturedImage.Size, currentAnnotation.Area);
-            BitmapSource bmp = ImageHelper.CropImage(CapturedImage.Source, applyRect);
-            WriteableBitmap wbmp = AnnotationHelper.ChangeColor(bmp, Brushes.Yellow.Color);
-            currentShape.Fill = new ImageBrush(wbmp);
+            currentAnnotation.Render();
 
             CapturedImage.Annotations.Add(currentAnnotation);
         }
@@ -137,7 +122,7 @@ namespace ShareX.ScreenCaptureLib
             if (AnnotationMode == AnnotationMode.None)
                 return;
 
-            if (e.LeftButton == MouseButtonState.Released || currentShape == null)
+            if (e.LeftButton == MouseButtonState.Released || currentAnnotation == null)
                 return;
 
             base.OnMouseMove(e);
@@ -148,11 +133,11 @@ namespace ShareX.ScreenCaptureLib
             var w = Math.Max(pos.X, pStart.X) - x;
             var h = Math.Max(pos.Y, pStart.Y) - y;
 
-            currentShape.Width = w;
-            currentShape.Height = h;
+            currentAnnotation.Width = w;
+            currentAnnotation.Height = h;
 
-            SetLeft(currentShape, x);
-            SetTop(currentShape, y);
+            SetLeft(currentAnnotation, x);
+            SetTop(currentAnnotation, y);
         }
     }
 }

@@ -17,5 +17,10 @@ namespace ShareX.ScreenCaptureLib
                 return new RectangleGeometry(new Rect(0, 0, Width, Height));
             }
         }
+
+        public override void Render()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

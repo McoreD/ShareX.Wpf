@@ -6,12 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace ShareX.ScreenCaptureLib
 {
     public abstract class Annotatation : Shape, IAnnotation
     {
+        protected ImageEx CapturedImage { get; set; }
         public Brush Brush { get; set; }
 
         internal static bool IsDoubleFinite(object o)
@@ -19,6 +21,8 @@ namespace ShareX.ScreenCaptureLib
             double d = (double)o;
             return (!double.IsInfinity(d) && !double.IsNaN(d));
         }
+
+        public abstract void Render();
 
         public static readonly DependencyProperty X1Property = DependencyProperty.Register("X1", typeof(double), typeof(Annotatation),
             new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender),
@@ -62,11 +66,6 @@ namespace ShareX.ScreenCaptureLib
         {
             get { return (double)GetValue(Y2Property); }
             set { SetValue(Y2Property, value); }
-        }
-
-        public virtual Shape Render()
-        {
-            throw new NotImplementedException();
         }
 
         public Rect Area
