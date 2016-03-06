@@ -150,48 +150,57 @@ namespace ShareX.ScreenCaptureLib
             }
         }
 
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        protected override void OnMouseDown(MouseButtonEventArgs e)
         {
-            if (AnnotationMode == AnnotationMode.None) return;
+            base.OnMouseDown(e);
 
-            base.OnMouseLeftButtonDown(e);
+            if (e.ChangedButton == MouseButton.Left && AnnotationMode != AnnotationMode.None)
+            {
+                HideAllNodes();
+                currentAnnotation = CreateCurrentAnnotation();
+                currentAnnotation.PointStart = currentAnnotation.PointFinish = e.GetPosition(this);
+                UpdateCurrentAnnotation();
 
-            HideAllNodes();
-            currentAnnotation = CreateCurrentAnnotation();
-            currentAnnotation.PointStart = currentAnnotation.PointFinish = e.GetPosition(this);
-            UpdateCurrentAnnotation();
-
-            Children.Add(currentAnnotation);
+                Children.Add(currentAnnotation);
+            }
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            if (!IsCreatingAnnotation) return;
-
             base.OnMouseMove(e);
 
-            currentAnnotation.PointFinish = e.GetPosition(this);
-            UpdateCurrentAnnotation();
+            if (IsCreatingAnnotation)
+            {
+                currentAnnotation.PointFinish = e.GetPosition(this);
+                UpdateCurrentAnnotation();
+            }
         }
 
-        protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
+        protected override void OnMouseUp(MouseButtonEventArgs e)
         {
-            if (!IsCreatingAnnotation) return;
-
             base.OnMouseUp(e);
 
-            currentAnnotation.PointFinish = e.GetPosition(this);
-            UpdateCurrentAnnotation();
-            FinishCurrentAnnotation();
+            if (IsCreatingAnnotation)
+            {
+                if (e.ChangedButton == MouseButton.Left)
+                {
+                    currentAnnotation.PointFinish = e.GetPosition(this);
+                    UpdateCurrentAnnotation();
+                    FinishCurrentAnnotation();
+                }
+                else if (e.ChangedButton == MouseButton.Right)
+                {
+                    Children.Remove(currentAnnotation);
+                    currentAnnotation = null;
+                }
+            }
         }
 
         protected override void OnMouseLeave(MouseEventArgs e)
         {
-            if (!IsCreatingAnnotation) return;
-
             base.OnMouseLeave(e);
 
-            if (e.LeftButton == MouseButtonState.Pressed)
+            if (e.LeftButton == MouseButtonState.Pressed && IsCreatingAnnotation)
             {
                 FinishCurrentAnnotation();
             }
