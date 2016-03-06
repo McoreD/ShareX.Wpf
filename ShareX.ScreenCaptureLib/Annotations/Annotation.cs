@@ -21,6 +21,29 @@ namespace ShareX.ScreenCaptureLib
 
         public bool IsCreating { get; set; }
 
+        private bool selected;
+
+        public bool Selected
+        {
+            get
+            {
+                return selected;
+            }
+            set
+            {
+                selected = value;
+
+                if (selected)
+                {
+                    ShowNodes();
+                }
+                else
+                {
+                    HideNodes();
+                }
+            }
+        }
+
         public Point PointStart
         {
             get { return new Point(X1, Y1); }
@@ -41,41 +64,30 @@ namespace ShareX.ScreenCaptureLib
             }
         }
 
-        public void CreateNodes()
+        protected void CreateNodes()
         {
             adorner = new CircleAdorner(this);
             AdornerLayer.GetAdornerLayer(this).Add(adorner);
         }
 
-        public void ShowNodes()
+        protected void ShowNodes()
         {
-            if (adorner != null)
+            if (adorner == null)
             {
-                adorner.Visibility = Visibility.Visible;
+                CreateNodes();
             }
+
+            adorner.Visibility = Visibility.Visible;
         }
 
-        public void HideNodes()
+        protected void HideNodes()
         {
-            if (adorner != null)
+            if (adorner == null)
             {
-                adorner.Visibility = Visibility.Hidden;
+                CreateNodes();
             }
-        }
 
-        public void ToggleNodes()
-        {
-            if (adorner != null)
-            {
-                if (adorner.Visibility == Visibility.Visible)
-                {
-                    adorner.Visibility = Visibility.Hidden;
-                }
-                else
-                {
-                    adorner.Visibility = Visibility.Visible;
-                }
-            }
+            adorner.Visibility = Visibility.Hidden;
         }
 
         protected override void OnMouseDown(MouseButtonEventArgs e)
@@ -84,7 +96,7 @@ namespace ShareX.ScreenCaptureLib
 
             if (e.ChangedButton == MouseButton.Left)
             {
-                ToggleNodes();
+                Selected = !Selected;
             }
         }
 

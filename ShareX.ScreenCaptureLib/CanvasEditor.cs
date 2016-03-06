@@ -123,7 +123,7 @@ namespace ShareX.ScreenCaptureLib
         {
             foreach (Annotation ann in Annotations)
             {
-                ann.HideNodes();
+                ann.Selected = false;
             }
         }
 
@@ -144,7 +144,7 @@ namespace ShareX.ScreenCaptureLib
             {
                 currentAnnotation.IsCreating = false;
                 currentAnnotation.FinalRender();
-                currentAnnotation.CreateNodes();
+                currentAnnotation.Selected = true;
 
                 Annotations.Add(currentAnnotation);
             }
