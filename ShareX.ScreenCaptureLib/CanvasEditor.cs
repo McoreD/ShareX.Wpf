@@ -24,13 +24,23 @@ namespace ShareX.ScreenCaptureLib
         [Category("Editor")]
         public ImageEx CapturedImage
         {
-            get { return (ImageEx)GetValue(SourceProperty); }
-            set { SetValue(SourceProperty, value); }
+            get
+            {
+                return (ImageEx)GetValue(SourceProperty);
+            }
+            set
+            {
+                SetValue(SourceProperty, value);
+            }
         }
 
-        private Point pStart;
         private Annotation currentAnnotation;
         private AdornerLayer adornerLayer;
+
+        public CanvasEditor()
+        {
+            ClipToBounds = true;
+        }
 
         protected virtual void OnImageLoaded()
         {
@@ -48,7 +58,6 @@ namespace ShareX.ScreenCaptureLib
                 return;
             }
 
-            canvas.ClipToBounds = true;
             canvas.Width = img.Source.Width;
             canvas.Height = img.Source.Height;
             canvas.Background = new ImageBrush(img.Source);
@@ -63,92 +72,81 @@ namespace ShareX.ScreenCaptureLib
             AnnotationHelper.LoadCapturedImage(CapturedImage);
         }
 
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        private Annotation CreateCurrentAnnotation()
         {
-            if (AnnotationMode == AnnotationMode.None) { return; };
-
-            base.OnMouseLeftButtonDown(e);
-            pStart = e.GetPosition(this);
+            Annotation annotation;
 
             switch (AnnotationMode)
             {
                 case AnnotationMode.Highlight:
-                    currentAnnotation = new HighlightAnnotation();
+                    annotation = new HighlightAnnotation();
                     break;
                 case AnnotationMode.Obfuscate:
-                    currentAnnotation = new ObfuscateAnnotation();
+                    annotation = new ObfuscateAnnotation();
                     break;
                 case AnnotationMode.Rectangle:
-                    currentAnnotation = new RectangleAnnotation();
+                    annotation = new RectangleAnnotation();
                     break;
                 case AnnotationMode.Ellipse:
-                    currentAnnotation = new EllipseAnnotation();
+                    annotation = new EllipseAnnotation();
                     break;
                 case AnnotationMode.Arrow:
-                    currentAnnotation = new ArrowAnnotation();
+                    annotation = new ArrowAnnotation();
                     break;
                 default:
                     throw new NotImplementedException();
             }
 
-            currentAnnotation.PointStart = e.GetPosition(this);
-            currentAnnotation.CursorPosStart = CaptureHelper.GetCursorPosition();
+            return annotation;
+        }
 
-            Console.WriteLine($"PointStart {CaptureHelper.GetCursorPosition()}");
-            Console.WriteLine($"PointFromScreen(CaptureHelper.GetCursorPosition() {PointFromScreen(CaptureHelper.GetCursorPosition())}");
-            Console.WriteLine($"GetPosition {e.GetPosition(this)}");
+        private void UpdateCurrentAnnotation()
+        {
+            SetLeft(currentAnnotation, currentAnnotation.Area.X);
+            SetTop(currentAnnotation, currentAnnotation.Area.Y);
+            currentAnnotation.Width = currentAnnotation.Area.Width;
+            currentAnnotation.Height = currentAnnotation.Area.Height;
+        }
 
-            SetLeft(currentAnnotation, pStart.X);
-            SetTop(currentAnnotation, pStart.Y);
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            if (AnnotationMode == AnnotationMode.None)
+                return;
+
+            base.OnMouseLeftButtonDown(e);
+
+            currentAnnotation = CreateCurrentAnnotation();
+            currentAnnotation.PointStart = currentAnnotation.PointFinish = e.GetPosition(this);
+            UpdateCurrentAnnotation();
 
             Children.Add(currentAnnotation);
         }
 
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            if (AnnotationMode == AnnotationMode.None || e.LeftButton == MouseButtonState.Released || currentAnnotation == null)
+                return;
+
+            base.OnMouseMove(e);
+
+            currentAnnotation.PointFinish = e.GetPosition(this);
+            UpdateCurrentAnnotation();
+        }
+
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
-            if (AnnotationMode == AnnotationMode.None) { return; };
+            if (AnnotationMode == AnnotationMode.None)
+                return;
 
             base.OnMouseUp(e);
 
             currentAnnotation.PointFinish = e.GetPosition(this);
-            Console.WriteLine($"PointFinish {CaptureHelper.GetCursorPosition()}");
-            Console.WriteLine($"PointFromScreen(CaptureHelper.GetCursorPosition() {PointFromScreen(CaptureHelper.GetCursorPosition())}");
-            Console.WriteLine($"GetPosition {e.GetPosition(this)}");
-
+            UpdateCurrentAnnotation();
             currentAnnotation.FinalRender();
 
             CapturedImage.Annotations.Add(currentAnnotation);
             adornerLayer = AdornerLayer.GetAdornerLayer(currentAnnotation);
             adornerLayer.Add(new CircleAdorner(currentAnnotation));
-
-            UpdateDimensions(e.GetPosition(this));
-        }
-
-        private void UpdateDimensions(Point pos)
-        {
-            var x = Math.Min(pos.X, pStart.X);
-            var y = Math.Min(pos.Y, pStart.Y);
-            var w = Math.Max(pos.X, pStart.X) - x;
-            var h = Math.Max(pos.Y, pStart.Y) - y;
-
-            currentAnnotation.Width = w;
-            currentAnnotation.Height = h;
-
-            //  SetLeft(currentAnnotation, x); // needs to be relative to canvas
-            //  SetTop(currentAnnotation, y);  // needs to be relative to canvas
-        }
-
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-            if (AnnotationMode == AnnotationMode.None)
-                return;
-
-            if (e.LeftButton == MouseButtonState.Released || currentAnnotation == null)
-                return;
-
-            base.OnMouseMove(e);
-
-            UpdateDimensions(e.GetPosition(this));
         }
     }
 }

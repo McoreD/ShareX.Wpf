@@ -26,7 +26,7 @@ namespace ShareX.ScreenCaptureLib
 
         public EllipseAnnotation()
         {
-            brush = Brushes.Blue;
+            brush = Brushes.Red;
             Stroke = brush;
             StrokeThickness = 1;
         }

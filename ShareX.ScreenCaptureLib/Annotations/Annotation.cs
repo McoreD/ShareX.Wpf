@@ -87,8 +87,6 @@ namespace ShareX.ScreenCaptureLib
             set { X2 = value.X; Y2 = value.Y; }
         }
 
-        public Point CursorPosStart { get; set; }
-
         public Rect Area
         {
             get
