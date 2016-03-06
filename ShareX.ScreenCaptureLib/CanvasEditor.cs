@@ -31,37 +31,26 @@ namespace ShareX.ScreenCaptureLib
 
         private static void ImagePropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CanvasEditor obj = d as CanvasEditor;
+            CanvasEditor canvas = d as CanvasEditor;
             ImageEx img = e.NewValue as ImageEx;
+
             if (img == null)
             {
-                obj.Background = null;
+                canvas.Background = null;
                 return;
             }
-            obj.Width = img.Source.Width;
-            obj.Height = img.Source.Height;
-            obj.Background = new ImageBrush(img.Source);
-            obj.RedrawAnnotations();
+
+            canvas.Width = img.Source.Width;
+            canvas.Height = img.Source.Height;
+            canvas.Background = new ImageBrush(img.Source);
+
+            canvas.Children.Clear();
         }
 
         public void Init(AnnotationMode mode)
         {
             AnnotationMode = mode;
             AnnotationHelper.LoadCapturedImage(CapturedImage);
-        }
-
-        private void RedrawAnnotations()
-        {
-            if (CapturedImage.Annotations == null) { return; }
-
-            RemoveAllAnnotations();
-        }
-
-        public void RemoveAllAnnotations()
-        {
-            if (CapturedImage.Annotations == null) { return; }
-
-            Children.RemoveRange(0, Children.Count);
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
