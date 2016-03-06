@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HelpersLib;
+using System;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
@@ -26,7 +27,7 @@ namespace ShareX.ScreenCaptureLib
             StrokeThickness = 1;
         }
 
-        public override RenderTargetBitmap Render()
+        public override RenderTargetBitmap FinalRender()
         {
             Effect = new DropShadowEffect
             {
@@ -38,14 +39,19 @@ namespace ShareX.ScreenCaptureLib
                 Direction = 45
             };
 
-            return base.Render();
+            return base.FinalRender();
         }
 
-        public override void Render(DrawingContext dc)
+        public override void FinalRender(DrawingContext dc)
         {
-            Render();
+            FinalRender();
             dc.DrawRectangle(null, new Pen(brush, StrokeThickness), Area);
             // dc.DrawImage(Render(), Area);
+        }
+
+        protected override void OnRender(DrawingContext dc)
+        {
+            dc.DrawRectangle(null, new Pen(brush, StrokeThickness), new Rect(PointFromScreen(CursorPosStart), PointFromScreen(CaptureHelper.GetCursorPosition())));
         }
     }
 }

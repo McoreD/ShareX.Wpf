@@ -21,14 +21,14 @@ namespace ShareX.ScreenCaptureLib
             return (!double.IsInfinity(d) && !double.IsNaN(d));
         }
 
-        public virtual RenderTargetBitmap Render()
+        public virtual RenderTargetBitmap FinalRender()
         {
             var rtb = new RenderTargetBitmap((int)Width, (int)Height, AnnotationHelper.CapturedImage.Source.DpiX, AnnotationHelper.CapturedImage.Source.DpiY, PixelFormats.Pbgra32);
             rtb.Render(this);
             return rtb;
         }
 
-        public abstract void Render(DrawingContext dc);
+        public abstract void FinalRender(DrawingContext dc);
 
         public static readonly DependencyProperty X1Property = DependencyProperty.Register("X1", typeof(double), typeof(Annotation),
             new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender),
@@ -85,6 +85,8 @@ namespace ShareX.ScreenCaptureLib
             get { return new Point(X2, Y2); }
             set { X2 = value.X; Y2 = value.Y; }
         }
+
+        public Point CursorPosStart { get; set; }
 
         public Rect Area
         {

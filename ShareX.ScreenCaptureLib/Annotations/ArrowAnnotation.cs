@@ -31,9 +31,9 @@ namespace ShareX.ScreenCaptureLib
             set { base.SetValue(HeadHeightProperty, value); }
         }
 
-        public override void Render(DrawingContext dc)
+        public override void FinalRender(DrawingContext dc)
         {
-            Render();
+            FinalRender();
             dc.DrawRectangle(Fill, null, Area);
         }
 
@@ -79,14 +79,14 @@ namespace ShareX.ScreenCaptureLib
             context.LineTo(pt4, true, true);
         }
 
-        public override RenderTargetBitmap Render()
+        public override RenderTargetBitmap FinalRender()
         {
             HeadWidth = 15;
             HeadHeight = 5;
             Stroke = Brushes.Red;
             StrokeThickness = 2;
 
-            return base.Render();
+            return base.FinalRender();
         }
     }
 }

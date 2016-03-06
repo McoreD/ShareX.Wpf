@@ -31,30 +31,6 @@ namespace ShareX.ScreenCaptureLib
             topRight.DragDelta += new DragDeltaEventHandler(HandleTopRight);
             bottomRight.DragDelta += new DragDeltaEventHandler(HandleBottomRight);
             bottomLeft.DragDelta += new DragDeltaEventHandler(HandleBottomLeft);
-
-            topLeft.MouseLeftButtonDown += Thumb_MouseDown;
-            topLeft.MouseLeftButtonUp += Thumb_MouseUp;
-
-            topRight.MouseLeftButtonDown += Thumb_MouseDown;
-            topRight.MouseLeftButtonUp += Thumb_MouseUp;
-
-            bottomRight.MouseLeftButtonDown += Thumb_MouseDown;
-            bottomRight.MouseLeftButtonUp += Thumb_MouseUp;
-
-            bottomLeft.MouseLeftButtonDown += Thumb_MouseDown;
-            bottomLeft.MouseLeftButtonUp += Thumb_MouseUp;
-        }
-
-        private void Thumb_MouseDown(object sender, MouseEventArgs e)
-        {
-            Annotation adornedElement = AdornedElement as Annotation;
-            adornedElement.Fill = null;
-        }
-
-        private void Thumb_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            Annotation adornedElement = AdornedElement as Annotation;
-            adornedElement.Render();
         }
 
         private void HandleTopLeft(object sender, DragDeltaEventArgs args)

@@ -18,6 +18,9 @@ namespace ShareX.ScreenCaptureLib
 
             Stroke = brush;
             StrokeThickness = 1;
+
+            Opacity = 1;
+            Fill = brush;
         }
 
         protected override Geometry DefiningGeometry
@@ -28,18 +31,15 @@ namespace ShareX.ScreenCaptureLib
             }
         }
 
-        public override RenderTargetBitmap Render()
+        public override RenderTargetBitmap FinalRender()
         {
-            Opacity = 1;
-            Fill = brush;
-
-            return base.Render();
+            return base.FinalRender();
         }
 
-        public override void Render(DrawingContext dc)
+        public override void FinalRender(DrawingContext dc)
         {
             // dc.DrawImage(Render(), new Rect(0, 0, Width, Height));
-            Render();
+            FinalRender();
             dc.DrawRectangle(Fill, null, Area);
         }
     }

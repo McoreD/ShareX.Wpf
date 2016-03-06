@@ -29,10 +29,10 @@ namespace ShareX.ScreenCaptureLib
 
         public LineAnnotation()
         {
-            Render();
+            FinalRender();
         }
 
-        public override RenderTargetBitmap Render()
+        public override RenderTargetBitmap FinalRender()
         {
             Stroke = Brushes.Blue;
             StrokeThickness = 3;
@@ -50,10 +50,10 @@ namespace ShareX.ScreenCaptureLib
                 BlurRadius = 10
             };
 
-            return base.Render();
+            return base.FinalRender();
         }
 
-        public override void Render(DrawingContext dc)
+        public override void FinalRender(DrawingContext dc)
         {
             dc.DrawLine(new Pen(Stroke, StrokeThickness), PointStart, PointFinish);
         }

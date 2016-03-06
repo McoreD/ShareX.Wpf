@@ -71,6 +71,9 @@ namespace ShareX.ScreenCaptureLib
                 case AnnotationMode.Rectangle:
                     currentAnnotation = new RectangleAnnotation();
                     break;
+                case AnnotationMode.Ellipse:
+                    currentAnnotation = new EllipseAnnotation();
+                    break;
                 case AnnotationMode.Arrow:
                     currentAnnotation = new ArrowAnnotation();
                     break;
@@ -78,7 +81,12 @@ namespace ShareX.ScreenCaptureLib
                     throw new NotImplementedException();
             }
 
-            currentAnnotation.PointStart = pStart;
+            currentAnnotation.PointStart = e.GetPosition(this);
+            currentAnnotation.CursorPosStart = CaptureHelper.GetCursorPosition();
+
+            Console.WriteLine($"PointStart {CaptureHelper.GetCursorPosition()}");
+            Console.WriteLine($"PointFromScreen(CaptureHelper.GetCursorPosition() {PointFromScreen(CaptureHelper.GetCursorPosition())}");
+            Console.WriteLine($"GetPosition {e.GetPosition(this)}");
 
             SetLeft(currentAnnotation, pStart.X);
             SetTop(currentAnnotation, pStart.Y);
@@ -93,8 +101,11 @@ namespace ShareX.ScreenCaptureLib
             base.OnMouseUp(e);
 
             currentAnnotation.PointFinish = e.GetPosition(this);
+            Console.WriteLine($"PointFinish {CaptureHelper.GetCursorPosition()}");
+            Console.WriteLine($"PointFromScreen(CaptureHelper.GetCursorPosition() {PointFromScreen(CaptureHelper.GetCursorPosition())}");
+            Console.WriteLine($"GetPosition {e.GetPosition(this)}");
 
-            currentAnnotation.Render();
+            // currentAnnotation.FinalRender();
 
             CapturedImage.Annotations.Add(currentAnnotation);
             adornerLayer = AdornerLayer.GetAdornerLayer(currentAnnotation);
@@ -111,8 +122,8 @@ namespace ShareX.ScreenCaptureLib
             currentAnnotation.Width = w;
             currentAnnotation.Height = h;
 
-            SetLeft(currentAnnotation, x);
-            SetTop(currentAnnotation, y);
+            SetLeft(currentAnnotation, x); // needs to be relative to canvas
+            SetTop(currentAnnotation, y);  // needs to be relative to canvas
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
