@@ -15,7 +15,7 @@ namespace ShareX.ScreenCaptureLib
         {
             get
             {
-                return new EllipseGeometry();
+                return new EllipseGeometry(PointFromScreen(CaptureHelper.GetCursorPosition()), Width, Height);
             }
         }
 
@@ -29,11 +29,6 @@ namespace ShareX.ScreenCaptureLib
         public override void FinalRender(DrawingContext dc)
         {
             throw new NotImplementedException();
-        }
-
-        protected override void OnRender(DrawingContext dc)
-        {
-            dc.DrawEllipse(null, new Pen(brush, 1), PointFromScreen(CaptureHelper.GetCursorPosition()), Width, Height);
         }
     }
 }

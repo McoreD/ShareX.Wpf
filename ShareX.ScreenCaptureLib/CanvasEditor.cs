@@ -105,11 +105,13 @@ namespace ShareX.ScreenCaptureLib
             Console.WriteLine($"PointFromScreen(CaptureHelper.GetCursorPosition() {PointFromScreen(CaptureHelper.GetCursorPosition())}");
             Console.WriteLine($"GetPosition {e.GetPosition(this)}");
 
-            // currentAnnotation.FinalRender();
+            currentAnnotation.FinalRender();
 
             CapturedImage.Annotations.Add(currentAnnotation);
             adornerLayer = AdornerLayer.GetAdornerLayer(currentAnnotation);
             adornerLayer.Add(new CircleAdorner(currentAnnotation));
+
+            UpdateDimensions(e.GetPosition(this));
         }
 
         private void UpdateDimensions(Point pos)
@@ -122,8 +124,8 @@ namespace ShareX.ScreenCaptureLib
             currentAnnotation.Width = w;
             currentAnnotation.Height = h;
 
-            SetLeft(currentAnnotation, x); // needs to be relative to canvas
-            SetTop(currentAnnotation, y);  // needs to be relative to canvas
+            //  SetLeft(currentAnnotation, x); // needs to be relative to canvas
+            //  SetTop(currentAnnotation, y);  // needs to be relative to canvas
         }
 
         protected override void OnMouseMove(MouseEventArgs e)

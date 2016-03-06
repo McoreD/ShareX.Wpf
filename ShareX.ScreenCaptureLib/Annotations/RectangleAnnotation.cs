@@ -31,12 +31,11 @@ namespace ShareX.ScreenCaptureLib
         {
             Effect = new DropShadowEffect
             {
-                RenderingBias = RenderingBias.Quality,
+                RenderingBias = RenderingBias.Performance,
                 Opacity = 0.8d,
                 Color = Colors.Black,
                 ShadowDepth = 0,
-                BlurRadius = ShadowSize,
-                Direction = 45
+                BlurRadius = ShadowSize
             };
 
             return base.FinalRender();
@@ -46,12 +45,6 @@ namespace ShareX.ScreenCaptureLib
         {
             FinalRender();
             dc.DrawRectangle(null, new Pen(brush, StrokeThickness), Area);
-            // dc.DrawImage(Render(), Area);
-        }
-
-        protected override void OnRender(DrawingContext dc)
-        {
-            dc.DrawRectangle(null, new Pen(brush, StrokeThickness), new Rect(PointFromScreen(CursorPosStart), PointFromScreen(CaptureHelper.GetCursorPosition())));
         }
     }
 }
