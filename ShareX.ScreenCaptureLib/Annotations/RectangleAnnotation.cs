@@ -1,6 +1,7 @@
 ﻿using HelpersLib;
 using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
@@ -9,13 +10,13 @@ namespace ShareX.ScreenCaptureLib
 {
     public class RectangleAnnotation : Annotation
     {
-        public int ShadowSize = 10;
+        public int ShadowSize = 15;
 
         protected override Geometry DefiningGeometry
         {
             get
             {
-                return new RectangleGeometry(new Rect(0, 0, Math.Max(0, Width - ShadowSize), Math.Max(0, Height - ShadowSize)));
+                return new RectangleGeometry(new Rect(0, 0, Width, Height));
             }
         }
 
@@ -31,7 +32,7 @@ namespace ShareX.ScreenCaptureLib
         {
             Effect = new DropShadowEffect
             {
-                RenderingBias = RenderingBias.Performance,
+                RenderingBias = RenderingBias.Quality,
                 Opacity = 0.8d,
                 Color = Colors.Black,
                 ShadowDepth = 0,

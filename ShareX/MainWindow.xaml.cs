@@ -1,9 +1,13 @@
 ﻿using HelpersLib;
 using Microsoft.Win32;
+using ScreenCaptureLib;
 using ShareX.ScreenCaptureLib;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -54,7 +58,7 @@ namespace ShareX
         private void btnCaptureArea_Click(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
-            System.Threading.Thread.Sleep(300);
+            Thread.Sleep(300);
 
             RectangleLight crop = new RectangleLight();
             if (crop.ShowDialog() == true)
@@ -103,10 +107,7 @@ namespace ShareX
         private void btnUpload_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
-            ContextMenu cm = btn.ContextMenu;
-            cm.PlacementTarget = btn;
-            cm.IsOpen = true;
-            e.Handled = true;
+            btn.SetContextMenuOnMouseDown(e);
         }
 
         #endregion Release
@@ -114,6 +115,68 @@ namespace ShareX
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void btnCaptureWindow_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            PrepareCaptureMenuAsync(tsmiWindow, tsmiWindowItems_Click);
+        }
+
+        private void tsmiWindowItems_Click(object sender, EventArgs e)
+        {
+            MenuItem tsi = (MenuItem)sender;
+            WindowInfo wi = tsi.Tag as WindowInfo;
+            if (wi != null)
+            {
+                CaptureWindow(wi.Handle);
+            }
+        }
+
+        private void CaptureWindow(IntPtr handle)
+        {
+            if (NativeMethods.IsIconic(handle))
+            {
+                NativeMethods.RestoreWindow(handle);
+            }
+
+            NativeMethods.SetForegroundWindow(handle);
+            Thread.Sleep(250);
+
+            editor.CapturedImage = ScreenshotHelper.CaptureWindowTransparent(handle);
+        }
+
+        private void PrepareCaptureMenuAsync(ContextMenu tsmiWindow, RoutedEventHandler handlerWindow)
+        {
+            tsmiWindow.Items.Clear();
+
+            WindowsList windowsList = new WindowsList();
+            List<WindowInfo> windows = null;
+            windows = windowsList.GetVisibleWindowsList();
+
+            TaskEx.Run(() =>
+            {
+                windows = windowsList.GetVisibleWindowsList();
+            }, () =>
+            {
+                if (windows != null)
+                {
+                    foreach (WindowInfo window in windows)
+                    {
+                        string title = window.Text.Truncate(50, "...");
+                        MenuItem mi = new MenuItem() { Header = title };
+                        mi.Tag = window;
+                        mi.Click += handlerWindow;
+                        tsmiWindow.Items.Add(mi);
+                    }
+                }
+            }
+            );
+        }
+
+        private void btnCaptureWindow_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            btn.SetContextMenuOnMouseDown(e);
         }
     }
 }

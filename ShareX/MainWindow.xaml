@@ -29,7 +29,12 @@
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" x:Name="capturePanel">
             <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}" HorizontalAlignment="Center" Margin="10"><Run Text="Capture" /></TextBlock>
             <Button x:Name="btnCaptureRectange" Margin="10" Click="btnCaptureArea_Click" Content="Area" />
-            <Button x:Name="btnCaptureWindow" Margin="10" Content="Window" />
+            <Button x:Name="btnCaptureWindow" Margin="10" Content="Window" ContextMenuOpening="btnCaptureWindow_ContextMenuOpening" Click="btnCaptureWindow_Click">
+                <Button.ContextMenu>
+                    <ContextMenu Name="tsmiWindow">
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
             <Button x:Name="btnCaptureScreen" Margin="10" Click="btnCaptureScreen_Click" Content="Screen" />
         </StackPanel>
 

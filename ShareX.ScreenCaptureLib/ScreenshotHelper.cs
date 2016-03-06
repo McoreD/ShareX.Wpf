@@ -1,8 +1,10 @@
 ﻿using HelpersLib;
 using System;
 using System.IO;
+using System.Threading;
 using System.Windows;
 using System.Windows.Interop;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace ShareX.ScreenCaptureLib
@@ -76,6 +78,167 @@ namespace ShareX.ScreenCaptureLib
             NativeMethods.DeleteObject(hBitmap);
 
             return bmp;
+        }
+
+        public static ImageEx CaptureWindowTransparent(IntPtr handle)
+        {
+            if (handle.ToInt32() > 0)
+            {
+                Rect rect = CaptureHelper.GetWindowRectangle(handle);
+
+                if (CaptureShadow && !NativeMethods.IsZoomed(handle) && NativeMethods.IsDWMEnabled())
+                {
+                    rect.Inflate(ShadowOffset, ShadowOffset);
+                    rect.Intersect(CaptureHelper.GetScreenBounds());
+                }
+
+                BitmapSource whiteBackground = null, blackBackground = null, whiteBackground2 = null;
+                CursorData cursor = null;
+                bool isTransparent = false, isTaskbarHide = false;
+
+                try
+                {
+                    if (AutoHideTaskbar)
+                    {
+                        isTaskbarHide = NativeMethods.SetTaskbarVisibilityIfIntersect(false, rect);
+                    }
+
+                    if (CaptureCursor)
+                    {
+                        try
+                        {
+                            cursor = new CursorData();
+                        }
+                        catch (Exception e)
+                        {
+                            DebugHelper.WriteException(e, "Cursor capture failed.");
+                        }
+                    }
+
+                    Window form = new Window();
+                    form.Background = new SolidColorBrush(Colors.White);
+                    form.WindowStyle = WindowStyle.None;
+                    form.ShowInTaskbar = false;
+                    form.WindowStartupLocation = WindowStartupLocation.Manual;
+                    form.Left = rect.Left;
+                    form.Top = rect.Top;
+                    form.RenderSize = new Size(rect.Width, rect.Height);
+
+                    IntPtr formHandle = new WindowInteropHelper(form).Handle;
+                    NativeMethods.ShowWindow(formHandle, (int)WindowShowStyle.ShowNoActivate);
+
+                    if (!NativeMethods.SetWindowPos(formHandle, handle, 0, 0, 0, 0,
+                        SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOACTIVATE))
+                    {
+                        form.Close();
+                        DebugHelper.WriteLine("Transparent capture failed. Reason: SetWindowPos fail.");
+                        return CaptureWindow(handle);
+                    }
+
+                    Thread.Sleep(10);
+                    form.UpdateLayout();
+
+                    whiteBackground = CaptureRectangleNative(rect);
+
+                    form.Background = new SolidColorBrush(Colors.Black);
+                    form.UpdateLayout();
+
+                    blackBackground = CaptureRectangleNative(rect);
+
+                    form.Background = new SolidColorBrush(Colors.White);
+                    form.UpdateLayout();
+
+                    whiteBackground2 = CaptureRectangleNative(rect);
+
+                    form.Close();
+
+                    return new ImageEx(whiteBackground2);
+
+                    // TODO: Transparent window - with WPF alternative to UnsafeBitmap
+
+                    /*
+                    BitmapSource transparentImage;
+
+                    if (whiteBackground.IsEqual(whiteBackground2))
+                    {
+                        transparentImage = CreateTransparentImage(whiteBackground, blackBackground);
+                        isTransparent = true;
+                    }
+                    else
+                    {
+                        DebugHelper.WriteLine("Transparent capture failed. Reason: Images not equal.");
+                        transparentImage = whiteBackground2;
+                    }
+
+                    if (cursor != null && cursor.IsVisible)
+                    {
+                        Point cursorOffset = CaptureHelper.ScreenToClient(rect.Location);
+                        cursor.DrawCursorToImage(transparentImage, cursorOffset);
+                    }
+
+                    if (isTransparent)
+                    {
+                        transparentImage = TrimTransparent(transparentImage);
+
+                        if (!CaptureShadow)
+                        {
+                            TrimShadow(transparentImage);
+                        }
+                    }
+
+                    return transparentImage;
+                    */
+                }
+                finally
+                {
+                    if (isTaskbarHide)
+                    {
+                        NativeMethods.SetTaskbarVisibility(true);
+                    }
+
+                    if (cursor != null) cursor.Dispose();
+                }
+            }
+
+            return null;
+        }
+
+        public static ImageEx CaptureWindow(IntPtr handle)
+        {
+            if (handle.ToInt32() > 0)
+            {
+                Rect rect;
+
+                if (CaptureClientArea)
+                {
+                    rect = NativeMethods.GetClientRect(handle);
+                }
+                else
+                {
+                    rect = CaptureHelper.GetWindowRectangle(handle);
+                }
+
+                bool isTaskbarHide = false;
+
+                try
+                {
+                    if (AutoHideTaskbar)
+                    {
+                        isTaskbarHide = NativeMethods.SetTaskbarVisibilityIfIntersect(false, rect);
+                    }
+
+                    return CaptureRectangle(rect);
+                }
+                finally
+                {
+                    if (isTaskbarHide)
+                    {
+                        NativeMethods.SetTaskbarVisibility(true);
+                    }
+                }
+            }
+
+            return null;
         }
     }
 }
