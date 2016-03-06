@@ -68,6 +68,7 @@
     <Compile Include="ImageEx.cs" />
     <Compile Include="ScreenshotHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TextAnnotation.cs" />
     <Compile Include="Windows\RectangleLight.xaml.cs">
       <DependentUpon>RectangleLight.xaml</DependentUpon>
       <SubType>Code</SubType>

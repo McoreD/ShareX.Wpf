@@ -2,10 +2,13 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace ShareX.ScreenCaptureLib
 {
@@ -29,10 +32,9 @@ namespace ShareX.ScreenCaptureLib
             DrawingContext dc = dv.RenderOpen();
             dc.DrawImage(Source, new Rect(0, 0, Source.Width, Source.Height));
 
-            foreach (var ann in Annotations)
-            {
-                ann.Render(dc);
-            }
+            foreach (var ann in Annotations) { ann.Render(dc); }
+
+            // Parallel.ForEach(Annotations, ann => { ann.Render(dc); });
 
             dc.Close();
 

@@ -11,6 +11,8 @@ namespace ShareX.ScreenCaptureLib
 {
     public class ArrowAnnotation : Annotation
     {
+        protected Geometry cachedGeometry;
+
         public static readonly DependencyProperty HeadWidthProperty = DependencyProperty.Register("HeadWidth", typeof(double), typeof(ArrowAnnotation), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
         public static readonly DependencyProperty HeadHeightProperty = DependencyProperty.Register("HeadHeight", typeof(double), typeof(ArrowAnnotation), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
@@ -26,6 +28,30 @@ namespace ShareX.ScreenCaptureLib
         {
             get { return (double)base.GetValue(HeadHeightProperty); }
             set { base.SetValue(HeadHeightProperty, value); }
+        }
+
+        public override void Render(DrawingContext dc)
+        {
+            Render();
+            dc.DrawRectangle(Fill, null, Area);
+        }
+
+        protected override Geometry DefiningGeometry
+        {
+            get
+            {
+                StreamGeometry geometry = new StreamGeometry();
+                geometry.FillRule = FillRule.EvenOdd;
+
+                using (StreamGeometryContext context = geometry.Open())
+                {
+                    InternalDrawArrowGeometry(context);
+                }
+
+                geometry.Freeze();
+
+                return geometry;
+            }
         }
 
         private void InternalDrawArrowGeometry(StreamGeometryContext context)
@@ -58,30 +84,6 @@ namespace ShareX.ScreenCaptureLib
             HeadHeight = 5;
             Stroke = Brushes.Red;
             StrokeThickness = 2;
-        }
-
-        public override void Render(DrawingContext dc)
-        {
-            Render();
-            dc.DrawRectangle(Fill, null, Area);
-        }
-
-        protected override Geometry DefiningGeometry
-        {
-            get
-            {
-                StreamGeometry geometry = new StreamGeometry();
-                geometry.FillRule = FillRule.EvenOdd;
-
-                using (StreamGeometryContext context = geometry.Open())
-                {
-                    InternalDrawArrowGeometry(context);
-                }
-
-                geometry.Freeze();
-
-                return geometry;
-            }
         }
     }
 }
