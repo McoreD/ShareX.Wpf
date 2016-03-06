@@ -2,6 +2,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -119,11 +120,20 @@ namespace ShareX.ScreenCaptureLib
             return annotation;
         }
 
-        public void HideAllNodes()
+        public void UnselectAll()
         {
             foreach (Annotation ann in Annotations)
             {
                 ann.Selected = false;
+            }
+        }
+
+        public void DeleteSelected()
+        {
+            foreach (Annotation ann in Annotations.Where(x => x.Selected).ToArray())
+            {
+                Annotations.Remove(ann);
+                Children.Remove(ann);
             }
         }
 
@@ -156,7 +166,7 @@ namespace ShareX.ScreenCaptureLib
 
             if (e.ChangedButton == MouseButton.Left && AnnotationMode != AnnotationMode.Cursor)
             {
-                HideAllNodes();
+                UnselectAll();
                 currentAnnotation = CreateCurrentAnnotation();
                 currentAnnotation.PointStart = currentAnnotation.PointFinish = e.GetPosition(this);
                 UpdateCurrentAnnotation();
@@ -203,6 +213,16 @@ namespace ShareX.ScreenCaptureLib
             if (e.LeftButton == MouseButtonState.Pressed && IsCreatingAnnotation)
             {
                 FinishCurrentAnnotation();
+            }
+        }
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+
+            if (e.Key == Key.Delete)
+            {
+                DeleteSelected();
             }
         }
     }
