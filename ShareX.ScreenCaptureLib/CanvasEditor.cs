@@ -137,17 +137,6 @@ namespace ShareX.ScreenCaptureLib
             }
         }
 
-        private void UpdateCurrentAnnotation()
-        {
-            if (currentAnnotation != null)
-            {
-                SetLeft(currentAnnotation, currentAnnotation.Area.X);
-                SetTop(currentAnnotation, currentAnnotation.Area.Y);
-                currentAnnotation.Width = currentAnnotation.Area.Width;
-                currentAnnotation.Height = currentAnnotation.Area.Height;
-            }
-        }
-
         private void FinishCurrentAnnotation()
         {
             if (currentAnnotation != null && currentAnnotation.IsCreating)
@@ -169,7 +158,7 @@ namespace ShareX.ScreenCaptureLib
                 UnselectAll();
                 currentAnnotation = CreateCurrentAnnotation();
                 currentAnnotation.PointStart = currentAnnotation.PointFinish = e.GetPosition(this);
-                UpdateCurrentAnnotation();
+                currentAnnotation.UpdateDimension();
 
                 Children.Add(currentAnnotation);
             }
@@ -182,7 +171,7 @@ namespace ShareX.ScreenCaptureLib
             if (IsCreatingAnnotation)
             {
                 currentAnnotation.PointFinish = e.GetPosition(this);
-                UpdateCurrentAnnotation();
+                currentAnnotation.UpdateDimension();
             }
         }
 
@@ -195,7 +184,7 @@ namespace ShareX.ScreenCaptureLib
                 if (e.ChangedButton == MouseButton.Left)
                 {
                     currentAnnotation.PointFinish = e.GetPosition(this);
-                    UpdateCurrentAnnotation();
+                    currentAnnotation.UpdateDimension();
                     FinishCurrentAnnotation();
                 }
                 else if (e.ChangedButton == MouseButton.Right)

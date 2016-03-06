@@ -10,7 +10,7 @@ namespace ShareX.ScreenCaptureLib
 {
     public class RectangleAnnotation : Annotation
     {
-        public int ShadowSize = 15;
+        public int ShadowSize { get; set; } = 15;
 
         protected override Geometry DefiningGeometry
         {

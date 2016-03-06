@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -98,6 +99,15 @@ namespace ShareX.ScreenCaptureLib
             {
                 Selected = !Selected;
             }
+        }
+
+        public void UpdateDimension()
+        {
+            Rect area = Area;
+            Canvas.SetLeft(this, area.X);
+            Canvas.SetTop(this, area.Y);
+            Width = area.Width;
+            Height = area.Height;
         }
 
         internal static bool IsDoubleFinite(object o)
