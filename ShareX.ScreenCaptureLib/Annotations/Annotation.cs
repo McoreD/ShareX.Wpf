@@ -14,6 +14,7 @@ namespace ShareX.ScreenCaptureLib
     public abstract class Annotation : Shape, IAnnotation
     {
         public Brush brush { get; set; }
+        public DrawingVisual dv { get; private set; }
 
         internal static bool IsDoubleFinite(object o)
         {
@@ -21,7 +22,12 @@ namespace ShareX.ScreenCaptureLib
             return (!double.IsInfinity(d) && !double.IsNaN(d));
         }
 
-        public abstract void Render();
+        public virtual RenderTargetBitmap Render()
+        {
+            var rtb = new RenderTargetBitmap((int)Width, (int)Height, AnnotationHelper.CapturedImage.Source.DpiX, AnnotationHelper.CapturedImage.Source.DpiY, PixelFormats.Pbgra32);
+            rtb.Render(this);
+            return rtb;
+        }
 
         public abstract void Render(DrawingContext dc);
 

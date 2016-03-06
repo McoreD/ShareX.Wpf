@@ -32,7 +32,7 @@ namespace ShareX.ScreenCaptureLib
             Render();
         }
 
-        public override void Render()
+        public override RenderTargetBitmap Render()
         {
             Stroke = Brushes.Blue;
             StrokeThickness = 3;
@@ -49,6 +49,8 @@ namespace ShareX.ScreenCaptureLib
                 ShadowDepth = 0,
                 BlurRadius = 10
             };
+
+            return base.Render();
         }
 
         public override void Render(DrawingContext dc)

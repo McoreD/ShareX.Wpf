@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace ShareX.ScreenCaptureLib
 {
@@ -78,12 +79,14 @@ namespace ShareX.ScreenCaptureLib
             context.LineTo(pt4, true, true);
         }
 
-        public override void Render()
+        public override RenderTargetBitmap Render()
         {
             HeadWidth = 15;
             HeadHeight = 5;
             Stroke = Brushes.Red;
             StrokeThickness = 2;
+
+            return base.Render();
         }
     }
 }

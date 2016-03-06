@@ -28,16 +28,17 @@ namespace ShareX.ScreenCaptureLib
             }
         }
 
-        public override void Render()
+        public override RenderTargetBitmap Render()
         {
             Opacity = 1;
             Fill = brush;
+
+            return base.Render();
         }
 
         public override void Render(DrawingContext dc)
         {
-            Render();
-            dc.DrawRectangle(Fill, null, Area);
+            dc.DrawImage(Render(), Area);
         }
     }
 }

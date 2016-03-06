@@ -33,7 +33,6 @@ namespace ShareX.ScreenCaptureLib
             dc.DrawImage(Source, new Rect(0, 0, Source.Width, Source.Height));
 
             foreach (var ann in Annotations) { ann.Render(dc); }
-
             // Parallel.ForEach(Annotations, ann => { ann.Render(dc); });
 
             dc.Close();

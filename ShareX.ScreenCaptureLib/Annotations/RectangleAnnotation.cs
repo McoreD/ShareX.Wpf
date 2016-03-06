@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
+using System.Windows.Media.Imaging;
 
 namespace ShareX.ScreenCaptureLib
 {
@@ -25,7 +26,7 @@ namespace ShareX.ScreenCaptureLib
             StrokeThickness = 1;
         }
 
-        public override void Render()
+        public override RenderTargetBitmap Render()
         {
             Effect = new DropShadowEffect
             {
@@ -36,11 +37,15 @@ namespace ShareX.ScreenCaptureLib
                 BlurRadius = ShadowSize,
                 Direction = 45
             };
+
+            return base.Render();
         }
 
         public override void Render(DrawingContext dc)
         {
+            Render();
             dc.DrawRectangle(null, new Pen(brush, StrokeThickness), Area);
+            // dc.DrawImage(Render(), Area);
         }
     }
 }

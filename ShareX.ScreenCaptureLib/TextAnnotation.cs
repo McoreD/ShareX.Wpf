@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace ShareX.ScreenCaptureLib
 {
@@ -19,7 +20,7 @@ namespace ShareX.ScreenCaptureLib
             }
         }
 
-        public override void Render()
+        public override RenderTargetBitmap Render()
         {
             throw new NotImplementedException();
         }

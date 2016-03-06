@@ -24,12 +24,14 @@ namespace ShareX.ScreenCaptureLib
             }
         }
 
-        public override void Render()
+        public override RenderTargetBitmap Render()
         {
             Rect applyRect = AnnotationHelper.CreateIntersectRect(Area);
             BitmapSource bmp = ImageHelper.CropImage(AnnotationHelper.CapturedImage.Source, applyRect);
             WriteableBitmap wbmp = AnnotationHelper.ChangeColor(bmp, ((SolidColorBrush)brush).Color);
             Fill = new ImageBrush(wbmp);
+
+            return base.Render();
         }
 
         public override void Render(DrawingContext dc)

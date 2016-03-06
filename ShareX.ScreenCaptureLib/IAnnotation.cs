@@ -11,7 +11,7 @@ namespace ShareX.ScreenCaptureLib
 {
     internal interface IAnnotation
     {
-        void Render();
+        RenderTargetBitmap Render();
 
         void Render(DrawingContext dc);
     }
