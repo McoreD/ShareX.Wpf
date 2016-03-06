@@ -94,5 +94,7 @@ namespace ShareX.ScreenCaptureLib
                 return CaptureHelper.CreateRectangle(PointStart, PointFinish);
             }
         }
+
+        public bool IsCreating { get; set; }
     }
 }

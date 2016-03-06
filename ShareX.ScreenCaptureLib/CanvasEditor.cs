@@ -34,6 +34,14 @@ namespace ShareX.ScreenCaptureLib
             }
         }
 
+        public bool IsCreatingAnnotation
+        {
+            get
+            {
+                return AnnotationMode != AnnotationMode.None && currentAnnotation != null && currentAnnotation.IsCreating;
+            }
+        }
+
         private Annotation currentAnnotation;
         private AdornerLayer adornerLayer;
 
@@ -97,21 +105,38 @@ namespace ShareX.ScreenCaptureLib
                     throw new NotImplementedException();
             }
 
+            annotation.IsCreating = true;
+
             return annotation;
         }
 
         private void UpdateCurrentAnnotation()
         {
-            SetLeft(currentAnnotation, currentAnnotation.Area.X);
-            SetTop(currentAnnotation, currentAnnotation.Area.Y);
-            currentAnnotation.Width = currentAnnotation.Area.Width;
-            currentAnnotation.Height = currentAnnotation.Area.Height;
+            if (currentAnnotation != null)
+            {
+                SetLeft(currentAnnotation, currentAnnotation.Area.X);
+                SetTop(currentAnnotation, currentAnnotation.Area.Y);
+                currentAnnotation.Width = currentAnnotation.Area.Width;
+                currentAnnotation.Height = currentAnnotation.Area.Height;
+            }
+        }
+
+        private void FinishCurrentAnnotation()
+        {
+            if (currentAnnotation != null && currentAnnotation.IsCreating)
+            {
+                currentAnnotation.IsCreating = false;
+                currentAnnotation.FinalRender();
+
+                CapturedImage.Annotations.Add(currentAnnotation);
+                adornerLayer = AdornerLayer.GetAdornerLayer(currentAnnotation);
+                adornerLayer.Add(new CircleAdorner(currentAnnotation));
+            }
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            if (AnnotationMode == AnnotationMode.None)
-                return;
+            if (AnnotationMode == AnnotationMode.None) return;
 
             base.OnMouseLeftButtonDown(e);
 
@@ -124,8 +149,7 @@ namespace ShareX.ScreenCaptureLib
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            if (AnnotationMode == AnnotationMode.None || e.LeftButton == MouseButtonState.Released || currentAnnotation == null)
-                return;
+            if (!IsCreatingAnnotation) return;
 
             base.OnMouseMove(e);
 
@@ -135,18 +159,25 @@ namespace ShareX.ScreenCaptureLib
 
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
-            if (AnnotationMode == AnnotationMode.None)
-                return;
+            if (!IsCreatingAnnotation) return;
 
             base.OnMouseUp(e);
 
             currentAnnotation.PointFinish = e.GetPosition(this);
             UpdateCurrentAnnotation();
-            currentAnnotation.FinalRender();
+            FinishCurrentAnnotation();
+        }
 
-            CapturedImage.Annotations.Add(currentAnnotation);
-            adornerLayer = AdornerLayer.GetAdornerLayer(currentAnnotation);
-            adornerLayer.Add(new CircleAdorner(currentAnnotation));
+        protected override void OnMouseLeave(MouseEventArgs e)
+        {
+            if (!IsCreatingAnnotation) return;
+
+            base.OnMouseLeave(e);
+
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                FinishCurrentAnnotation();
+            }
         }
     }
 }
