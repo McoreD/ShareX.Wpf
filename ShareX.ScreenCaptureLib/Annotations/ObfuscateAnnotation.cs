@@ -38,7 +38,9 @@ namespace ShareX.ScreenCaptureLib
 
         public override void Render(DrawingContext dc)
         {
-            dc.DrawImage(Render(), Area);
+            // dc.DrawImage(Render(), new Rect(0, 0, Width, Height));
+            Render();
+            dc.DrawRectangle(Fill, null, Area);
         }
     }
 }

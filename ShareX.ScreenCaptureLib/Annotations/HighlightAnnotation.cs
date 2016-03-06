@@ -38,6 +38,7 @@ namespace ShareX.ScreenCaptureLib
         {
             Render();
             dc.DrawRectangle(Fill, null, Area);
+            // dc.DrawImage(Render(), Area);
         }
     }
 }
