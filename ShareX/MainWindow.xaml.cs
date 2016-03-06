@@ -3,6 +3,7 @@ using Microsoft.Win32;
 using ShareX.ScreenCaptureLib;
 using System;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -19,8 +20,33 @@ namespace ShareX
         {
             InitializeComponent();
             Title = $"ShareX 11.0";
-            cboAnnotation.ItemsSource = Helper.GetEnumDescriptions<AnnotationMode>();
-            cboAnnotation.SelectedIndex = 0;
+
+            editor.ImageLoaded += Editor_ImageLoaded;
+
+            spAnnotations.IsEnabled = false;
+
+            var annList = Enum.GetValues(typeof(AnnotationMode)).Cast<AnnotationMode>().ToList<AnnotationMode>();
+            foreach (AnnotationMode ann in annList)
+            {
+                if (ann == AnnotationMode.None)
+                    continue;
+
+                Button btnAnnotate = new Button() { Content = ann.GetDescription(), Tag = ann };
+                btnAnnotate.Click += btnAnnotate_Click;
+                btnAnnotate.Margin = new Thickness(10);
+                spAnnotations.Children.Add(btnAnnotate);
+            }
+        }
+
+        private void Editor_ImageLoaded()
+        {
+            spAnnotations.IsEnabled = true;
+        }
+
+        private void btnAnnotate_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            editor.Init((AnnotationMode)btn.Tag);
         }
 
         #region Capture
@@ -28,7 +54,7 @@ namespace ShareX
         private void btnCaptureArea_Click(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
-            System.Threading.Thread.Sleep(500);
+            System.Threading.Thread.Sleep(300);
 
             RectangleLight crop = new RectangleLight();
             if (crop.ShowDialog() == true)
@@ -47,14 +73,6 @@ namespace ShareX
         #endregion Capture
 
         #region Editor
-
-        private void cboAnnotation_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (editor.CapturedImage != null)
-            {
-                editor.Init((AnnotationMode)cboAnnotation.SelectedIndex);
-            }
-        }
 
         #endregion Editor
 

@@ -14,6 +14,9 @@ namespace ShareX.ScreenCaptureLib
 {
     public class CanvasEditor : Canvas
     {
+        public delegate void ImageLoadedEventHandler();
+        public event ImageLoadedEventHandler ImageLoaded;
+
         public AnnotationMode AnnotationMode { get; private set; } = AnnotationMode.None;
 
         public static readonly DependencyProperty SourceProperty = DependencyProperty.Register("Source", typeof(ImageEx), typeof(CanvasEditor), new FrameworkPropertyMetadata(ImagePropertyChangedCallback));
@@ -29,6 +32,11 @@ namespace ShareX.ScreenCaptureLib
         private Annotation currentAnnotation;
         private AdornerLayer adornerLayer;
 
+        protected virtual void OnImageLoaded()
+        {
+            if (ImageLoaded != null) ImageLoaded();
+        }
+
         private static void ImagePropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             CanvasEditor canvas = d as CanvasEditor;
@@ -43,6 +51,7 @@ namespace ShareX.ScreenCaptureLib
             canvas.Width = img.Source.Width;
             canvas.Height = img.Source.Height;
             canvas.Background = new ImageBrush(img.Source);
+            canvas.ImageLoaded();
 
             canvas.Children.Clear();
         }

@@ -15,7 +15,12 @@ namespace ShareX.ScreenCaptureLib
         {
             get
             {
-                return new EllipseGeometry(PointFromScreen(CaptureHelper.GetCursorPosition()), Width, Height);
+                return new EllipseGeometry()
+                {
+                    Transform = new TranslateTransform(Width / 2, Height / 2),
+                    RadiusX = Width / 2,
+                    RadiusY = Height / 2
+                };
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HelpersLib;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -92,7 +93,7 @@ namespace ShareX.ScreenCaptureLib
         {
             get
             {
-                return new Rect(PointStart, PointFinish);
+                return CaptureHelper.CreateRectangle(PointStart, PointFinish);
             }
         }
     }

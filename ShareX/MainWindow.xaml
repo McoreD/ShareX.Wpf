@@ -13,32 +13,33 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
-        <ScreenCaptureLib:CanvasEditor x:Name="editor" Grid.Row="1" Grid.Column="0" Margin="10" Cursor="Pen" />
+        <!--Image editor canvas-->
+        <ScreenCaptureLib:CanvasEditor x:Name="editor" Grid.Row="0" Grid.Column="1" Margin="10" Cursor="Pen" />
 
         <!--Capture commands-->
-        <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" x:Name="capturePanel">
-            <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}" HorizontalAlignment="Center"><Run Text="Capture" /></TextBlock>
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" x:Name="capturePanel">
+            <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}" HorizontalAlignment="Center" Margin="10"><Run Text="Capture" /></TextBlock>
             <Button x:Name="btnCaptureRectange" Margin="10" Click="btnCaptureArea_Click" Content="Area" />
             <Button x:Name="btnCaptureWindow" Margin="10" Content="Window" />
             <Button x:Name="btnCaptureScreen" Margin="10" Click="btnCaptureScreen_Click" Content="Screen" />
         </StackPanel>
 
         <!--Image editor buttons-->
-        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
-            <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}" HorizontalAlignment="Center" Margin="10"><Run Text="Annotate using" /></TextBlock>
-            <ComboBox Name="cboAnnotation" SelectionChanged="cboAnnotation_SelectionChanged" MinWidth="100" Margin="10,0,0,0" IsReadOnly="True" />
+        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical" Name="spAnnotations">
+            <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}" HorizontalAlignment="Center" Margin="10"><Run Text="Annotate" /></TextBlock>
         </StackPanel>
 
-        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal">
+        <!--Export buttons-->
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
             <Button Margin="10,10,0,10"
 				x:Name="btnCopyToClipboard" Content="Copy to clipboard" Click="btnCopyToClipboard_Click" />
             <Button Margin="10,10,0,10"
