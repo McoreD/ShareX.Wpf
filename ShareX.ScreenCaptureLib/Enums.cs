@@ -8,7 +8,7 @@ namespace ShareX.ScreenCaptureLib
 {
     public enum AnnotationMode
     {
-        None,
+        Cursor,
         Highlight,
         Obfuscate,
         Rectangle,

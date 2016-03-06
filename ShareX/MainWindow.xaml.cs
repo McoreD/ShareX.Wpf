@@ -30,9 +30,6 @@ namespace ShareX
 
             foreach (AnnotationMode ann in annList)
             {
-                if (ann == AnnotationMode.None)
-                    continue;
-
                 Button btnAnnotate = new Button() { Content = ann.GetDescription(), Tag = ann };
                 btnAnnotate.Click += btnAnnotate_Click;
                 btnAnnotate.Margin = new Thickness(10);

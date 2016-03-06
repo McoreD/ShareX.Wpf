@@ -24,6 +24,7 @@ namespace ShareX.ScreenCaptureLib
         {
             brush = Brushes.Red;
 
+            Fill = Brushes.Transparent;
             Stroke = brush;
             StrokeThickness = 1;
         }

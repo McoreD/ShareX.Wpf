@@ -32,7 +32,7 @@ namespace ShareX.ScreenCaptureLib
             }
         }
 
-        private AnnotationMode annotationMode = AnnotationMode.None;
+        private AnnotationMode annotationMode = AnnotationMode.Cursor;
 
         public AnnotationMode AnnotationMode
         {
@@ -54,7 +54,7 @@ namespace ShareX.ScreenCaptureLib
         {
             get
             {
-                return AnnotationMode != AnnotationMode.None && currentAnnotation != null && currentAnnotation.IsCreating;
+                return AnnotationMode != AnnotationMode.Cursor && currentAnnotation != null && currentAnnotation.IsCreating;
             }
         }
 
@@ -154,7 +154,7 @@ namespace ShareX.ScreenCaptureLib
         {
             base.OnMouseDown(e);
 
-            if (e.ChangedButton == MouseButton.Left && AnnotationMode != AnnotationMode.None)
+            if (e.ChangedButton == MouseButton.Left && AnnotationMode != AnnotationMode.Cursor)
             {
                 HideAllNodes();
                 currentAnnotation = CreateCurrentAnnotation();

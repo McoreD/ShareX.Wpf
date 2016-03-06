@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
@@ -59,6 +60,31 @@ namespace ShareX.ScreenCaptureLib
             if (adorner != null)
             {
                 adorner.Visibility = Visibility.Hidden;
+            }
+        }
+
+        public void ToggleNodes()
+        {
+            if (adorner != null)
+            {
+                if (adorner.Visibility == Visibility.Visible)
+                {
+                    adorner.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    adorner.Visibility = Visibility.Visible;
+                }
+            }
+        }
+
+        protected override void OnMouseDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseDown(e);
+
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                ToggleNodes();
             }
         }
 
