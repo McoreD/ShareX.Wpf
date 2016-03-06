@@ -167,6 +167,9 @@ namespace ShareX
                         mi.Tag = window;
                         mi.Click += handlerWindow;
                         tsmiWindow.Items.Add(mi);
+
+                        // lbWindows.Items.Add(window);
+                        //  lbWindows.Visibility = Visibility.Visible;
                     }
                 }
             }
@@ -177,6 +180,13 @@ namespace ShareX
         {
             Button btn = sender as Button;
             btn.SetContextMenuOnMouseDown(e);
+            PrepareCaptureMenuAsync(tsmiWindow, tsmiWindowItems_Click);
+        }
+
+        private void lbWindows_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var window = lbWindows.SelectedItem as WindowInfo;
+            CaptureWindow(window.Handle);
         }
     }
 }

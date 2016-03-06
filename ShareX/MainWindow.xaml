@@ -35,6 +35,7 @@
                     </ContextMenu>
                 </Button.ContextMenu>
             </Button>
+            <ListBox Name="lbWindows" Visibility="Collapsed" Margin="10" SelectionChanged="lbWindows_SelectionChanged" />
             <Button x:Name="btnCaptureScreen" Margin="10" Click="btnCaptureScreen_Click" Content="Screen" />
         </StackPanel>
 

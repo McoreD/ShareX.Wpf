@@ -48,6 +48,7 @@ namespace ShareX.ScreenCaptureLib
                 return;
             }
 
+            canvas.ClipToBounds = true;
             canvas.Width = img.Source.Width;
             canvas.Height = img.Source.Height;
             canvas.Background = new ImageBrush(img.Source);

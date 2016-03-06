@@ -89,7 +89,7 @@ namespace ShareX.ScreenCaptureLib
             }
             else if (e.RightButton == MouseButtonState.Pressed)
             {
-                // canvas.Children.Remove(CropArea);
+                Close();
             }
         }
 
