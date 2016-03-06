@@ -14,7 +14,6 @@ namespace ShareX.ScreenCaptureLib
     public abstract class Annotation : Shape, IAnnotation
     {
         public Brush brush { get; set; }
-        public DrawingVisual dv { get; private set; }
 
         internal static bool IsDoubleFinite(object o)
         {
