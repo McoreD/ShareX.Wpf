@@ -95,6 +95,7 @@ namespace ShareX.ScreenCaptureLib
             currentAnnotation.PointFinish = e.GetPosition(this);
 
             currentAnnotation.Render();
+
             CapturedImage.Annotations.Add(currentAnnotation);
             adornerLayer = AdornerLayer.GetAdornerLayer(currentAnnotation);
             adornerLayer.Add(new CircleAdorner(currentAnnotation));
@@ -102,8 +103,14 @@ namespace ShareX.ScreenCaptureLib
             if (CapturedImage.Annotations.Count == 1)
             {
                 adornerLayer.MouseUp += AdornerLayer_MouseUp;
+                adornerLayer.MouseDown += AdornerLayer_MouseDown;
                 adornerLayer.Cursor = Cursors.SizeAll;
             }
+        }
+
+        private void AdornerLayer_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            currentAnnotation.Fill = null;
         }
 
         private void AdornerLayer_MouseUp(object sender, MouseButtonEventArgs e)
