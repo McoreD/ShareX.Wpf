@@ -17,8 +17,6 @@ namespace ShareX.ScreenCaptureLib
         public delegate void ImageLoadedEventHandler();
         public event ImageLoadedEventHandler ImageLoaded;
 
-        public AnnotationMode AnnotationMode { get; private set; } = AnnotationMode.None;
-
         public static readonly DependencyProperty SourceProperty = DependencyProperty.Register("Source", typeof(ImageEx), typeof(CanvasEditor), new FrameworkPropertyMetadata(ImagePropertyChangedCallback));
 
         [Category("Editor")]
@@ -31,6 +29,22 @@ namespace ShareX.ScreenCaptureLib
             set
             {
                 SetValue(SourceProperty, value);
+            }
+        }
+
+        private AnnotationMode annotationMode = AnnotationMode.None;
+
+        public AnnotationMode AnnotationMode
+        {
+            get
+            {
+                return annotationMode;
+            }
+            set
+            {
+                annotationMode = value;
+
+                AnnotationHelper.LoadCapturedImage(CapturedImage);
             }
         }
 
@@ -72,12 +86,6 @@ namespace ShareX.ScreenCaptureLib
             canvas.ImageLoaded();
 
             canvas.Children.Clear();
-        }
-
-        public void Init(AnnotationMode mode)
-        {
-            AnnotationMode = mode;
-            AnnotationHelper.LoadCapturedImage(CapturedImage);
         }
 
         private Annotation CreateCurrentAnnotation()

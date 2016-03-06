@@ -50,7 +50,7 @@ namespace ShareX
         private void btnAnnotate_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
-            editor.Init((AnnotationMode)btn.Tag);
+            editor.AnnotationMode = (AnnotationMode)btn.Tag;
         }
 
         #region Capture
