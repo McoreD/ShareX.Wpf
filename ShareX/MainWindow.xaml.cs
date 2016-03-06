@@ -23,13 +23,14 @@ namespace ShareX
         public MainWindow()
         {
             InitializeComponent();
-            Title = $"ShareX 11.0";
+            Title = $"ShareX WPF";
 
             editor.ImageLoaded += Editor_ImageLoaded;
 
             spAnnotations.IsEnabled = false;
 
-            var annList = Enum.GetValues(typeof(AnnotationMode)).Cast<AnnotationMode>().ToList<AnnotationMode>();
+            var annList = Enum.GetValues(typeof(AnnotationMode)).Cast<AnnotationMode>().ToList();
+
             foreach (AnnotationMode ann in annList)
             {
                 if (ann == AnnotationMode.None)
@@ -57,7 +58,7 @@ namespace ShareX
 
         private void btnCaptureArea_Click(object sender, RoutedEventArgs e)
         {
-            this.WindowState = WindowState.Minimized;
+            WindowState = WindowState.Minimized;
             Thread.Sleep(300);
 
             RectangleLight crop = new RectangleLight();
@@ -66,7 +67,7 @@ namespace ShareX
                 editor.CapturedImage = crop.GetScreenshot();
             }
 
-            this.WindowState = WindowState.Normal;
+            WindowState = WindowState.Normal;
         }
 
         private void btnCaptureScreen_Click(object sender, RoutedEventArgs e)
@@ -85,7 +86,7 @@ namespace ShareX
         private void btnCopyToClipboard_Click(object sender, RoutedEventArgs e)
         {
             if (editor.CapturedImage != null)
-                ClipboardHelper.SetImage(editor.CapturedImage.Export());
+                ClipboardHelper.SetImage(editor.CapturedImage.Export(editor.Annotations));
         }
 
         private void btnSaveToFile_Click(object sender, RoutedEventArgs e)
@@ -96,7 +97,7 @@ namespace ShareX
 
             if (dlg.ShowDialog() == true)
             {
-                using (var ms = editor.CapturedImage.ExportAsMemoryStream())
+                using (var ms = editor.CapturedImage.ExportAsMemoryStream(editor.Annotations))
                 using (var fs = new FileStream(dlg.FileName, FileMode.OpenOrCreate))
                 {
                     ms.CopyTo(fs);

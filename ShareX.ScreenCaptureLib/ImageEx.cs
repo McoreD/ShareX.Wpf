@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
@@ -18,21 +19,19 @@ namespace ShareX.ScreenCaptureLib
     {
         public BitmapSource Source { get; private set; }
 
-        public ObservableCollection<Annotation> Annotations { get; set; } = new ObservableCollection<Annotation>();
-
         public ImageEx(BitmapSource img)
         {
             Source = img;
             DateTimeCaptured = DateTime.Now;
         }
 
-        public MemoryStream ExportAsMemoryStream()
+        public MemoryStream ExportAsMemoryStream(IEnumerable<Annotation> annotations)
         {
             DrawingVisual dv = new DrawingVisual();
             DrawingContext dc = dv.RenderOpen();
             dc.DrawImage(Source, new Rect(0, 0, Source.Width, Source.Height));
 
-            foreach (var ann in Annotations) { ann.FinalRender(dc); }
+            foreach (Annotation ann in annotations) { ann.FinalRender(dc); }
             // Parallel.ForEach(Annotations, ann => { ann.Render(dc); });
 
             dc.Close();
@@ -49,10 +48,10 @@ namespace ShareX.ScreenCaptureLib
             return ms;
         }
 
-        public BitmapImage Export()
+        public BitmapImage Export(IEnumerable<Annotation> annotations)
         {
             var img = new BitmapImage();
-            using (MemoryStream ms = ExportAsMemoryStream())
+            using (MemoryStream ms = ExportAsMemoryStream(annotations))
             {
                 img.BeginInit();
                 img.StreamSource = new MemoryStream(ms.ToArray());

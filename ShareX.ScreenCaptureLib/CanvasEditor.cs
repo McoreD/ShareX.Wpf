@@ -48,6 +48,8 @@ namespace ShareX.ScreenCaptureLib
             }
         }
 
+        public ObservableCollection<Annotation> Annotations { get; set; } = new ObservableCollection<Annotation>();
+
         public bool IsCreatingAnnotation
         {
             get
@@ -119,7 +121,7 @@ namespace ShareX.ScreenCaptureLib
 
         public void HideAllNodes()
         {
-            foreach (Annotation ann in CapturedImage.Annotations)
+            foreach (Annotation ann in Annotations)
             {
                 ann.HideNodes();
             }
@@ -143,7 +145,8 @@ namespace ShareX.ScreenCaptureLib
                 currentAnnotation.IsCreating = false;
                 currentAnnotation.FinalRender();
                 currentAnnotation.CreateNodes();
-                CapturedImage.Annotations.Add(currentAnnotation);
+
+                Annotations.Add(currentAnnotation);
             }
         }
 
