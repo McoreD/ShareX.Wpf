@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
@@ -14,7 +15,52 @@ namespace ShareX.ScreenCaptureLib
 {
     public abstract class Annotation : Shape, IAnnotation
     {
-        public Brush brush { get; set; }
+        protected Brush brush;
+        protected Adorner adorner;
+
+        public bool IsCreating { get; set; }
+
+        public Point PointStart
+        {
+            get { return new Point(X1, Y1); }
+            set { X1 = value.X; Y1 = value.Y; }
+        }
+
+        public Point PointFinish
+        {
+            get { return new Point(X2, Y2); }
+            set { X2 = value.X; Y2 = value.Y; }
+        }
+
+        public Rect Area
+        {
+            get
+            {
+                return CaptureHelper.CreateRectangle(PointStart, PointFinish);
+            }
+        }
+
+        public void CreateNodes()
+        {
+            adorner = new CircleAdorner(this);
+            AdornerLayer.GetAdornerLayer(this).Add(adorner);
+        }
+
+        public void ShowNodes()
+        {
+            if (adorner != null)
+            {
+                adorner.Visibility = Visibility.Visible;
+            }
+        }
+
+        public void HideNodes()
+        {
+            if (adorner != null)
+            {
+                adorner.Visibility = Visibility.Hidden;
+            }
+        }
 
         internal static bool IsDoubleFinite(object o)
         {
@@ -74,27 +120,5 @@ namespace ShareX.ScreenCaptureLib
             get { return (double)GetValue(Y2Property); }
             set { SetValue(Y2Property, value); }
         }
-
-        public Point PointStart
-        {
-            get { return new Point(X1, Y1); }
-            set { X1 = value.X; Y1 = value.Y; }
-        }
-
-        public Point PointFinish
-        {
-            get { return new Point(X2, Y2); }
-            set { X2 = value.X; Y2 = value.Y; }
-        }
-
-        public Rect Area
-        {
-            get
-            {
-                return CaptureHelper.CreateRectangle(PointStart, PointFinish);
-            }
-        }
-
-        public bool IsCreating { get; set; }
     }
 }

@@ -57,7 +57,6 @@ namespace ShareX.ScreenCaptureLib
         }
 
         private Annotation currentAnnotation;
-        private AdornerLayer adornerLayer;
 
         public CanvasEditor()
         {
@@ -118,6 +117,14 @@ namespace ShareX.ScreenCaptureLib
             return annotation;
         }
 
+        public void HideAllNodes()
+        {
+            foreach (Annotation ann in CapturedImage.Annotations)
+            {
+                ann.HideNodes();
+            }
+        }
+
         private void UpdateCurrentAnnotation()
         {
             if (currentAnnotation != null)
@@ -135,10 +142,8 @@ namespace ShareX.ScreenCaptureLib
             {
                 currentAnnotation.IsCreating = false;
                 currentAnnotation.FinalRender();
-
+                currentAnnotation.CreateNodes();
                 CapturedImage.Annotations.Add(currentAnnotation);
-                adornerLayer = AdornerLayer.GetAdornerLayer(currentAnnotation);
-                adornerLayer.Add(new CircleAdorner(currentAnnotation));
             }
         }
 
@@ -148,6 +153,7 @@ namespace ShareX.ScreenCaptureLib
 
             base.OnMouseLeftButtonDown(e);
 
+            HideAllNodes();
             currentAnnotation = CreateCurrentAnnotation();
             currentAnnotation.PointStart = currentAnnotation.PointFinish = e.GetPosition(this);
             UpdateCurrentAnnotation();
