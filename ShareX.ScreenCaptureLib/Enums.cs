@@ -11,6 +11,7 @@ namespace ShareX.ScreenCaptureLib
         None,
         Highlight,
         Obfuscate,
+        Rectangle,
         Arrow
     }
 }

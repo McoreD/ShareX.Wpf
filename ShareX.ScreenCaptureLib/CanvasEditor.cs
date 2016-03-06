@@ -79,8 +79,11 @@ namespace ShareX.ScreenCaptureLib
                 case AnnotationMode.Obfuscate:
                     currentAnnotation = new ObfuscateAnnotation();
                     break;
-                case AnnotationMode.Arrow:
+                case AnnotationMode.Rectangle:
                     currentAnnotation = new RectangleAnnotation();
+                    break;
+                case AnnotationMode.Arrow:
+                    currentAnnotation = new ArrowAnnotation();
                     break;
                 default:
                     throw new NotImplementedException();

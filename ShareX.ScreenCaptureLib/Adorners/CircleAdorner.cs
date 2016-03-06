@@ -18,7 +18,7 @@ namespace ShareX.ScreenCaptureLib
 
         protected override void OnRender(DrawingContext dc)
         {
-            Rect adornedElementRect = new Rect(this.AdornedElement.DesiredSize);
+            Rect adornedElementRect = new Rect(AdornedElement.DesiredSize);
 
             // Some arbitrary drawing implements.
             SolidColorBrush brush = new SolidColorBrush(Colors.Black);

@@ -18,7 +18,9 @@ namespace ShareX
         public MainWindow()
         {
             InitializeComponent();
-            this.Title = $"ShareX 11.0";
+            Title = $"ShareX 11.0";
+            cboAnnotation.ItemsSource = Helper.GetEnumDescriptions<AnnotationMode>();
+            cboAnnotation.SelectedIndex = 0;
         }
 
         #region Capture
@@ -46,35 +48,11 @@ namespace ShareX
 
         #region Editor
 
-        private void btnEditHighlight_Click(object sender, RoutedEventArgs e)
+        private void cboAnnotation_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (editor.CapturedImage != null)
             {
-                editor.Init(AnnotationMode.Highlight);
-            }
-        }
-
-        private void btnEditObfuscate_Click(object sender, RoutedEventArgs e)
-        {
-            if (editor.CapturedImage != null)
-            {
-                editor.Init(AnnotationMode.Obfuscate);
-            }
-        }
-
-        private void btnEditRotate_Click(object sender, RoutedEventArgs e)
-        {
-            if (editor.CapturedImage != null)
-            {
-                // stuff
-            }
-        }
-
-        private void btnEditArrow_Click(object sender, RoutedEventArgs e)
-        {
-            if (editor.CapturedImage != null)
-            {
-                editor.Init(AnnotationMode.Arrow);
+                editor.Init((AnnotationMode)cboAnnotation.SelectedIndex);
             }
         }
 

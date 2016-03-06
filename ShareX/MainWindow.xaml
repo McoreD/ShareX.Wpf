@@ -34,10 +34,8 @@
 
         <!--Image editor buttons-->
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
-            <Button x:Name="btnEditHighlight" Margin="10,10,0,10" Click="btnEditHighlight_Click" Content="Highlight" />
-            <Button x:Name="btnEditObfuscate" Margin="10,10,0,10" Click="btnEditObfuscate_Click" Content="Obfuscate" />
-            <Button x:Name="btnEditArrow" Margin="10,10,0,10" Content="Rectangle" Click="btnEditArrow_Click" />
-            <Button x:Name="btnEditRotate" Margin="10" Click="btnEditRotate_Click" Visibility="Collapsed" Content="R" />
+            <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}" HorizontalAlignment="Center" Margin="10"><Run Text="Annotate using" /></TextBlock>
+            <ComboBox Name="cboAnnotation" SelectionChanged="cboAnnotation_SelectionChanged" MinWidth="100" Margin="10,0,0,0" IsReadOnly="True" />
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal">
