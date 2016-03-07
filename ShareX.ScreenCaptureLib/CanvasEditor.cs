@@ -18,12 +18,10 @@ namespace ShareX.ScreenCaptureLib
     {
         public delegate void ImageLoadedEventHandler();
         public event ImageLoadedEventHandler ImageLoaded;
-        private List<DrawingVisual> visuals = new List<DrawingVisual>();
 
         public ImageCapture CapturedImage { get; private set; }
 
         private AnnotationMode annotationMode = AnnotationMode.Cursor;
-
         public AnnotationMode AnnotationMode
         {
             get
@@ -33,7 +31,6 @@ namespace ShareX.ScreenCaptureLib
             set
             {
                 annotationMode = value;
-
                 AnnotationHelper.LoadCapturedImage(CapturedImage);
             }
         }

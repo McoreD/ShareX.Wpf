@@ -10,7 +10,7 @@
         Title="MainWindow"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" Width="507" MinWidth="500" MinHeight="400" Icon="ShareX_Icon.ico" Closing="Window_Closing">
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" Width="Auto" MinWidth="{Binding Width, ElementName=spBottomPanel}" MinHeight="400" Icon="ShareX_Icon.ico" Closing="Window_Closing">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -20,7 +20,6 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
         <!--Image editor canvas-->
@@ -54,7 +53,7 @@
                     </Button>
                 </StackPanel>
             </materialDesign:Card>
-            <materialDesign:Card Grid.Row="0" Grid.Column="0" Margin="5 0 5 5">
+            <materialDesign:Card  Margin="5 0 5 5">
                 <StackPanel Orientation="Vertical">
                     <TextBlock Text="Open" Margin="5" />
                     <Button x:Name="btnOpenFile" Margin="5" Click="btnOpenFile_Click">
@@ -67,8 +66,8 @@
             </materialDesign:Card>
         </StackPanel>
 
-        <DockPanel Grid.Row="1" Grid.Column="1">
-            <materialDesign:Card Margin="5">
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Name="spBottomPanel">
+            <materialDesign:Card Margin="5" HorizontalContentAlignment="Stretch">
                 <StackPanel Orientation="Vertical">
                     <TextBlock Text="Annotations" Margin="5 5 5 0" />
                     <StackPanel Name="spAnnotationBar" Orientation="Horizontal" HorizontalAlignment="Right" />
@@ -77,7 +76,7 @@
             <materialDesign:Card Margin="0 5 5 5">
                 <StackPanel Orientation="Vertical">
                     <TextBlock Text="Tasks" Margin="5 5 5 0" />
-                    <StackPanel Name="spBottomBar" Orientation="Horizontal">
+                    <StackPanel Name="spTasks" Orientation="Horizontal">
                         <Button Name="btnCopyToClipboard" Margin="5" Padding="0" Width="40" Height="40" Click="btnCopyToClipboard_Click">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="ClipboardOutline" />
@@ -102,6 +101,6 @@
                     </StackPanel>
                 </StackPanel>
             </materialDesign:Card>
-        </DockPanel>
+        </StackPanel>
     </Grid>
 </Window>
