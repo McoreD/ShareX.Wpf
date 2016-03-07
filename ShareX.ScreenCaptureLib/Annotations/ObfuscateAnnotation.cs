@@ -33,8 +33,8 @@ namespace ShareX.ScreenCaptureLib
 
         public override void FinalRender(DrawingContext dc)
         {
-            ToBitmap();
-            dc.DrawRectangle(Fill, null, Area);
+            GetBitmap();
+            dc.DrawRectangle(Fill, null, Bounds);
         }
 
         public override DrawingVisual GetVisual()
@@ -43,7 +43,7 @@ namespace ShareX.ScreenCaptureLib
 
             using (DrawingContext dc = visual.RenderOpen())
             {
-                dc.DrawImage(ToBitmap(), Area);
+                dc.DrawImage(GetBitmap(), Bounds);
             }
 
             return visual;

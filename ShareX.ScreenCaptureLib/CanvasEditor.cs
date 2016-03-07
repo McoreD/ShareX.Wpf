@@ -17,7 +17,9 @@ namespace ShareX.ScreenCaptureLib
     public class CanvasEditor : Canvas
     {
         public delegate void ImageLoadedEventHandler();
+
         public event ImageLoadedEventHandler ImageLoaded;
+
         private List<DrawingVisual> visuals = new List<DrawingVisual>();
 
         public static readonly DependencyProperty SourceProperty = DependencyProperty.Register("Source", typeof(ImageCapture), typeof(CanvasEditor), new FrameworkPropertyMetadata(ImagePropertyChangedCallback));
@@ -90,6 +92,7 @@ namespace ShareX.ScreenCaptureLib
             canvas.ImageLoaded();
 
             canvas.Children.Clear();
+            canvas.visuals.Clear();
         }
 
         private Annotation CreateCurrentAnnotation()
@@ -101,18 +104,23 @@ namespace ShareX.ScreenCaptureLib
                 case AnnotationMode.Highlight:
                     annotation = new HighlightAnnotation();
                     break;
+
                 case AnnotationMode.Obfuscate:
                     annotation = new ObfuscateAnnotation();
                     break;
+
                 case AnnotationMode.Rectangle:
                     annotation = new RectangleAnnotation();
                     break;
+
                 case AnnotationMode.Ellipse:
                     annotation = new EllipseAnnotation();
                     break;
+
                 case AnnotationMode.Arrow:
                     annotation = new ArrowAnnotation();
                     break;
+
                 default:
                     throw new NotImplementedException();
             }
@@ -144,7 +152,7 @@ namespace ShareX.ScreenCaptureLib
             if (currentAnnotation != null && currentAnnotation.IsCreating)
             {
                 currentAnnotation.IsCreating = false;
-                //  currentAnnotation.ToBitmap();
+
                 currentAnnotation.Selected = true;
 
                 Annotations.Add(currentAnnotation);
@@ -222,10 +230,23 @@ namespace ShareX.ScreenCaptureLib
             }
         }
 
-        public RenderTargetBitmap ToBitmap()
+        public RenderTargetBitmap GetBitmap()
         {
             RenderTargetBitmap rtb = new RenderTargetBitmap((int)CapturedImage.Source.Width, (int)CapturedImage.Source.Height, CapturedImage.Source.DpiX, CapturedImage.Source.DpiY, PixelFormats.Pbgra32);
-            rtb.Render(this);
+
+            DrawingVisual background = new DrawingVisual();
+            using (DrawingContext dc = background.RenderOpen())
+            {
+                dc.DrawImage(CapturedImage.Source, new Rect(0, 0, (int)Width, (int)Height));
+            }
+
+            rtb.Render(background);
+
+            foreach (var ann in Children)
+            {
+                rtb.Render(ann as UIElement);
+            }
+
             return rtb;
         }
     }

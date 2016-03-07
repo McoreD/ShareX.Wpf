@@ -57,7 +57,7 @@ namespace ShareX.ScreenCaptureLib
             set { X2 = value.X; Y2 = value.Y; }
         }
 
-        public Rect Area
+        public Rect Bounds
         {
             get
             {
@@ -103,7 +103,7 @@ namespace ShareX.ScreenCaptureLib
 
         public void UpdateDimensions()
         {
-            Rect area = Area;
+            Rect area = Bounds;
             Canvas.SetLeft(this, area.X);
             Canvas.SetTop(this, area.Y);
             Width = area.Width;
@@ -116,7 +116,7 @@ namespace ShareX.ScreenCaptureLib
             return (!double.IsInfinity(d) && !double.IsNaN(d));
         }
 
-        public virtual RenderTargetBitmap ToBitmap()
+        public virtual RenderTargetBitmap GetBitmap()
         {
             var rtb = new RenderTargetBitmap((int)Width, (int)Height, AnnotationHelper.CapturedImage.Source.DpiX, AnnotationHelper.CapturedImage.Source.DpiY, PixelFormats.Pbgra32);
             rtb.Render(this);

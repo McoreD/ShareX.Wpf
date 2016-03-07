@@ -30,7 +30,7 @@ namespace ShareX.ScreenCaptureLib
 
             using (DrawingContext dc = visual.RenderOpen())
             {
-                dc.DrawImage(ToBitmap(), Area);
+                dc.DrawImage(GetBitmap(), Bounds);
             }
 
             return visual;

@@ -40,7 +40,7 @@ namespace ShareX.ScreenCaptureLib
 
         public override void FinalRender(DrawingContext dc)
         {
-            dc.DrawImage(ToBitmap(), Area);
+            dc.DrawImage(GetBitmap(), Bounds);
         }
 
         public override DrawingVisual GetVisual()
@@ -50,7 +50,7 @@ namespace ShareX.ScreenCaptureLib
 
             using (DrawingContext dc = visual.RenderOpen())
             {
-                dc.DrawImage(ToBitmap(), Area);
+                FinalRender(dc);
             }
 
             return visual;
