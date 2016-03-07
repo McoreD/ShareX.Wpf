@@ -143,9 +143,8 @@ namespace ShareX.ScreenCaptureLib
             return rtb;
         }
 
-        public virtual DrawingVisual Render()
+        public virtual void Render()
         {
-            return new DrawingVisual();
         }
 
         public static readonly DependencyProperty X1Property = DependencyProperty.Register("X1", typeof(double), typeof(Annotation),

@@ -26,24 +26,16 @@ namespace ShareX.ScreenCaptureLib
 
         public override RenderTargetBitmap GetBitmap()
         {
+            Render();
+            return base.GetBitmap();
+        }
+
+        public override void Render()
+        {
             Rect applyRect = AnnotationHelper.CreateIntersectRect(Bounds);
             BitmapSource bmp = ImageHelper.CropImage(AnnotationHelper.CapturedImage.Source, applyRect);
             WriteableBitmap wbmp = AnnotationHelper.ChangeColor(bmp, ((SolidColorBrush)brush).Color);
             Fill = new ImageBrush(wbmp);
-
-            return base.GetBitmap();
-        }
-
-        public override DrawingVisual Render()
-        {
-            DrawingVisual visual = new DrawingVisual();
-
-            using (DrawingContext dc = visual.RenderOpen())
-            {
-                dc.DrawImage(GetBitmap(), Bounds);
-            }
-
-            return visual;
         }
     }
 }

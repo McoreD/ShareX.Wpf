@@ -80,17 +80,5 @@ namespace ShareX.ScreenCaptureLib
             context.LineTo(pt2, true, true);
             context.LineTo(pt4, true, true);
         }
-
-        public override DrawingVisual Render()
-        {
-            DrawingVisual visual = new DrawingVisual();
-
-            using (DrawingContext dc = visual.RenderOpen())
-            {
-                dc.DrawGeometry(null, new Pen(brush, StrokeThickness), DefiningGeometry);
-            }
-
-            return visual;
-        }
     }
 }
