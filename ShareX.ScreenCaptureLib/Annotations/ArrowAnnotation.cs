@@ -31,12 +31,6 @@ namespace ShareX.ScreenCaptureLib
             set { base.SetValue(HeadHeightProperty, value); }
         }
 
-        public override void Render(DrawingContext dc)
-        {
-            GetBitmap();
-            dc.DrawRectangle(Fill, null, Bounds);
-        }
-
         public ArrowAnnotation()
         {
             HeadWidth = 15;
@@ -87,7 +81,7 @@ namespace ShareX.ScreenCaptureLib
             context.LineTo(pt4, true, true);
         }
 
-        public override DrawingVisual GetVisual()
+        public override DrawingVisual Render()
         {
             DrawingVisual visual = new DrawingVisual();
 

@@ -20,11 +20,7 @@ namespace ShareX.ScreenCaptureLib
             }
         }
 
-        public override void Render(DrawingContext dc)
-        {
-        }
-
-        public override DrawingVisual GetVisual()
+        public override DrawingVisual Render()
         {
             DrawingVisual visual = new DrawingVisual();
 

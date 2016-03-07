@@ -46,17 +46,12 @@ namespace ShareX.ScreenCaptureLib
             };
         }
 
-        public override void Render(DrawingContext dc)
-        {
-            dc.DrawLine(new Pen(Stroke, StrokeThickness), PointStart, PointFinish);
-        }
-
         internal virtual void CacheDefiningGeometry()
         {
             cachedGeometry = new LineGeometry(PointStart, PointFinish);
         }
 
-        public override DrawingVisual GetVisual()
+        public override DrawingVisual Render()
         {
             DrawingVisual visual = new DrawingVisual();
 

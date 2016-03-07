@@ -154,7 +154,7 @@ namespace ShareX.ScreenCaptureLib
 
                 Annotations.Add(currentAnnotation);
 
-                DrawingVisual visual = currentAnnotation.GetVisual();
+                currentAnnotation.Render();
             }
         }
 

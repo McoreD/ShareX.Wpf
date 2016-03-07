@@ -123,9 +123,7 @@ namespace ShareX.ScreenCaptureLib
             return rtb;
         }
 
-        public abstract void Render(DrawingContext dc);
-
-        public abstract DrawingVisual GetVisual();
+        public abstract DrawingVisual Render();
 
         public static readonly DependencyProperty X1Property = DependencyProperty.Register("X1", typeof(double), typeof(Annotation),
             new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender),

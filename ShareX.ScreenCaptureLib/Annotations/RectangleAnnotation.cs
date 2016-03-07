@@ -38,19 +38,14 @@ namespace ShareX.ScreenCaptureLib
             };
         }
 
-        public override void Render(DrawingContext dc)
-        {
-            dc.DrawImage(GetBitmap(), Bounds);
-        }
-
-        public override DrawingVisual GetVisual()
+        public override DrawingVisual Render()
         {
             DrawingVisual visual = new DrawingVisual();
             visual.Effect = Effect;
 
             using (DrawingContext dc = visual.RenderOpen())
             {
-                Render(dc);
+                dc.DrawImage(GetBitmap(), Bounds);
             }
 
             return visual;

@@ -34,13 +34,7 @@ namespace ShareX.ScreenCaptureLib
             return base.GetBitmap();
         }
 
-        public override void Render(DrawingContext dc)
-        {
-            GetBitmap();
-            dc.DrawRectangle(Fill, null, Bounds);
-        }
-
-        public override DrawingVisual GetVisual()
+        public override DrawingVisual Render()
         {
             DrawingVisual visual = new DrawingVisual();
 
