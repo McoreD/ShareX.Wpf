@@ -1,4 +1,5 @@
 ﻿using HelpersLib;
+using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
 using ScreenCaptureLib;
 using ShareX.ScreenCaptureLib;
@@ -25,16 +26,44 @@ namespace ShareX
 
             editor.ImageLoaded += Editor_ImageLoaded;
 
-            spAnnotations.IsEnabled = false;
+            spAnnotationBar.IsEnabled = spBottomBar.IsEnabled = false;
 
             var annList = Enum.GetValues(typeof(AnnotationMode)).Cast<AnnotationMode>().ToList();
 
             foreach (AnnotationMode ann in annList)
             {
-                Button btnAnnotate = new Button() { Content = ann.GetDescription(), Tag = ann };
+                Button btnAnnotate = new Button();
+                btnAnnotate.Tag = ann;
                 btnAnnotate.Click += btnAnnotate_Click;
-                btnAnnotate.Margin = new Thickness(10);
-                spAnnotations.Children.Add(btnAnnotate);
+                btnAnnotate.Width = btnAnnotate.Height = 40;
+                btnAnnotate.Padding = new Thickness(0);
+                btnAnnotate.Margin = new Thickness(5);
+                spAnnotationBar.Children.Add(btnAnnotate);
+
+                switch (ann)
+                {
+                    case AnnotationMode.Cursor:
+                        btnAnnotate.Content = new PackIcon() { Kind = PackIconKind.CursorDefaultOutline };
+                        break;
+                    case AnnotationMode.Highlight:
+                        btnAnnotate.Content = new PackIcon() { Kind = PackIconKind.WeatherSunny };
+                        break;
+                    case AnnotationMode.Obfuscate:
+                        btnAnnotate.Content = new PackIcon() { Kind = PackIconKind.Texture };
+                        break;
+                    case AnnotationMode.Rectangle:
+                        btnAnnotate.Content = new PackIcon() { Kind = PackIconKind.CheckboxBlankOutline };
+                        break;
+                    case AnnotationMode.Ellipse:
+                        btnAnnotate.Content = new PackIcon() { Kind = PackIconKind.CheckboxBlankCircleOutline };
+                        break;
+                    case AnnotationMode.Line:
+                        btnAnnotate.Content = new PackIcon() { Kind = PackIconKind.VectorLine };
+                        break;
+                    case AnnotationMode.Arrow:
+                        btnAnnotate.Content = new PackIcon() { Kind = PackIconKind.CallMade };
+                        break;
+                }
             }
         }
 
@@ -45,7 +74,7 @@ namespace ShareX
 
         private void Editor_ImageLoaded()
         {
-            spAnnotations.IsEnabled = true;
+            spAnnotationBar.IsEnabled = spBottomBar.IsEnabled = true;
         }
 
         #region Capture

@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShareX"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:ScreenCaptureLib="clr-namespace:ShareX.ScreenCaptureLib;assembly=ShareX.ScreenCaptureLib" x:Class="ShareX.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow"
@@ -25,41 +26,82 @@
         <!--Image editor canvas-->
         <ScreenCaptureLib:CanvasEditor x:Name="editor" Grid.Row="0" Grid.Column="1" Margin="10" Cursor="Pen" />
 
-        <!--Capture / Import commands-->
-        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" x:Name="capturePanel">
-            <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}" HorizontalAlignment="Center" Margin="10"><Run Text="Capture" /></TextBlock>
-            <Button x:Name="btnCaptureRectange" Margin="10" Click="btnCaptureArea_Click" Content="Area" />
-            <Button x:Name="btnCaptureWindow" Margin="10" Content="Window" ContextMenuOpening="btnCaptureWindow_ContextMenuOpening" Click="btnCaptureWindow_Click">
-                <Button.ContextMenu>
-                    <ContextMenu Name="tsmiWindow">
-                    </ContextMenu>
-                </Button.ContextMenu>
-            </Button>
-            <Button x:Name="btnCaptureScreen" Margin="10" Click="btnCaptureScreen_Click" Content="Screen" />
-            <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}" HorizontalAlignment="Center" Margin="10"><Run Text="Open" /></TextBlock>
-            <Button x:Name="btnOpenFile" Margin="10" Content="File..." Click="btnOpenFile_Click" />
+        <StackPanel Grid.Row="0" Grid.Column="0">
+            <materialDesign:Card Margin="5">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Capture" Margin="5" />
+                    <Button x:Name="btnCaptureRectange" Margin="5" Padding="0" Click="btnCaptureArea_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Camera" />
+                            <TextBlock Text="Region" Margin="5 0 0 0" />
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="btnCaptureWindow" Margin="5" ContextMenuOpening="btnCaptureWindow_ContextMenuOpening" Click="btnCaptureWindow_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="WindowMaximize" />
+                            <TextBlock Text="Window" Margin="5 0 0 0" />
+                        </StackPanel>
+                        <Button.ContextMenu>
+                            <ContextMenu Name="tsmiWindow">
+                            </ContextMenu>
+                        </Button.ContextMenu>
+                    </Button>
+                    <Button x:Name="btnCaptureScreen" Margin="5" Padding="0" Click="btnCaptureScreen_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Monitor" />
+                            <TextBlock Text="Screen" Margin="5 0 0 0" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </materialDesign:Card>
+            <materialDesign:Card Grid.Row="0" Grid.Column="0" Margin="5 0 5 5">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Open" Margin="5" />
+                    <Button x:Name="btnOpenFile" Margin="5" Click="btnOpenFile_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="FileImage" />
+                            <TextBlock Text="Open" Margin="5 0 0 0" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </materialDesign:Card>
         </StackPanel>
 
-        <!--Image editor buttons-->
-        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical" Name="spAnnotations">
-            <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}" HorizontalAlignment="Center" Margin="10"><Run Text="Annotate" /></TextBlock>
-        </StackPanel>
-
-        <!--Export buttons-->
-        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
-            <Button Margin="10,10,0,10"
-				x:Name="btnCopyToClipboard" Content="Copy to clipboard" Click="btnCopyToClipboard_Click" />
-            <Button Margin="10,10,0,10"
-				x:Name="btnSaveToFile" Content="Save to file" Click="btnSaveToFile_Click" />
-            <Button Margin="10"
-				x:Name="btnUpload" Content="Upload" Click="btnUpload_Click">
-                <Button.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="Dropbox" />
-                        <MenuItem Header="Imgur" />
-                    </ContextMenu>
-                </Button.ContextMenu>
-            </Button>
-        </StackPanel>
+        <DockPanel Grid.Row="1" Grid.Column="1">
+            <materialDesign:Card Margin="5">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Annotations" Margin="5 5 5 0" />
+                    <StackPanel Name="spAnnotationBar" Orientation="Horizontal" HorizontalAlignment="Right" />
+                </StackPanel>
+            </materialDesign:Card>
+            <materialDesign:Card Margin="0 5 5 5">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Tasks" Margin="5 5 5 0" />
+                    <StackPanel Name="spBottomBar" Orientation="Horizontal">
+                        <Button Name="btnCopyToClipboard" Margin="5" Padding="0" Width="40" Height="40" Click="btnCopyToClipboard_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="ClipboardOutline" />
+                            </StackPanel>
+                        </Button>
+                        <Button Name="btnSaveToFile" Margin="5" Padding="0" Width="40" Height="40" Click="btnSaveToFile_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Floppy" />
+                            </StackPanel>
+                        </Button>
+                        <Button Name="btnUpload" Margin="5" Padding="0" Width="40" Height="40" Click="btnUpload_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="CloudUpload" />
+                            </StackPanel>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Dropbox" />
+                                    <MenuItem Header="Imgur" />
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </materialDesign:Card>
+        </DockPanel>
     </Grid>
 </Window>
