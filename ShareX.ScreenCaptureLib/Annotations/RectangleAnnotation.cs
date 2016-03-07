@@ -37,13 +37,5 @@ namespace ShareX.ScreenCaptureLib
                 BlurRadius = ShadowSize
             };
         }
-
-        public override DrawingVisual Render()
-        {
-            DrawingVisual visual = new DrawingVisual();
-            visual.Effect = Effect;
-
-            return visual;
-        }
     }
 }
