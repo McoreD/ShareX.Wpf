@@ -23,8 +23,9 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
-        <!--Image editor canvas-->
-        <ScreenCaptureLib:CanvasEditor x:Name="editor" Grid.Row="0" Grid.Column="1" Margin="10" Cursor="Pen" />
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Row="0" Grid.Column="1" Margin="10" MaxWidth="700" MaxHeight="500">
+            <ScreenCaptureLib:CanvasEditor Name="editor" Cursor="Pen" />
+        </ScrollViewer>
 
         <StackPanel Grid.Row="0" Grid.Column="0">
             <materialDesign:Card Margin="5">
@@ -74,7 +75,7 @@
                     <StackPanel Name="spAnnotationBar" Orientation="Horizontal" HorizontalAlignment="Right" />
                 </StackPanel>
             </materialDesign:Card>
-            <materialDesign:Card Margin="0 5 5 5">
+            <materialDesign:Card Margin="0 5 5 5" HorizontalAlignment="Left">
                 <StackPanel Orientation="Vertical">
                     <TextBlock Text="Tasks" Margin="5 5 5 0" />
                     <StackPanel Name="spBottomBar" Orientation="Horizontal">
