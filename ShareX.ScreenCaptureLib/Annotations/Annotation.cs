@@ -123,7 +123,7 @@ namespace ShareX.ScreenCaptureLib
             return rtb;
         }
 
-        public abstract void FinalRender(DrawingContext dc);
+        public abstract void Render(DrawingContext dc);
 
         public abstract DrawingVisual GetVisual();
 

@@ -33,7 +33,7 @@ namespace ShareX.ScreenCaptureLib
             StrokeThickness = 1;
         }
 
-        public override void FinalRender(DrawingContext dc)
+        public override void Render(DrawingContext dc)
         {
             dc.DrawImage(GetBitmap(), Bounds);
         }

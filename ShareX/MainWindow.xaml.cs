@@ -180,10 +180,12 @@ namespace ShareX
 
             if (dlg.ShowDialog() == true)
             {
-                using (var ms = editor.CapturedImage.ExportAsMemoryStream(editor.Annotations))
-                using (var fs = new FileStream(dlg.FileName, FileMode.OpenOrCreate))
+                var encoder = new PngBitmapEncoder();
+                var outputFrame = BitmapFrame.Create(editor.GetBitmap());
+                encoder.Frames.Add(outputFrame);
+                using (var fp = File.OpenWrite(dlg.FileName))
                 {
-                    ms.CopyTo(fs);
+                    encoder.Save(fp);
                 }
             }
         }

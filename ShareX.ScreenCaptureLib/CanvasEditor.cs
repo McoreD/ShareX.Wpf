@@ -20,8 +20,6 @@ namespace ShareX.ScreenCaptureLib
 
         public event ImageLoadedEventHandler ImageLoaded;
 
-        private List<DrawingVisual> visuals = new List<DrawingVisual>();
-
         public static readonly DependencyProperty SourceProperty = DependencyProperty.Register("Source", typeof(ImageCapture), typeof(CanvasEditor), new FrameworkPropertyMetadata(ImagePropertyChangedCallback));
 
         [Category("Editor")]
@@ -92,7 +90,6 @@ namespace ShareX.ScreenCaptureLib
             canvas.ImageLoaded();
 
             canvas.Children.Clear();
-            canvas.visuals.Clear();
         }
 
         private Annotation CreateCurrentAnnotation()
@@ -158,9 +155,6 @@ namespace ShareX.ScreenCaptureLib
                 Annotations.Add(currentAnnotation);
 
                 DrawingVisual visual = currentAnnotation.GetVisual();
-                visuals.Add(visual);
-                AddVisualChild(visual);
-                AddLogicalChild(visual);
             }
         }
 

@@ -39,40 +39,5 @@ namespace ShareX.ScreenCaptureLib
                 FilePath = fp;
             }
         }
-
-        public MemoryStream ExportAsMemoryStream(IEnumerable<Annotation> annotations)
-        {
-            DrawingVisual dv = new DrawingVisual();
-            DrawingContext dc = dv.RenderOpen();
-            dc.DrawImage(Source, new Rect(0, 0, Source.Width, Source.Height));
-
-            foreach (Annotation ann in annotations) { ann.FinalRender(dc); }
-            // Parallel.ForEach(Annotations, ann => { ann.Render(dc); });
-
-            dc.Close();
-
-            RenderTargetBitmap rtb = new RenderTargetBitmap((int)Source.Width, (int)Source.Height, Source.DpiX, Source.DpiY, PixelFormats.Pbgra32);
-            rtb.Render(dv);
-
-            PngBitmapEncoder encoder = new PngBitmapEncoder();
-            MemoryStream ms = new MemoryStream();
-            encoder.Frames.Add(BitmapFrame.Create(rtb));
-            encoder.Save(ms);
-            ms.Position = 0;
-
-            return ms;
-        }
-
-        public BitmapImage Export(IEnumerable<Annotation> annotations)
-        {
-            var img = new BitmapImage();
-            using (MemoryStream ms = ExportAsMemoryStream(annotations))
-            {
-                img.BeginInit();
-                img.StreamSource = new MemoryStream(ms.ToArray());
-                img.EndInit();
-            }
-            return img;
-        }
     }
 }

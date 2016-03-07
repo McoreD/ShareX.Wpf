@@ -46,7 +46,7 @@ namespace ShareX.ScreenCaptureLib
             };
         }
 
-        public override void FinalRender(DrawingContext dc)
+        public override void Render(DrawingContext dc)
         {
             dc.DrawLine(new Pen(Stroke, StrokeThickness), PointStart, PointFinish);
         }

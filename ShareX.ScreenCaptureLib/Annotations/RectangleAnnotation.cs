@@ -38,7 +38,7 @@ namespace ShareX.ScreenCaptureLib
             };
         }
 
-        public override void FinalRender(DrawingContext dc)
+        public override void Render(DrawingContext dc)
         {
             dc.DrawImage(GetBitmap(), Bounds);
         }
@@ -50,7 +50,7 @@ namespace ShareX.ScreenCaptureLib
 
             using (DrawingContext dc = visual.RenderOpen())
             {
-                FinalRender(dc);
+                Render(dc);
             }
 
             return visual;

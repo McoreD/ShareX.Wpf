@@ -31,7 +31,7 @@ namespace ShareX.ScreenCaptureLib
             }
         }
 
-        public override void FinalRender(DrawingContext dc)
+        public override void Render(DrawingContext dc)
         {
             GetBitmap();
             dc.DrawRectangle(Fill, null, Bounds);
