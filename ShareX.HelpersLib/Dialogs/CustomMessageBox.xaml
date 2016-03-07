@@ -1,0 +1,14 @@
+﻿<UserControl x:Class="HelpersLib.CustomMessageBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:HelpersLib"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <StackPanel Margin="15">
+        <TextBlock Name="tbText" />
+        <StackPanel Name="spButtons" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 30 0 0" />
+    </StackPanel>
+</UserControl>
