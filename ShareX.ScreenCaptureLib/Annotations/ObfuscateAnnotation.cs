@@ -30,17 +30,5 @@ namespace ShareX.ScreenCaptureLib
                 return new RectangleGeometry(new Rect(0, 0, Width, Height));
             }
         }
-
-        public override DrawingVisual Render()
-        {
-            DrawingVisual visual = new DrawingVisual();
-
-            using (DrawingContext dc = visual.RenderOpen())
-            {
-                dc.DrawImage(GetBitmap(), Bounds);
-            }
-
-            return visual;
-        }
     }
 }

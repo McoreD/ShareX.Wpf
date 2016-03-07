@@ -43,11 +43,6 @@ namespace ShareX.ScreenCaptureLib
             DrawingVisual visual = new DrawingVisual();
             visual.Effect = Effect;
 
-            using (DrawingContext dc = visual.RenderOpen())
-            {
-                dc.DrawImage(GetBitmap(), Bounds);
-            }
-
             return visual;
         }
     }
