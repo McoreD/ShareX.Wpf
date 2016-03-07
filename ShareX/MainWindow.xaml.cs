@@ -159,7 +159,12 @@ namespace ShareX
 
         private void btnCaptureScreen_Click(object sender, RoutedEventArgs e)
         {
+            WindowState = WindowState.Minimized;
+            Thread.Sleep(300);
+
             editor.LoadImage(ScreenshotHelper.CaptureFullscreen());
+
+            WindowState = WindowState.Normal;
         }
 
         #endregion Capture
