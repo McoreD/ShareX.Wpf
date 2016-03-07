@@ -101,27 +101,21 @@ namespace ShareX.ScreenCaptureLib
                 case AnnotationMode.Highlight:
                     annotation = new HighlightAnnotation();
                     break;
-
                 case AnnotationMode.Obfuscate:
                     annotation = new ObfuscateAnnotation();
                     break;
-
                 case AnnotationMode.Rectangle:
                     annotation = new RectangleAnnotation();
                     break;
-
                 case AnnotationMode.Ellipse:
                     annotation = new EllipseAnnotation();
                     break;
-
                 case AnnotationMode.Line:
                     annotation = new LineAnnotation();
                     break;
-
                 case AnnotationMode.Arrow:
                     annotation = new ArrowAnnotation();
                     break;
-
                 default:
                     throw new NotImplementedException();
             }
