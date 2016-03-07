@@ -8,8 +8,8 @@ namespace ShareX.ScreenCaptureLib
     {
         public ImageAnnotation(BitmapSource src)
         {
-            Width = src.Width;
-            Height = src.Height;
+            Width = src.PixelWidth;
+            Height = src.PixelHeight;
 
             Fill = new ImageBrush(src);
         }

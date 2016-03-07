@@ -38,6 +38,7 @@ namespace ShareX
                 btnAnnotate.Width = btnAnnotate.Height = 40;
                 btnAnnotate.Padding = new Thickness(0);
                 btnAnnotate.Margin = new Thickness(5);
+                btnAnnotate.ToolTip = ann.GetDescription();
                 spAnnotationBar.Children.Add(btnAnnotate);
 
                 switch (ann)
