@@ -31,15 +31,22 @@ namespace ShareX.ScreenCaptureLib
             }
         }
 
-        public override RenderTargetBitmap FinalRender()
-        {
-            return base.FinalRender();
-        }
-
         public override void FinalRender(DrawingContext dc)
         {
-            FinalRender();
+            ToBitmap();
             dc.DrawRectangle(Fill, null, Area);
+        }
+
+        public override DrawingVisual GetVisual()
+        {
+            DrawingVisual visual = new DrawingVisual();
+
+            using (DrawingContext dc = visual.RenderOpen())
+            {
+                dc.DrawImage(ToBitmap(), Area);
+            }
+
+            return visual;
         }
     }
 }

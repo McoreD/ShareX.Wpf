@@ -20,13 +20,20 @@ namespace ShareX.ScreenCaptureLib
             }
         }
 
-        public override RenderTargetBitmap FinalRender()
-        {
-            throw new NotImplementedException();
-        }
-
         public override void FinalRender(DrawingContext dc)
         {
+        }
+
+        public override DrawingVisual GetVisual()
+        {
+            DrawingVisual visual = new DrawingVisual();
+
+            using (DrawingContext dc = visual.RenderOpen())
+            {
+                dc.DrawImage(ToBitmap(), Area);
+            }
+
+            return visual;
         }
     }
 }

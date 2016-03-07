@@ -1,5 +1,6 @@
 ﻿using HelpersLib;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace ShareX.ScreenCaptureLib
     {
         public delegate void ImageLoadedEventHandler();
         public event ImageLoadedEventHandler ImageLoaded;
+        private List<DrawingVisual> visuals = new List<DrawingVisual>();
 
         public static readonly DependencyProperty SourceProperty = DependencyProperty.Register("Source", typeof(ImageCapture), typeof(CanvasEditor), new FrameworkPropertyMetadata(ImagePropertyChangedCallback));
 
@@ -142,10 +144,15 @@ namespace ShareX.ScreenCaptureLib
             if (currentAnnotation != null && currentAnnotation.IsCreating)
             {
                 currentAnnotation.IsCreating = false;
-                currentAnnotation.FinalRender();
+                //  currentAnnotation.ToBitmap();
                 currentAnnotation.Selected = true;
 
                 Annotations.Add(currentAnnotation);
+
+                DrawingVisual visual = currentAnnotation.GetVisual();
+                visuals.Add(visual);
+                AddVisualChild(visual);
+                AddLogicalChild(visual);
             }
         }
 
@@ -158,7 +165,7 @@ namespace ShareX.ScreenCaptureLib
                 UnselectAll();
                 currentAnnotation = CreateCurrentAnnotation();
                 currentAnnotation.PointStart = currentAnnotation.PointFinish = e.GetPosition(this);
-                currentAnnotation.UpdateDimension();
+                currentAnnotation.UpdateDimensions();
 
                 Children.Add(currentAnnotation);
             }
@@ -171,7 +178,7 @@ namespace ShareX.ScreenCaptureLib
             if (IsCreatingAnnotation)
             {
                 currentAnnotation.PointFinish = e.GetPosition(this);
-                currentAnnotation.UpdateDimension();
+                currentAnnotation.UpdateDimensions();
             }
         }
 
@@ -184,7 +191,7 @@ namespace ShareX.ScreenCaptureLib
                 if (e.ChangedButton == MouseButton.Left)
                 {
                     currentAnnotation.PointFinish = e.GetPosition(this);
-                    currentAnnotation.UpdateDimension();
+                    currentAnnotation.UpdateDimensions();
                     FinishCurrentAnnotation();
                 }
                 else if (e.ChangedButton == MouseButton.Right)
@@ -213,6 +220,13 @@ namespace ShareX.ScreenCaptureLib
             {
                 DeleteSelected();
             }
+        }
+
+        public RenderTargetBitmap ToBitmap()
+        {
+            RenderTargetBitmap rtb = new RenderTargetBitmap((int)CapturedImage.Source.Width, (int)CapturedImage.Source.Height, CapturedImage.Source.DpiX, CapturedImage.Source.DpiY, PixelFormats.Pbgra32);
+            rtb.Render(this);
+            return rtb;
         }
     }
 }

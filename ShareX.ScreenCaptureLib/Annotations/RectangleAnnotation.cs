@@ -27,10 +27,7 @@ namespace ShareX.ScreenCaptureLib
             Fill = Brushes.Transparent;
             Stroke = brush;
             StrokeThickness = 1;
-        }
 
-        public override RenderTargetBitmap FinalRender()
-        {
             Effect = new DropShadowEffect
             {
                 RenderingBias = RenderingBias.Quality,
@@ -39,14 +36,24 @@ namespace ShareX.ScreenCaptureLib
                 ShadowDepth = 0,
                 BlurRadius = ShadowSize
             };
-
-            return base.FinalRender();
         }
 
         public override void FinalRender(DrawingContext dc)
         {
-            FinalRender();
-            dc.DrawRectangle(null, new Pen(brush, StrokeThickness), Area);
+            dc.DrawImage(ToBitmap(), Area);
+        }
+
+        public override DrawingVisual GetVisual()
+        {
+            DrawingVisual visual = new DrawingVisual();
+            visual.Effect = Effect;
+
+            using (DrawingContext dc = visual.RenderOpen())
+            {
+                dc.DrawImage(ToBitmap(), Area);
+            }
+
+            return visual;
         }
     }
 }

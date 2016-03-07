@@ -33,8 +33,16 @@ namespace ShareX.ScreenCaptureLib
 
         public override void FinalRender(DrawingContext dc)
         {
-            FinalRender();
+            ToBitmap();
             dc.DrawRectangle(Fill, null, Area);
+        }
+
+        public ArrowAnnotation()
+        {
+            HeadWidth = 15;
+            HeadHeight = 5;
+            Stroke = Brushes.Red;
+            StrokeThickness = 2;
         }
 
         protected override Geometry DefiningGeometry
@@ -79,14 +87,16 @@ namespace ShareX.ScreenCaptureLib
             context.LineTo(pt4, true, true);
         }
 
-        public override RenderTargetBitmap FinalRender()
+        public override DrawingVisual GetVisual()
         {
-            HeadWidth = 15;
-            HeadHeight = 5;
-            Stroke = Brushes.Red;
-            StrokeThickness = 2;
+            DrawingVisual visual = new DrawingVisual();
 
-            return base.FinalRender();
+            using (DrawingContext dc = visual.RenderOpen())
+            {
+                dc.DrawImage(ToBitmap(), Area);
+            }
+
+            return visual;
         }
     }
 }

@@ -24,20 +24,32 @@ namespace ShareX.ScreenCaptureLib
             }
         }
 
-        public override RenderTargetBitmap FinalRender()
+        public override RenderTargetBitmap ToBitmap()
         {
             Rect applyRect = AnnotationHelper.CreateIntersectRect(Area);
             BitmapSource bmp = ImageHelper.CropImage(AnnotationHelper.CapturedImage.Source, applyRect);
             WriteableBitmap wbmp = AnnotationHelper.ChangeColor(bmp, ((SolidColorBrush)brush).Color);
             Fill = new ImageBrush(wbmp);
 
-            return base.FinalRender();
+            return base.ToBitmap();
         }
 
         public override void FinalRender(DrawingContext dc)
         {
-            FinalRender();
+            ToBitmap();
             dc.DrawRectangle(Fill, null, Area);
+        }
+
+        public override DrawingVisual GetVisual()
+        {
+            DrawingVisual visual = new DrawingVisual();
+
+            using (DrawingContext dc = visual.RenderOpen())
+            {
+                dc.DrawImage(ToBitmap(), Area);
+            }
+
+            return visual;
         }
     }
 }

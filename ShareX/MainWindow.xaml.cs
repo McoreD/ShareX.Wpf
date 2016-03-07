@@ -169,7 +169,7 @@ namespace ShareX
         private void btnCopyToClipboard_Click(object sender, RoutedEventArgs e)
         {
             if (editor.CapturedImage != null)
-                ClipboardHelper.SetImage(editor.CapturedImage.Export(editor.Annotations));
+                ClipboardHelper.SetImage(editor.ToBitmap());
         }
 
         private void btnSaveToFile_Click(object sender, RoutedEventArgs e)

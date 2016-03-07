@@ -101,7 +101,7 @@ namespace ShareX.ScreenCaptureLib
             }
         }
 
-        public void UpdateDimension()
+        public void UpdateDimensions()
         {
             Rect area = Area;
             Canvas.SetLeft(this, area.X);
@@ -116,7 +116,7 @@ namespace ShareX.ScreenCaptureLib
             return (!double.IsInfinity(d) && !double.IsNaN(d));
         }
 
-        public virtual RenderTargetBitmap FinalRender()
+        public virtual RenderTargetBitmap ToBitmap()
         {
             var rtb = new RenderTargetBitmap((int)Width, (int)Height, AnnotationHelper.CapturedImage.Source.DpiX, AnnotationHelper.CapturedImage.Source.DpiY, PixelFormats.Pbgra32);
             rtb.Render(this);
@@ -124,6 +124,8 @@ namespace ShareX.ScreenCaptureLib
         }
 
         public abstract void FinalRender(DrawingContext dc);
+
+        public abstract DrawingVisual GetVisual();
 
         public static readonly DependencyProperty X1Property = DependencyProperty.Register("X1", typeof(double), typeof(Annotation),
             new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender),

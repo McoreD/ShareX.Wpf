@@ -29,11 +29,6 @@ namespace ShareX.ScreenCaptureLib
 
         public LineAnnotation()
         {
-            FinalRender();
-        }
-
-        public override RenderTargetBitmap FinalRender()
-        {
             Stroke = Brushes.Blue;
             StrokeThickness = 3;
             StrokeLineJoin = PenLineJoin.Round;
@@ -49,8 +44,6 @@ namespace ShareX.ScreenCaptureLib
                 ShadowDepth = 0,
                 BlurRadius = 10
             };
-
-            return base.FinalRender();
         }
 
         public override void FinalRender(DrawingContext dc)
@@ -61,6 +54,18 @@ namespace ShareX.ScreenCaptureLib
         internal virtual void CacheDefiningGeometry()
         {
             cachedGeometry = new LineGeometry(PointStart, PointFinish);
+        }
+
+        public override DrawingVisual GetVisual()
+        {
+            DrawingVisual visual = new DrawingVisual();
+
+            using (DrawingContext dc = visual.RenderOpen())
+            {
+                dc.DrawImage(ToBitmap(), Area);
+            }
+
+            return visual;
         }
     }
 }
