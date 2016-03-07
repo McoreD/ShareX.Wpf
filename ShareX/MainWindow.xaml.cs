@@ -26,7 +26,7 @@ namespace ShareX
 
             editor.ImageLoaded += Editor_ImageLoaded;
 
-            spAnnotationBar.IsEnabled = spTasks.IsEnabled = false;
+            spAnnotationBar.IsEnabled = spBottomBar.IsEnabled = false;
 
             var annList = Enum.GetValues(typeof(AnnotationMode)).Cast<AnnotationMode>().ToList();
 
@@ -75,7 +75,7 @@ namespace ShareX
 
         private void Editor_ImageLoaded()
         {
-            spAnnotationBar.IsEnabled = spTasks.IsEnabled = true;
+            spAnnotationBar.IsEnabled = spBottomBar.IsEnabled = true;
         }
 
         #region Capture
