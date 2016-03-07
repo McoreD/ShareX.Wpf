@@ -13,6 +13,7 @@ namespace ShareX.ScreenCaptureLib
         Obfuscate,
         Rectangle,
         Ellipse,
+        Line,
         Arrow
     }
 }

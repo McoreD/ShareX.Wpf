@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HelpersLib;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -19,11 +20,7 @@ namespace ShareX.ScreenCaptureLib
         {
             get
             {
-                if (cachedGeometry == null)
-                {
-                    CacheDefiningGeometry();
-                }
-                return cachedGeometry;
+                return new LineGeometry(PointStart, PointFromScreen(CaptureHelper.GetCursorPosition()));
             }
         }
 
@@ -49,18 +46,6 @@ namespace ShareX.ScreenCaptureLib
         internal virtual void CacheDefiningGeometry()
         {
             cachedGeometry = new LineGeometry(PointStart, PointFinish);
-        }
-
-        public override DrawingVisual Render()
-        {
-            DrawingVisual visual = new DrawingVisual();
-
-            using (DrawingContext dc = visual.RenderOpen())
-            {
-                dc.DrawImage(GetBitmap(), Bounds);
-            }
-
-            return visual;
         }
     }
 }

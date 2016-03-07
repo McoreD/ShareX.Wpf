@@ -87,7 +87,7 @@ namespace ShareX.ScreenCaptureLib
 
             using (DrawingContext dc = visual.RenderOpen())
             {
-                dc.DrawImage(GetBitmap(), Bounds);
+                dc.DrawGeometry(null, new Pen(brush, StrokeThickness), DefiningGeometry);
             }
 
             return visual;

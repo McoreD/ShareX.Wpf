@@ -32,17 +32,5 @@ namespace ShareX.ScreenCaptureLib
             Stroke = brush;
             StrokeThickness = 1;
         }
-
-        public override DrawingVisual Render()
-        {
-            DrawingVisual visual = new DrawingVisual();
-
-            using (DrawingContext dc = visual.RenderOpen())
-            {
-                dc.DrawImage(GetBitmap(), Bounds);
-            }
-
-            return visual;
-        }
     }
 }

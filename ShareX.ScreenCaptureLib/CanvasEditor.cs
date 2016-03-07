@@ -114,6 +114,10 @@ namespace ShareX.ScreenCaptureLib
                     annotation = new EllipseAnnotation();
                     break;
 
+                case AnnotationMode.Line:
+                    annotation = new LineAnnotation();
+                    break;
+
                 case AnnotationMode.Arrow:
                     annotation = new ArrowAnnotation();
                     break;
