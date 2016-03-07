@@ -65,6 +65,7 @@ namespace ShareX.ScreenCaptureLib
             CapturedImage = src;
             Children.Clear();
             ImageAnnotation ann = new ImageAnnotation(src.Source);
+            ann.Selectable = false;
             Children.Add(ann);
 
             Width = CapturedImage.Source.Width;

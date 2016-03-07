@@ -32,15 +32,37 @@ namespace ShareX.ScreenCaptureLib
             }
             set
             {
-                selected = value;
+                if (Selectable)
+                {
+                    selected = value;
 
-                if (selected)
-                {
-                    ShowNodes();
+                    if (selected)
+                    {
+                        ShowNodes();
+                    }
+                    else
+                    {
+                        HideNodes();
+                    }
                 }
-                else
+            }
+        }
+
+        private bool selectable = true;
+
+        public bool Selectable
+        {
+            get
+            {
+                return selectable;
+            }
+            set
+            {
+                selectable = value;
+
+                if (!selectable)
                 {
-                    HideNodes();
+                    Selected = false;
                 }
             }
         }
@@ -83,12 +105,10 @@ namespace ShareX.ScreenCaptureLib
 
         protected void HideNodes()
         {
-            if (adorner == null)
+            if (adorner != null)
             {
-                CreateNodes();
+                adorner.Visibility = Visibility.Hidden;
             }
-
-            adorner.Visibility = Visibility.Hidden;
         }
 
         protected override void OnMouseDown(MouseButtonEventArgs e)
