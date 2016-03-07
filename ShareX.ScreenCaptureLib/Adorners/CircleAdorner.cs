@@ -146,11 +146,10 @@ namespace ShareX.ScreenCaptureLib
             if (cornerThumb != null) return;
 
             cornerThumb = new Thumb();
-
+            cornerThumb.Height = cornerThumb.Width = 20;
+            cornerThumb.Foreground = FindResource("PrimaryHueMidBrush") as Brush;
+            cornerThumb.Template = FindResource("MaterialDesignSliderThumb") as ControlTemplate;
             cornerThumb.Cursor = customizedCursor;
-            cornerThumb.Height = cornerThumb.Width = 10;
-            cornerThumb.Opacity = 0.40;
-            cornerThumb.Background = new SolidColorBrush(Colors.Black);
 
             visualChildren.Add(cornerThumb);
         }

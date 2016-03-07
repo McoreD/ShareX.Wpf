@@ -22,7 +22,7 @@ namespace ShareX.ScreenCaptureLib
 
         public RectangleAnnotation()
         {
-            brush = Brushes.Red;
+            brush = FindResource("PrimaryHueDarkBrush") as Brush;
 
             Fill = Brushes.Transparent;
             Stroke = brush;

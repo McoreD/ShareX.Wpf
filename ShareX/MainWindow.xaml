@@ -10,7 +10,7 @@
         Title="MainWindow"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" Width="507" MinWidth="500" MinHeight="400" Icon="ShareX_Icon.ico" Closing="Window_Closing">
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" WindowStartupLocation="CenterScreen" SizeToContent="Manual" Width="700" Height="500" MinWidth="700" MinHeight="500" Icon="ShareX_Icon.ico" Closing="Window_Closing">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -23,8 +23,9 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
-        <!--Image editor canvas-->
-        <ScreenCaptureLib:CanvasEditor x:Name="editor" Grid.Row="0" Grid.Column="1" Margin="10" Cursor="Pen" />
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Row="0" Grid.Column="1" Margin="10">
+            <ScreenCaptureLib:CanvasEditor Name="editor" Cursor="Pen" />
+        </ScrollViewer>
 
         <StackPanel Grid.Row="0" Grid.Column="0">
             <materialDesign:Card Margin="5">
@@ -74,7 +75,7 @@
                     <StackPanel Name="spAnnotationBar" Orientation="Horizontal" HorizontalAlignment="Right" />
                 </StackPanel>
             </materialDesign:Card>
-            <materialDesign:Card Margin="0 5 5 5">
+            <materialDesign:Card Margin="0 5 5 5" HorizontalAlignment="Left">
                 <StackPanel Orientation="Vertical">
                     <TextBlock Text="Tasks" Margin="5 5 5 0" />
                     <StackPanel Name="spBottomBar" Orientation="Horizontal">
