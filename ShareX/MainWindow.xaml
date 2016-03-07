@@ -25,7 +25,7 @@
         <!--Image editor canvas-->
         <ScreenCaptureLib:CanvasEditor x:Name="editor" Grid.Row="0" Grid.Column="1" Margin="10" Cursor="Pen" />
 
-        <!--Capture commands-->
+        <!--Capture / Import commands-->
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" x:Name="capturePanel">
             <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}" HorizontalAlignment="Center" Margin="10"><Run Text="Capture" /></TextBlock>
             <Button x:Name="btnCaptureRectange" Margin="10" Click="btnCaptureArea_Click" Content="Area" />
@@ -35,8 +35,9 @@
                     </ContextMenu>
                 </Button.ContextMenu>
             </Button>
-            <ListBox Name="lbWindows" Visibility="Collapsed" Margin="10" SelectionChanged="lbWindows_SelectionChanged" />
             <Button x:Name="btnCaptureScreen" Margin="10" Click="btnCaptureScreen_Click" Content="Screen" />
+            <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}" HorizontalAlignment="Center" Margin="10"><Run Text="Open" /></TextBlock>
+            <Button x:Name="btnOpenFile" Margin="10" Content="File..." Click="btnOpenFile_Click" />
         </StackPanel>
 
         <!--Image editor buttons-->

@@ -19,10 +19,24 @@ namespace ShareX.ScreenCaptureLib
     {
         public BitmapSource Source { get; private set; }
 
+        private ImageEx()
+        {
+            DateTimeCaptured = DateTime.Now;
+        }
+
         public ImageEx(BitmapSource img)
+            : this()
         {
             Source = img;
-            DateTimeCaptured = DateTime.Now;
+        }
+
+        public ImageEx(string fp)
+            : this()
+        {
+            if (File.Exists(fp))
+            {
+                Source = new BitmapImage(new Uri(fp));
+            }
         }
 
         public MemoryStream ExportAsMemoryStream(IEnumerable<Annotation> annotations)
