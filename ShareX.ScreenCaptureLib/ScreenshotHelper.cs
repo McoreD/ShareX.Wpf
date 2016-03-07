@@ -18,7 +18,7 @@ namespace ShareX.ScreenCaptureLib
         public static int ShadowOffset = 20;
         public static bool AutoHideTaskbar = false;
 
-        public static ImageEx CaptureRectangle(Rect rect)
+        public static ImageCapture CaptureRectangle(Rect rect)
         {
             if (RemoveOutsideScreenArea)
             {
@@ -26,10 +26,10 @@ namespace ShareX.ScreenCaptureLib
                 rect = Rect.Intersect(bounds, rect);
             }
 
-            return new ImageEx(CaptureRectangleNative(rect, CaptureCursor));
+            return new ImageCapture(CaptureRectangleNative(rect, CaptureCursor));
         }
 
-        public static ImageEx CaptureFullscreen()
+        public static ImageCapture CaptureFullscreen()
         {
             Rect bounds = CaptureHelper.GetScreenBounds();
 
@@ -80,7 +80,7 @@ namespace ShareX.ScreenCaptureLib
             return bmp;
         }
 
-        public static ImageEx CaptureWindowTransparent(IntPtr handle)
+        public static ImageCapture CaptureWindowTransparent(IntPtr handle)
         {
             if (handle.ToInt32() > 0)
             {
@@ -152,7 +152,7 @@ namespace ShareX.ScreenCaptureLib
 
                     form.Close();
 
-                    return new ImageEx(whiteBackground2);
+                    return new ImageCapture(whiteBackground2);
 
                     // TODO: Transparent window - with WPF alternative to UnsafeBitmap
 
@@ -203,7 +203,7 @@ namespace ShareX.ScreenCaptureLib
             return null;
         }
 
-        public static ImageEx CaptureWindow(IntPtr handle)
+        public static ImageCapture CaptureWindow(IntPtr handle)
         {
             if (handle.ToInt32() > 0)
             {

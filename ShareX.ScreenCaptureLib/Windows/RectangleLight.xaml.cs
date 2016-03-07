@@ -136,7 +136,7 @@ namespace ShareX.ScreenCaptureLib
             }
         }
 
-        public ImageEx GetScreenshot()
+        public ImageCapture GetScreenshot()
         {
             Rect rect = SelectionRectangle0Based;
 
@@ -144,10 +144,10 @@ namespace ShareX.ScreenCaptureLib
             {
                 if (rect.X == 0 && rect.Y == 0 && rect.Width == backgroundImage.Width && rect.Height == backgroundImage.Height)
                 {
-                    return new ImageEx(backgroundImage.Clone());
+                    return new ImageCapture(backgroundImage.Clone());
                 }
 
-                return new ImageEx(ImageHelper.CropImage(backgroundImage, rect));
+                return new ImageCapture(ImageHelper.CropImage(backgroundImage, rect));
             }
 
             return null;

@@ -148,7 +148,7 @@ namespace ShareX
             dlg.Filter = sbFilter.ToString().TrimEnd('|');
             if (dlg.ShowDialog() == true)
             {
-                editor.CapturedImage = new ImageEx(dlg.FileName);
+                editor.CapturedImage = new ImageCapture(dlg.FileName);
             }
         }
 

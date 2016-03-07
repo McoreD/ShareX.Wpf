@@ -18,14 +18,14 @@ namespace ShareX.ScreenCaptureLib
         public delegate void ImageLoadedEventHandler();
         public event ImageLoadedEventHandler ImageLoaded;
 
-        public static readonly DependencyProperty SourceProperty = DependencyProperty.Register("Source", typeof(ImageEx), typeof(CanvasEditor), new FrameworkPropertyMetadata(ImagePropertyChangedCallback));
+        public static readonly DependencyProperty SourceProperty = DependencyProperty.Register("Source", typeof(ImageCapture), typeof(CanvasEditor), new FrameworkPropertyMetadata(ImagePropertyChangedCallback));
 
         [Category("Editor")]
-        public ImageEx CapturedImage
+        public ImageCapture CapturedImage
         {
             get
             {
-                return (ImageEx)GetValue(SourceProperty);
+                return (ImageCapture)GetValue(SourceProperty);
             }
             set
             {
@@ -74,7 +74,7 @@ namespace ShareX.ScreenCaptureLib
         private static void ImagePropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             CanvasEditor canvas = d as CanvasEditor;
-            ImageEx img = e.NewValue as ImageEx;
+            ImageCapture img = e.NewValue as ImageCapture;
 
             if (img == null)
             {

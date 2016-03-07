@@ -12,9 +12,9 @@ namespace ShareX.ScreenCaptureLib
 {
     public static class AnnotationHelper
     {
-        public static ImageEx CapturedImage { get; private set; }
+        public static ImageCapture CapturedImage { get; private set; }
 
-        public static void LoadCapturedImage(ImageEx src)
+        public static void LoadCapturedImage(ImageCapture src)
         {
             CapturedImage = src;
         }

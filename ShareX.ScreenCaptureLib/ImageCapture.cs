@@ -15,27 +15,28 @@ namespace ShareX.ScreenCaptureLib
 {
     // Class to hold Screenshots or other images
 
-    public class ImageEx : Capture
+    public class ImageCapture : Capture
     {
         public BitmapSource Source { get; private set; }
 
-        private ImageEx()
+        private ImageCapture()
         {
             DateTimeCaptured = DateTime.Now;
         }
 
-        public ImageEx(BitmapSource img)
+        public ImageCapture(BitmapSource img)
             : this()
         {
             Source = img;
         }
 
-        public ImageEx(string fp)
+        public ImageCapture(string fp)
             : this()
         {
             if (File.Exists(fp))
             {
                 Source = new BitmapImage(new Uri(fp));
+                FilePath = fp;
             }
         }
 

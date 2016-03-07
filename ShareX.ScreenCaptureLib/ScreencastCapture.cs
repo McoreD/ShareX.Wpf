@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ShareX.ScreenCaptureLib
 {
-    public class Screencast : Capture
+    public class ScreencastCapture : Capture
     {
     }
 }
