@@ -10,7 +10,7 @@
         Title="MainWindow"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" Width="507" MinWidth="500" MinHeight="400" Icon="ShareX_Icon.ico" Closing="Window_Closing">
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" WindowStartupLocation="CenterScreen" SizeToContent="Manual" Width="700" Height="500" MinWidth="700" MinHeight="500" Icon="ShareX_Icon.ico" Closing="Window_Closing">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -23,7 +23,7 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Row="0" Grid.Column="1" Margin="10" MaxWidth="700" MaxHeight="500">
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Row="0" Grid.Column="1" Margin="10">
             <ScreenCaptureLib:CanvasEditor Name="editor" Cursor="Pen" />
         </ScrollViewer>
 

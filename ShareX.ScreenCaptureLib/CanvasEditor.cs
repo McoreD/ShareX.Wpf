@@ -71,7 +71,7 @@ namespace ShareX.ScreenCaptureLib
             Width = CapturedImage.Source.Width;
             Height = CapturedImage.Source.Height;
 
-            ImageLoaded();
+            OnImageLoaded();
         }
 
         private Annotation CreateCurrentAnnotation()
