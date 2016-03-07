@@ -58,7 +58,7 @@ namespace ShareX
             RectangleLight crop = new RectangleLight();
             if (crop.ShowDialog() == true)
             {
-                editor.CapturedImage = crop.GetScreenshot();
+                editor.LoadImage(crop.GetScreenshot());
             }
 
             WindowState = WindowState.Normal;
@@ -124,12 +124,12 @@ namespace ShareX
             NativeMethods.SetForegroundWindow(handle);
             Thread.Sleep(250);
 
-            editor.CapturedImage = ScreenshotHelper.CaptureWindowTransparent(handle);
+            editor.LoadImage(ScreenshotHelper.CaptureWindowTransparent(handle));
         }
 
         private void btnCaptureScreen_Click(object sender, RoutedEventArgs e)
         {
-            editor.CapturedImage = ScreenshotHelper.CaptureFullscreen();
+            editor.LoadImage(ScreenshotHelper.CaptureFullscreen());
         }
 
         #endregion Capture
@@ -148,7 +148,7 @@ namespace ShareX
             dlg.Filter = sbFilter.ToString().TrimEnd('|');
             if (dlg.ShowDialog() == true)
             {
-                editor.CapturedImage = new ImageCapture(dlg.FileName);
+                editor.LoadImage(new ImageCapture(dlg.FileName));
             }
         }
 

@@ -18,20 +18,9 @@ namespace ShareX.ScreenCaptureLib
     {
         public delegate void ImageLoadedEventHandler();
         public event ImageLoadedEventHandler ImageLoaded;
+        private List<DrawingVisual> visuals = new List<DrawingVisual>();
 
-        private ImageCapture capturedImage = null;
-        public ImageCapture CapturedImage
-        {
-            get
-            {
-                return capturedImage;
-            }
-            set
-            {
-                capturedImage = value;
-                LoadImage();
-            }
-        }
+        public ImageCapture CapturedImage { get; private set; }
 
         private AnnotationMode annotationMode = AnnotationMode.Cursor;
 
@@ -71,13 +60,15 @@ namespace ShareX.ScreenCaptureLib
             if (ImageLoaded != null) ImageLoaded();
         }
 
-        private void LoadImage()
+        public void LoadImage(ImageCapture src)
         {
+            CapturedImage = src;
+            Children.Clear();
+            ImageAnnotation ann = new ImageAnnotation(src.Source);
+            Children.Add(ann);
+
             Width = CapturedImage.Source.Width;
             Height = CapturedImage.Source.Height;
-            Background = new ImageBrush(CapturedImage.Source);
-
-            Children.Clear();
 
             ImageLoaded();
         }
@@ -137,11 +128,8 @@ namespace ShareX.ScreenCaptureLib
             if (currentAnnotation != null && currentAnnotation.IsCreating)
             {
                 currentAnnotation.IsCreating = false;
-
                 currentAnnotation.Selected = true;
-
                 Annotations.Add(currentAnnotation);
-
                 currentAnnotation.Render();
             }
         }
@@ -215,14 +203,6 @@ namespace ShareX.ScreenCaptureLib
         public RenderTargetBitmap GetBitmap()
         {
             RenderTargetBitmap rtb = new RenderTargetBitmap((int)CapturedImage.Source.Width, (int)CapturedImage.Source.Height, CapturedImage.Source.DpiX, CapturedImage.Source.DpiY, PixelFormats.Pbgra32);
-
-            DrawingVisual background = new DrawingVisual();
-            using (DrawingContext dc = background.RenderOpen())
-            {
-                dc.DrawImage(CapturedImage.Source, new Rect(0, 0, (int)Width, (int)Height));
-            }
-
-            rtb.Render(background);
 
             foreach (var ann in Children)
             {

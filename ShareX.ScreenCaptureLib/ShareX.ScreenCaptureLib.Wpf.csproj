@@ -64,6 +64,7 @@
     <Compile Include="Annotations\LineAnnotation.cs" />
     <Compile Include="Annotations\RectangleAnnotation.cs" />
     <Compile Include="Annotations\IAnnotation.cs" />
+    <Compile Include="Annotations\ImageAnnotation.cs" />
     <Compile Include="ScreencastCapture.cs" />
     <Compile Include="ImageCapture.cs" />
     <Compile Include="ScreenshotHelper.cs" />
