@@ -3,6 +3,7 @@ using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
 using ScreenCaptureLib;
 using ShareX.ScreenCaptureLib;
+using ShareX.UploadersLib;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -232,5 +233,11 @@ namespace ShareX
         }
 
         #endregion Export
+
+        private void btnDestinations_Click(object sender, RoutedEventArgs e)
+        {
+            UploaderConfigWindow dlg = new UploaderConfigWindow();
+            dlg.Show();
+        }
     }
 }

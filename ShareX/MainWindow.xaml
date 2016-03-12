@@ -55,6 +55,7 @@
                     </Button>
                 </StackPanel>
             </materialDesign:Card>
+
             <materialDesign:Card Grid.Row="0" Grid.Column="0" Margin="5 0 5 5">
                 <StackPanel Orientation="Vertical">
                     <TextBlock Text="Open" Margin="5" />
@@ -68,16 +69,43 @@
             </materialDesign:Card>
         </StackPanel>
 
-        <DockPanel Grid.Row="1" Grid.Column="1">
+        <materialDesign:Card Grid.Row="1" Grid.Column="1" Margin="5" HorizontalAlignment="Left">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Annotations" Margin="5 5 5 0" />
+                <StackPanel Name="spAnnotationBar" Orientation="Horizontal" HorizontalAlignment="Right" />
+            </StackPanel>
+        </materialDesign:Card>
+
+        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical">
             <materialDesign:Card Margin="5">
                 <StackPanel Orientation="Vertical">
-                    <TextBlock Text="Annotations" Margin="5 5 5 0" />
-                    <StackPanel Name="spAnnotationBar" Orientation="Horizontal" HorizontalAlignment="Right" />
+                    <TextBlock Text="Workflow" Margin="5" />
+                    <ComboBox Margin="5">Capture rectangle</ComboBox>
+                    <TextBlock Margin="5" HorizontalAlignment="Center">Ctrl + PrntScreen</TextBlock>
+                    <Button Margin="5">Save workflow</Button>
                 </StackPanel>
             </materialDesign:Card>
-            <materialDesign:Card Margin="0 5 5 5" HorizontalAlignment="Left">
+
+            <materialDesign:Card Margin="5">
                 <StackPanel Orientation="Vertical">
-                    <TextBlock Text="Tasks" Margin="5 5 5 0" />
+                    <TextBlock Text="Before capture" Margin="5" />
+                    <CheckBox Margin="5">Include cursor</CheckBox>
+                    <CheckBox Margin="5">Clear background</CheckBox>
+                </StackPanel>
+            </materialDesign:Card>
+
+            <materialDesign:Card Margin="5">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="After capture" Margin="5" />
+                    <CheckBox Margin="5">Copy to clipboard</CheckBox>
+                    <CheckBox Margin="5">Upload</CheckBox>
+                    <Button Name="btnDestinations" Margin="5" Click="btnDestinations_Click">Destinations...</Button>
+                </StackPanel>
+            </materialDesign:Card>
+
+            <materialDesign:Card Margin="5" HorizontalAlignment="Left">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Tasks" Margin="5" />
                     <StackPanel Name="spBottomBar" Orientation="Horizontal">
                         <Button Name="btnCopyToClipboard" Margin="5" Padding="0" Width="40" Height="40" Click="btnCopyToClipboard_Click">
                             <StackPanel Orientation="Horizontal">
@@ -103,6 +131,6 @@
                     </StackPanel>
                 </StackPanel>
             </materialDesign:Card>
-        </DockPanel>
+        </StackPanel>
     </Grid>
 </Window>
