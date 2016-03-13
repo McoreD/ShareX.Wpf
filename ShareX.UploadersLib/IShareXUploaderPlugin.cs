@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShareX.PluginsLib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,9 +8,8 @@ using System.Windows.Controls;
 
 namespace ShareX.UploadersLib
 {
-    public interface IShareXUploaderPlugin
+    public interface IShareXUploaderPlugin : IShareXPluginBase
     {
-        string Name { get; }
         UserControl UI { get; }
         UploaderConfig Config { get; set; }
     }

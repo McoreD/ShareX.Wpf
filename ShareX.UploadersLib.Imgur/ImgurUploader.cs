@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Windows.Controls;
 
 namespace ShareX.UploadersLib.Imgur
 {
@@ -24,6 +25,14 @@ namespace ShareX.UploadersLib.Imgur
             get
             {
                 return "Imgur";
+            }
+        }
+
+        public string Publisher
+        {
+            get
+            {
+                return "ShareX Team";
             }
         }
 

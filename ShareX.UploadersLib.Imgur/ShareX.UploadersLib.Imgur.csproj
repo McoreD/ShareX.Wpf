@@ -75,6 +75,10 @@
     <Resource Include="ImgurLogo.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ShareX.PluginsLib\ShareX.PluginsLib.csproj">
+      <Project>{335A0A7D-CA08-4F7E-933F-94556991DDC2}</Project>
+      <Name>ShareX.PluginsLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ShareX.UploadersLib\ShareX.UploadersLib.Wpf.csproj">
       <Project>{2dedaa33-86fd-4068-ab8f-450560c8ef41}</Project>
       <Name>ShareX.UploadersLib.Wpf</Name>
