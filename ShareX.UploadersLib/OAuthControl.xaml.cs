@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace ShareX.UploadersLib
 {
     /// <summary>
-    /// Interaction logic for DropboxControl.xaml
+    /// Interaction logic for OAuthControl.xaml
     /// </summary>
-    public partial class Dropbox : UserControl
+    public partial class OAuthControl : UserControl
     {
-        public Dropbox()
+        public OAuthControl()
         {
             InitializeComponent();
         }

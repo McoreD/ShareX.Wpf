@@ -36,23 +36,13 @@
                                   DockPanel.Dock="Top"
                                   HorizontalAlignment="Right" Margin="16"
                                   IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}" />
-                    <ListBox x:Name="DemoItemsListBox" Margin="0 16 0 16" SelectedIndex="0"
+                    <ListBox x:Name="lbDrawer" Margin="0 16 0 16" SelectedIndex="0"
                              PreviewMouseLeftButtonUp="UIElement_OnPreviewMouseLeftButtonUp">
                         <ListBox.ItemTemplate>
                             <DataTemplate DataType="local:LeftDrawerContentItem">
                                 <TextBlock Text="{Binding Name}" Margin="32 0 32 0" />
                             </DataTemplate>
                         </ListBox.ItemTemplate>
-                        <local:LeftDrawerContentItem Name="Dropbox">
-                            <local:LeftDrawerContentItem.Content>
-                                <local:Dropbox></local:Dropbox>
-                            </local:LeftDrawerContentItem.Content>
-                        </local:LeftDrawerContentItem>
-                        <local:LeftDrawerContentItem Name="Imgur">
-                            <local:LeftDrawerContentItem.Content>
-                                <local:Imgur></local:Imgur>
-                            </local:LeftDrawerContentItem.Content>
-                        </local:LeftDrawerContentItem>
                     </ListBox>
                 </DockPanel>
             </md:DrawerHost.LeftDrawerContent>
@@ -65,7 +55,7 @@
                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16">Destination configuration</TextBlock>
                     </DockPanel>
                 </md:ColorZone>
-                <ContentControl Margin="16" Content="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.Content}" />
+                <ContentControl Margin="16" Content="{Binding ElementName=lbDrawer, Path=SelectedItem.Content}" />
             </DockPanel>
         </md:DrawerHost>
     </md:DialogHost>

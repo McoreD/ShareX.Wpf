@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ShareX.UploadersLib
+namespace ShareX.UploadersLib.Dropbox
 {
     /// <summary>
-    /// Interaction logic for OAuthControl.xaml
+    /// Interaction logic for DropboxControl.xaml
     /// </summary>
-    public partial class OAuthControl : UserControl
+    public partial class DropboxControl : UserControl
     {
-        public OAuthControl()
+        public DropboxControl()
         {
             InitializeComponent();
         }

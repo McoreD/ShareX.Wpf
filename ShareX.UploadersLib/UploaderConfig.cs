@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ShareX.UploadersLib
 {
-    class DropboxUploader
+    public abstract class UploaderConfig
     {
     }
 }

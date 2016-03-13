@@ -1,16 +1,7 @@
-﻿using System;
+﻿using HelpersLib;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace ShareX.UploadersLib
 {
@@ -19,9 +10,21 @@ namespace ShareX.UploadersLib
     /// </summary>
     public partial class UploaderConfigWindow : Window
     {
+        private Dictionary<string, IShareXUploaderPlugin> Uploaders = new Dictionary<string, IShareXUploaderPlugin>();
+
         public UploaderConfigWindow()
         {
             InitializeComponent();
+
+            ICollection<IShareXUploaderPlugin> plugins = PluginHelper<IShareXUploaderPlugin>.LoadPlugins("Plugins");
+            foreach (var uploader in plugins)
+            {
+                LeftDrawerContentItem o = new LeftDrawerContentItem() { Name = uploader.Name };
+                o.Content = uploader.UI;
+                lbDrawer.Items.Add(o);
+
+                Uploaders.Add(uploader.Name, uploader);
+            }
         }
 
         private void UIElement_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)

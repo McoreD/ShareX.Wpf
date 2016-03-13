@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ShareX.UploadersLib
+namespace ShareX.UploadersLib.Imgur
 {
     /// <summary>
     /// Interaction logic for Imgur.xaml
     /// </summary>
-    public partial class Imgur : UserControl
+    public partial class ImgurControl : UserControl
     {
-        public Imgur()
+        public ImgurControl()
         {
             InitializeComponent();
         }

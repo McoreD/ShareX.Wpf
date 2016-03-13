@@ -1,14 +1,15 @@
-﻿<UserControl x:Class="ShareX.UploadersLib.Imgur"
+﻿<UserControl x:Class="ShareX.UploadersLib.Imgur.ImgurControl"
+             xmlns:UploadersLib="clr-namespace:ShareX.UploadersLib;assembly=ShareX.UploadersLib"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:ShareX.UploadersLib"
+             xmlns:local="clr-namespace:ShareX.UploadersLib.Imgur"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     <StackPanel Orientation="Vertical">
         <Image Source="ImgurLogo.png" StretchDirection="DownOnly" />
-        <local:OAuthControl x:Name="oauth" Margin="5" />
+        <UploadersLib:OAuthControl Name="oauth" />
         <TextBlock>Upload path:</TextBlock>
         <StackPanel Orientation="Horizontal">
             <TextBox></TextBox>

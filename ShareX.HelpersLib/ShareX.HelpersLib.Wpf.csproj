@@ -90,6 +90,7 @@
     <Compile Include="Native\NativeEnums.cs" />
     <Compile Include="Native\NativeMethods.cs" />
     <Compile Include="NumberExtensions.cs" />
+    <Compile Include="Helpers\PluginHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

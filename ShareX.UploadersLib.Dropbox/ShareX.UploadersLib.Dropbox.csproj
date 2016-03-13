@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2DEDAA33-86FD-4068-AB8F-450560C8EF41}</ProjectGuid>
+    <ProjectGuid>{04232151-B4F3-4518-94DB-4CCA41439815}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ShareX.UploadersLib</RootNamespace>
-    <AssemblyName>ShareX.UploadersLib</AssemblyName>
+    <RootNamespace>ShareX.UploadersLib.Dropbox</RootNamespace>
+    <AssemblyName>ShareX.UploadersLib.Dropbox</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -20,7 +20,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\ShareX\bin\Debug\</OutputPath>
+    <OutputPath>..\ShareX\bin\Debug\Plugins\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -38,14 +38,6 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MaterialDesignColors, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MaterialDesignColors.1.1.2\lib\net45\MaterialDesignColors.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="MaterialDesignThemes.Wpf, Version=1.4.1.485, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MaterialDesignThemes.1.4.1.485\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -62,54 +54,29 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IShareXUploaderPlugin.cs" />
-    <Compile Include="LeftDrawerContentItem.cs" />
-    <Compile Include="OAuthControl.xaml.cs">
-      <DependentUpon>OAuthControl.xaml</DependentUpon>
+    <Compile Include="DropboxConfig.cs" />
+    <Compile Include="DropboxControl.xaml.cs">
+      <DependentUpon>DropboxControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DropboxUploader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="UploaderConfig.cs" />
-    <Compile Include="UploaderConfigWindow.xaml.cs">
-      <DependentUpon>UploaderConfigWindow.xaml</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="OAuthControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UploaderConfigWindow.xaml">
+    <Page Include="DropboxControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ShareX.HelpersLib\ShareX.HelpersLib.Wpf.csproj">
-      <Project>{43b77ceb-6410-43ad-842e-726a129fa4bb}</Project>
-      <Name>ShareX.HelpersLib.Wpf</Name>
+    <Resource Include="DropboxLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ShareX.UploadersLib\ShareX.UploadersLib.Wpf.csproj">
+      <Project>{2dedaa33-86fd-4068-ab8f-450560c8ef41}</Project>
+      <Name>ShareX.UploadersLib.Wpf</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

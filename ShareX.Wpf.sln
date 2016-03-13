@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareX.ScreenCaptureLib.Wpf
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareX.UploadersLib.Wpf", "ShareX.UploadersLib\ShareX.UploadersLib.Wpf.csproj", "{2DEDAA33-86FD-4068-AB8F-450560C8EF41}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareX.UploadersLib.Dropbox", "ShareX.UploadersLib.Dropbox\ShareX.UploadersLib.Dropbox.csproj", "{04232151-B4F3-4518-94DB-4CCA41439815}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareX.UploadersLib.Imgur", "ShareX.UploadersLib.Imgur\ShareX.UploadersLib.Imgur.csproj", "{27F44806-022D-439E-8305-9714EF8EEF98}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +91,38 @@ Global
 		{2DEDAA33-86FD-4068-AB8F-450560C8EF41}.Release|x64.Build.0 = Release|Any CPU
 		{2DEDAA33-86FD-4068-AB8F-450560C8EF41}.Release|x86.ActiveCfg = Release|Any CPU
 		{2DEDAA33-86FD-4068-AB8F-450560C8EF41}.Release|x86.Build.0 = Release|Any CPU
+		{04232151-B4F3-4518-94DB-4CCA41439815}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04232151-B4F3-4518-94DB-4CCA41439815}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04232151-B4F3-4518-94DB-4CCA41439815}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{04232151-B4F3-4518-94DB-4CCA41439815}.Debug|ARM.Build.0 = Debug|Any CPU
+		{04232151-B4F3-4518-94DB-4CCA41439815}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{04232151-B4F3-4518-94DB-4CCA41439815}.Debug|x64.Build.0 = Debug|Any CPU
+		{04232151-B4F3-4518-94DB-4CCA41439815}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{04232151-B4F3-4518-94DB-4CCA41439815}.Debug|x86.Build.0 = Debug|Any CPU
+		{04232151-B4F3-4518-94DB-4CCA41439815}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04232151-B4F3-4518-94DB-4CCA41439815}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04232151-B4F3-4518-94DB-4CCA41439815}.Release|ARM.ActiveCfg = Release|Any CPU
+		{04232151-B4F3-4518-94DB-4CCA41439815}.Release|ARM.Build.0 = Release|Any CPU
+		{04232151-B4F3-4518-94DB-4CCA41439815}.Release|x64.ActiveCfg = Release|Any CPU
+		{04232151-B4F3-4518-94DB-4CCA41439815}.Release|x64.Build.0 = Release|Any CPU
+		{04232151-B4F3-4518-94DB-4CCA41439815}.Release|x86.ActiveCfg = Release|Any CPU
+		{04232151-B4F3-4518-94DB-4CCA41439815}.Release|x86.Build.0 = Release|Any CPU
+		{27F44806-022D-439E-8305-9714EF8EEF98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27F44806-022D-439E-8305-9714EF8EEF98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27F44806-022D-439E-8305-9714EF8EEF98}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{27F44806-022D-439E-8305-9714EF8EEF98}.Debug|ARM.Build.0 = Debug|Any CPU
+		{27F44806-022D-439E-8305-9714EF8EEF98}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{27F44806-022D-439E-8305-9714EF8EEF98}.Debug|x64.Build.0 = Debug|Any CPU
+		{27F44806-022D-439E-8305-9714EF8EEF98}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{27F44806-022D-439E-8305-9714EF8EEF98}.Debug|x86.Build.0 = Debug|Any CPU
+		{27F44806-022D-439E-8305-9714EF8EEF98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27F44806-022D-439E-8305-9714EF8EEF98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27F44806-022D-439E-8305-9714EF8EEF98}.Release|ARM.ActiveCfg = Release|Any CPU
+		{27F44806-022D-439E-8305-9714EF8EEF98}.Release|ARM.Build.0 = Release|Any CPU
+		{27F44806-022D-439E-8305-9714EF8EEF98}.Release|x64.ActiveCfg = Release|Any CPU
+		{27F44806-022D-439E-8305-9714EF8EEF98}.Release|x64.Build.0 = Release|Any CPU
+		{27F44806-022D-439E-8305-9714EF8EEF98}.Release|x86.ActiveCfg = Release|Any CPU
+		{27F44806-022D-439E-8305-9714EF8EEF98}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
