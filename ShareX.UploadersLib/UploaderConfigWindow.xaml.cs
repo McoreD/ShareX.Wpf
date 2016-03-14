@@ -17,13 +17,16 @@ namespace ShareX.UploadersLib
             InitializeComponent();
 
             ICollection<IShareXUploaderPlugin> plugins = PluginHelper<IShareXUploaderPlugin>.LoadPlugins("Plugins");
-            foreach (var uploader in plugins)
+            if (plugins != null)
             {
-                LeftDrawerContentItem o = new LeftDrawerContentItem() { Name = uploader.Name };
-                o.Content = uploader.UI;
-                lbDrawer.Items.Add(o);
+                foreach (var uploader in plugins)
+                {
+                    LeftDrawerContentItem o = new LeftDrawerContentItem() { Name = uploader.Name };
+                    o.Content = uploader.UI;
+                    lbDrawer.Items.Add(o);
 
-                Uploaders.Add(uploader.Name, uploader);
+                    Uploaders.Add(uploader.Name, uploader);
+                }
             }
         }
 
