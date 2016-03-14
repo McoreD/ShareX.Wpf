@@ -15,7 +15,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{StaticResource MaterialDesignFont}"
 
-        Title="UploaderConfigWindow" Height="300" Width="300">
+        Title="ShareX - Destination settings" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterOwner">
 
     <Window.Resources>
         <ResourceDictionary>

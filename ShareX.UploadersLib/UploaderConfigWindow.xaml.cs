@@ -16,18 +16,24 @@ namespace ShareX.UploadersLib
         {
             InitializeComponent();
 
-            ICollection<IShareXUploaderPlugin> plugins = PluginHelper<IShareXUploaderPlugin>.LoadPlugins("Plugins");
-            if (plugins != null)
+            ICollection<IShareXUploaderPlugin> plugins = null;
+            TaskEx.Run(() =>
             {
-                foreach (var uploader in plugins)
+                plugins = PluginHelper<IShareXUploaderPlugin>.LoadPlugins("Plugins");
+            }, () =>
+            {
+                if (plugins != null)
                 {
-                    LeftDrawerContentItem o = new LeftDrawerContentItem() { Name = uploader.Name };
-                    o.Content = uploader.UI;
-                    lbDrawer.Items.Add(o);
+                    foreach (var uploader in plugins)
+                    {
+                        LeftDrawerContentItem o = new LeftDrawerContentItem() { Name = uploader.Name };
+                        o.Content = uploader.UI;
+                        lbDrawer.Items.Add(o);
 
-                    Uploaders.Add(uploader.Name, uploader);
+                        Uploaders.Add(uploader.Name, uploader);
+                    }
                 }
-            }
+            });
         }
 
         private void UIElement_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)

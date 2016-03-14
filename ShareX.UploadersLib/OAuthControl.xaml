@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:ShareX.UploadersLib"
              xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300" Height="Auto" HorizontalContentAlignment="Left">
     <StackPanel Orientation="Vertical">
         <md:Card Margin="5">
             <StackPanel Orientation="Vertical">
