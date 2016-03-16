@@ -25,6 +25,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Linq;
 using System.Text;
 
 namespace HelpersLib
@@ -325,6 +327,14 @@ namespace HelpersLib
         public static string ToBase(this string text, int from, int to, string digits)
         {
             return text.FromBase(from, digits).ToBase(to, digits);
+        }
+
+        public static string ToQueryString(this NameValueCollection nvc)
+        {
+            IEnumerable<string> segments = from key in nvc.AllKeys
+                                           from value in nvc.GetValues(key)
+                                           select string.Format("{0}={1}", key, value);
+            return "?" + string.Join("&", segments);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -118,5 +119,65 @@ namespace HelpersLib
         }
 
         #endregion OS version checks
+
+        public static string GetMimeType(string fileName)
+        {
+            if (!string.IsNullOrEmpty(fileName))
+            {
+                string ext = Path.GetExtension(fileName).ToLower();
+
+                if (!string.IsNullOrEmpty(ext))
+                {
+                    string mimeType = MimeTypes.GetMimeType(ext);
+
+                    if (!string.IsNullOrEmpty(mimeType))
+                    {
+                        return mimeType;
+                    }
+
+                    using (RegistryKey regKey = Registry.ClassesRoot.OpenSubKey(ext))
+                    {
+                        if (regKey != null && regKey.GetValue("Content Type") != null)
+                        {
+                            mimeType = regKey.GetValue("Content Type").ToString();
+
+                            if (!string.IsNullOrEmpty(mimeType))
+                            {
+                                return mimeType;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return MimeTypes.DefaultMimeType;
+        }
+
+        public static char GetRandomChar(string chars)
+        {
+            return chars[MathHelper.Random(chars.Length - 1)];
+        }
+
+        public static string GetRandomString(string chars, int length)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            while (length-- > 0)
+            {
+                sb.Append(GetRandomChar(chars));
+            }
+
+            return sb.ToString();
+        }
+
+        public static string GetRandomNumber(int length)
+        {
+            return GetRandomString(Numbers, length);
+        }
+
+        public static string GetRandomAlphanumeric(int length)
+        {
+            return GetRandomString(Alphanumeric, length);
+        }
     }
 }

@@ -70,6 +70,7 @@
     <Compile Include="Extensions\UIElementExtensions.cs" />
     <Compile Include="HelperOptions.cs" />
     <Compile Include="Helpers\MathHelper.cs" />
+    <Compile Include="MimeTypes.cs" />
     <Compile Include="Native\NativeMethods_Helper.cs" />
     <Compile Include="Native\FolderDialog.cs" />
     <Compile Include="Helpers\CaptureHelper.cs" />
@@ -104,9 +105,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ProxyInfo.cs" />
     <Compile Include="SimpleCommand.cs" />
     <Compile Include="Extensions\WindowExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\StreamExtensions.cs" />
     <Compile Include="TaskEx.cs" />
     <Compile Include="URLHelper.cs" />
     <Compile Include="Vector2.cs" />

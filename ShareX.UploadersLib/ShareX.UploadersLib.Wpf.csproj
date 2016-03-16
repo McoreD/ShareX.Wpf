@@ -46,8 +46,13 @@
       <HintPath>..\packages\MaterialDesignThemes.1.4.1.485\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -62,11 +67,21 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums.cs" />
+    <Compile Include="FileUploader.cs" />
+    <Compile Include="FixedSizedQueue.cs" />
+    <Compile Include="OAuth\IOAuth2Basic.cs" />
+    <Compile Include="OAuth\IOAuthBase.cs" />
     <Compile Include="IShareXUploaderPlugin.cs" />
     <Compile Include="LeftDrawerContentItem.cs" />
-    <Compile Include="OAuthControl.xaml.cs">
+    <Compile Include="OAuth\OAuth2Info.cs" />
+    <Compile Include="OAuth\OAuth2Token.cs" />
+    <Compile Include="OAuth\OAuthControl.xaml.cs">
       <DependentUpon>OAuthControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="OAuth\OAuthInfo.cs" />
+    <Compile Include="OAuth\OAuthManager.cs" />
+    <Compile Include="ProgressManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -80,10 +95,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Uploader.cs" />
     <Compile Include="UploaderConfig.cs" />
     <Compile Include="UploaderConfigWindow.xaml.cs">
       <DependentUpon>UploaderConfigWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UploadResult.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -97,7 +114,7 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="OAuthControl.xaml">
+    <Page Include="OAuth\OAuthControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

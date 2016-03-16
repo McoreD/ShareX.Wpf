@@ -38,6 +38,10 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -54,11 +58,16 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DropboxAccountInfo.cs" />
     <Compile Include="DropboxConfig.cs" />
+    <Compile Include="DropboxContentInfo.cs" />
     <Compile Include="DropboxControl.xaml.cs">
       <DependentUpon>DropboxControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DropboxQuotaInfo.cs" />
+    <Compile Include="DropboxShares.cs" />
     <Compile Include="DropboxUploader.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -74,6 +83,10 @@
     <Resource Include="DropboxLogo.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ShareX.HelpersLib\ShareX.HelpersLib.Wpf.csproj">
+      <Project>{43b77ceb-6410-43ad-842e-726a129fa4bb}</Project>
+      <Name>ShareX.HelpersLib.Wpf</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ShareX.PluginsLib\ShareX.PluginsLib.csproj">
       <Project>{335A0A7D-CA08-4F7E-933F-94556991DDC2}</Project>
       <Name>ShareX.PluginsLib</Name>
@@ -82,6 +95,9 @@
       <Project>{2dedaa33-86fd-4068-ab8f-450560c8ef41}</Project>
       <Name>ShareX.UploadersLib.Wpf</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
