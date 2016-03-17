@@ -67,7 +67,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="APIKeysLocal.cs" />
+    <Compile Include="APIKeys\APIKeysLocal.cs" />
     <Compile Include="APIKeys\APIKeys.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="FileUploader.cs" />
