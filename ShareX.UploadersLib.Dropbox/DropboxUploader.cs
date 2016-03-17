@@ -11,7 +11,11 @@ namespace ShareX.UploadersLib.Dropbox
 {
     public class DropboxUploader : FileUploader, IShareXUploaderPlugin, IOAuth2Basic
     {
-        public DropboxAccountInfo AccountInfo { get; set; }
+        public string Name { get; set; } = "Dropbox";
+        public string Publisher { get; } = "ShareX Team";
+
+        public OAuth2Info AuthInfo { get; set; }
+        private DropboxAccountInfo AccountInfo { get; set; }
         public string UploadPath { get; set; }
         public bool AutoCreateShareableLink { get; set; }
         public DropboxURLType ShareURLType { get; set; }
@@ -34,37 +38,6 @@ namespace ShareX.UploadersLib.Dropbox
         private const string URLPublicDirect = "https://dl.dropboxusercontent.com/u";
         private const string URLShareDirect = "https://dl.dropboxusercontent.com/s";
 
-        private DropboxConfig config = new DropboxConfig();
-
-        public UploaderConfig Config
-        {
-            get
-            {
-                return config;
-            }
-
-            set
-            {
-                config = value as DropboxConfig;
-            }
-        }
-
-        public string Name
-        {
-            get
-            {
-                return "Dropbox";
-            }
-        }
-
-        public string Publisher
-        {
-            get
-            {
-                return "ShareX Team";
-            }
-        }
-
         public UserControl UI
         {
             get
@@ -73,22 +46,49 @@ namespace ShareX.UploadersLib.Dropbox
             }
         }
 
-        public OAuth2Info AuthInfo
+        public DropboxUploader()
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
         }
 
+        public DropboxUploader(OAuth2Info oauth)
+            : this()
+        {
+            AuthInfo = oauth;
+        }
+
+        // https://www.dropbox.com/developers/core/docs#oa2-authorize
         public string GetAuthorizationURL()
         {
-            throw new NotImplementedException();
+            Dictionary<string, string> args = new Dictionary<string, string>();
+            args.Add("response_type", "code");
+            args.Add("client_id", AuthInfo.Client_ID);
+
+            return CreateQuery(URLWEB + "/oauth2/authorize", args);
         }
 
+        // https://www.dropbox.com/developers/core/docs#oa2-token
         public bool GetAccessToken(string code)
         {
-            throw new NotImplementedException();
+            Dictionary<string, string> args = new Dictionary<string, string>();
+            args.Add("client_id", AuthInfo.Client_ID);
+            args.Add("client_secret", AuthInfo.Client_Secret);
+            args.Add("grant_type", "authorization_code");
+            args.Add("code", code);
+
+            string response = SendRequest(HttpMethod.POST, URLAPI + "/oauth2/token", args);
+
+            if (!string.IsNullOrEmpty(response))
+            {
+                OAuth2Token token = JsonConvert.DeserializeObject<OAuth2Token>(response);
+
+                if (token != null && !string.IsNullOrEmpty(token.access_token))
+                {
+                    AuthInfo.Token = token;
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public string GetPublicURL(string path)

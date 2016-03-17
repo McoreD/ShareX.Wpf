@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace HelpersLib
 {
@@ -32,15 +33,16 @@ namespace HelpersLib
                 dllFileNames = Directory.GetFiles(path, "*.dll");
 
                 ICollection<Assembly> assemblies = new List<Assembly>(dllFileNames.Length);
-                foreach (string dllFile in dllFileNames)
+                Parallel.ForEach(dllFileNames, dllFile =>
                 {
                     AssemblyName an = AssemblyName.GetAssemblyName(dllFile);
                     Assembly assembly = Assembly.Load(an);
                     assemblies.Add(assembly);
-                }
+                });
 
                 Type pluginType = typeof(T);
                 ICollection<Type> pluginTypes = new List<Type>();
+
                 foreach (Assembly assembly in assemblies)
                 {
                     if (assembly != null)
@@ -62,7 +64,7 @@ namespace HelpersLib
                             }
                         }
                     }
-                }
+                };
 
                 ICollection<T> plugins = new List<T>(pluginTypes.Count);
                 foreach (Type type in pluginTypes)

@@ -5,6 +5,9 @@ namespace ShareX.UploadersLib.Imgur
 {
     public class ImgurUploader : IShareXUploaderPlugin
     {
+        public string Name { get; set; } = "Imgur";
+        public string Publisher { get; } = "ShareX Team";
+
         private ImgurConfig config = new ImgurConfig();
 
         public UploaderConfig Config
@@ -17,22 +20,6 @@ namespace ShareX.UploadersLib.Imgur
             set
             {
                 config = value as ImgurConfig;
-            }
-        }
-
-        public string Name
-        {
-            get
-            {
-                return "Imgur";
-            }
-        }
-
-        public string Publisher
-        {
-            get
-            {
-                return "ShareX Team";
             }
         }
 

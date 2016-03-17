@@ -40,5 +40,12 @@ namespace ShareX.UploadersLib
         {
             MenuToggleButton.IsChecked = false;
         }
+
+        private void Window_Unloaded(object sender, RoutedEventArgs e)
+        {
+            foreach (var uploader in Uploaders)
+            {
+            }
+        }
     }
 }

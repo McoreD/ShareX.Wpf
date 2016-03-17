@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShareX.PluginsLib
+namespace ShareX.UploadersLib
 {
-    public interface IShareXPluginBase
+    public interface IShareXUploaderUI
     {
-        string Name { get; set; }
-        string Publisher { get; }
+        void Load(UploaderConfig config);
     }
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -178,6 +179,55 @@ namespace HelpersLib
         public static string GetRandomAlphanumeric(int length)
         {
             return GetRandomString(Alphanumeric, length);
+        }
+
+        private static Version GetProductVersion()
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            return assembly.GetName().Version;
+        }
+
+        public static Version ProductVersion
+        {
+            get
+            {
+                return GetProductVersion();
+            }
+        }
+
+        private static Version NormalizeVersion(string version)
+        {
+            return Version.Parse(version).Normalize();
+        }
+
+        /// <summary>
+        /// If version1 newer than version2 = 1
+        /// If version1 equal to version2 = 0
+        /// If version1 older than version2 = -1
+        /// </summary>
+        public static int CompareVersion(string version1, string version2)
+        {
+            return NormalizeVersion(version1).CompareTo(NormalizeVersion(version2));
+        }
+
+        /// <summary>
+        /// If version1 newer than version2 = 1
+        /// If version1 equal to version2 = 0
+        /// If version1 older than version2 = -1
+        /// </summary>
+        public static int CompareVersion(Version version1, Version version2)
+        {
+            return version1.Normalize().CompareTo(version2.Normalize());
+        }
+
+        /// <summary>
+        /// If version newer than ApplicationVersion = 1
+        /// If version equal to ApplicationVersion = 0
+        /// If version older than ApplicationVersion = -1
+        /// </summary>
+        public static int CompareApplicationVersion(string version)
+        {
+            return CompareVersion(version, ProductVersion.ToString());
         }
     }
 }

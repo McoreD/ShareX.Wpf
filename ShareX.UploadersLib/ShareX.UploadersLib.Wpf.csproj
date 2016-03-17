@@ -67,9 +67,12 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="APIKeysLocal.cs" />
+    <Compile Include="APIKeys\APIKeys.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="FileUploader.cs" />
     <Compile Include="FixedSizedQueue.cs" />
+    <Compile Include="IShareXUploaderUI.cs" />
     <Compile Include="OAuth\IOAuth2Basic.cs" />
     <Compile Include="OAuth\IOAuthBase.cs" />
     <Compile Include="IShareXUploaderPlugin.cs" />

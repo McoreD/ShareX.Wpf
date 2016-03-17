@@ -20,9 +20,16 @@ namespace ShareX.UploadersLib
     /// </summary>
     public partial class OAuthControl : UserControl
     {
+        public event RoutedEventHandler OpenAuthorizePageClick;
+
         public OAuthControl()
         {
             InitializeComponent();
+        }
+
+        private void btnOpenAuthorizePage_Click(object sender, RoutedEventArgs e)
+        {
+            if (OpenAuthorizePageClick != null) OpenAuthorizePageClick(sender, e);
         }
     }
 }
