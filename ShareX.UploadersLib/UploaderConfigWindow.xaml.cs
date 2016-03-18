@@ -1,5 +1,6 @@
 ﻿using HelpersLib;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 
@@ -10,29 +11,29 @@ namespace ShareX.UploadersLib
     /// </summary>
     public partial class UploaderConfigWindow : Window
     {
-        private Dictionary<string, IShareXUploaderPlugin> Uploaders = new Dictionary<string, IShareXUploaderPlugin>();
+        private Dictionary<string, IShareXUploaderPlugin> Plugins = new Dictionary<string, IShareXUploaderPlugin>();
 
         public UploaderConfigWindow()
         {
             InitializeComponent();
 
-            ICollection<IShareXUploaderPlugin> plugins = null;
             TaskEx.Run(() =>
             {
-                plugins = PluginHelper<IShareXUploaderPlugin>.LoadPlugins("Plugins");
+                Plugins = PluginHelper<IShareXUploaderPlugin>.LoadPlugins("Plugins");
             }, () =>
             {
-                if (plugins != null)
+                if (Plugins != null)
                 {
-                    foreach (var uploader in plugins)
+                    foreach (var plugin in Plugins)
                     {
+                        IShareXUploaderPlugin uploader = plugin.Value;
+                        uploader.Location = plugin.Key;
+                        uploader.LoadSettings(Path.ChangeExtension(uploader.Location, "json"));
+
                         LeftDrawerContentItem o = new LeftDrawerContentItem() { Name = uploader.Name };
-                        uploader.LoadSettings();
 
                         o.Content = uploader.UI;
                         lbDrawer.Items.Add(o);
-
-                        Uploaders.Add(uploader.Name, uploader);
                     }
                 }
             });
@@ -45,9 +46,9 @@ namespace ShareX.UploadersLib
 
         private void Window_Unloaded(object sender, RoutedEventArgs e)
         {
-            foreach (var uploader in Uploaders)
+            foreach (var plugin in Plugins)
             {
-                uploader.Value.SaveSettings();
+                plugin.Value.SaveSettings();
             }
         }
     }

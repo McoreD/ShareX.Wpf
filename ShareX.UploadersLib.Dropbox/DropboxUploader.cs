@@ -13,8 +13,8 @@ namespace ShareX.UploadersLib.Dropbox
     {
         public string Name { get; set; } = "Dropbox";
         public string Publisher { get; } = "ShareX Team";
+        public string Location { get; set; }
         public static DropboxSettings Config { get; set; }
-        public string SettingsFilePath { get; private set; }
 
         public OAuth2Info AuthInfo { get; set; }
         private DropboxAccountInfo AccountInfo { get; set; }
@@ -235,16 +235,15 @@ namespace ShareX.UploadersLib.Dropbox
             return UploadFile(stream, UploadPath, fileName, AutoCreateShareableLink, ShareURLType);
         }
 
-        public void LoadSettings()
+        public void LoadSettings(string filePath)
         {
-            SettingsFilePath = $"{Name}.json";
-            Config = DropboxSettings.Load(SettingsFilePath) as DropboxSettings;
+            Config = DropboxSettings.Load(filePath) as DropboxSettings;
             dropboxControl = new DropboxControl();
         }
 
         public void SaveSettings()
         {
-            Config.Save(SettingsFilePath);
+            Config.Save();
         }
     }
 }

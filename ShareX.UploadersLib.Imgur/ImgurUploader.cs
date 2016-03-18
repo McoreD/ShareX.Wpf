@@ -7,6 +7,7 @@ namespace ShareX.UploadersLib.Imgur
     {
         public string Name { get; set; } = "Imgur";
         public string Publisher { get; } = "ShareX Team";
+        public string Location { get; set; }
 
         private ImgurSettings config = new ImgurSettings();
 
@@ -31,7 +32,7 @@ namespace ShareX.UploadersLib.Imgur
             }
         }
 
-        public void LoadSettings()
+        public void LoadSettings(string filePath)
         {
             //  throw new NotImplementedException();
         }

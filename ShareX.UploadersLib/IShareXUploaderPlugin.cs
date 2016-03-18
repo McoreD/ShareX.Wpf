@@ -10,9 +10,11 @@ namespace ShareX.UploadersLib
 {
     public interface IShareXUploaderPlugin : IShareXPluginBase
     {
+        string Location { get; set; }
+
         UserControl UI { get; }
 
-        void LoadSettings();
+        void LoadSettings(string filePath);
 
         void SaveSettings();
     }

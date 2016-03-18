@@ -24,7 +24,7 @@ namespace HelpersLib
 {
     public static class PluginHelper<T>
     {
-        public static ICollection<T> LoadPlugins(string path)
+        public static Dictionary<string, T> LoadPlugins(string path)
         {
             string[] dllFileNames = null;
 
@@ -32,7 +32,8 @@ namespace HelpersLib
             {
                 dllFileNames = Directory.GetFiles(path, "*.dll");
 
-                ICollection<Assembly> assemblies = new List<Assembly>(dllFileNames.Length);
+                ICollection<Assembly> assemblies = new List<Assembly>();
+
                 Parallel.ForEach(dllFileNames, dllFile =>
                 {
                     AssemblyName an = AssemblyName.GetAssemblyName(dllFile);
@@ -40,40 +41,37 @@ namespace HelpersLib
                     assemblies.Add(assembly);
                 });
 
-                Type pluginType = typeof(T);
-                ICollection<Type> pluginTypes = new List<Type>();
-
-                foreach (Assembly assembly in assemblies)
+                if (assemblies.Count > 0)
                 {
-                    if (assembly != null)
-                    {
-                        Type[] types = assembly.GetTypes();
+                    Dictionary<string, T> plugins = new Dictionary<string, T>();
+                    Type pluginType = typeof(T);
 
-                        foreach (Type type in types)
+                    foreach (Assembly assembly in assemblies)
+                    {
+                        if (assembly != null)
                         {
-                            if (type.IsInterface || type.IsAbstract)
+                            Type[] types = assembly.GetTypes();
+
+                            foreach (Type type in types)
                             {
-                                continue;
-                            }
-                            else
-                            {
-                                if (type.GetInterface(pluginType.FullName) != null)
+                                if (type.IsInterface || type.IsAbstract)
                                 {
-                                    pluginTypes.Add(type);
+                                    continue;
+                                }
+                                else
+                                {
+                                    if (type.GetInterface(pluginType.FullName) != null)
+                                    {
+                                        T plugin = (T)Activator.CreateInstance(type);
+                                        plugins.Add(assembly.Location, plugin);
+                                    }
                                 }
                             }
                         }
-                    }
-                };
+                    };
 
-                ICollection<T> plugins = new List<T>(pluginTypes.Count);
-                foreach (Type type in pluginTypes)
-                {
-                    T plugin = (T)Activator.CreateInstance(type);
-                    plugins.Add(plugin);
+                    return plugins;
                 }
-
-                return plugins;
             }
 
             return null;
