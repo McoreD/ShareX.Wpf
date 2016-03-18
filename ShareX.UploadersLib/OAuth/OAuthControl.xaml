@@ -14,8 +14,8 @@
                 <Button Name="btnOpenAuthorizePage" Margin="5" Click="btnOpenAuthorizePage_Click">Step 1: Open authorize page...</Button>
                 <TextBlock Text="Verification code:" Margin="5" />
                 <TextBox Name="txtVerificationCode" Margin="5"></TextBox>
-                <Button Name="btnCompleteAuthorization" Margin="5">Step 2: Complete authorization</Button>
-                <TextBlock Text="Status:" Margin="5" />
+                <Button Name="btnCompleteAuthorization" Margin="5" Click="btnCompleteAuthorization_Click">Step 2: Complete authorization</Button>
+                <TextBlock Name="lblLoginStatus" Text="Status:" Margin="5" />
                 <Button Name="btnClearAuthorization" Margin="5">Clear authorization</Button>
                 <Button Name="btnRefreshAuthorization" Margin="5">Refresh authorization</Button>
             </StackPanel>

@@ -13,6 +13,8 @@ namespace ShareX.UploadersLib.Dropbox
     {
         public string Name { get; set; } = "Dropbox";
         public string Publisher { get; } = "ShareX Team";
+        public static DropboxSettings Config { get; set; }
+        public string SettingsFilePath { get; private set; }
 
         public OAuth2Info AuthInfo { get; set; }
         private DropboxAccountInfo AccountInfo { get; set; }
@@ -38,11 +40,13 @@ namespace ShareX.UploadersLib.Dropbox
         private const string URLPublicDirect = "https://dl.dropboxusercontent.com/u";
         private const string URLShareDirect = "https://dl.dropboxusercontent.com/s";
 
+        private DropboxControl dropboxControl;
+
         public UserControl UI
         {
             get
             {
-                return new DropboxControl();
+                return dropboxControl;
             }
         }
 
@@ -201,11 +205,46 @@ namespace ShareX.UploadersLib.Dropbox
             return result;
         }
 
+        // https://www.dropbox.com/developers/core/docs#account-info
+        public DropboxAccountInfo GetAccountInfo()
+        {
+            DropboxAccountInfo account = null;
+
+            if (OAuth2Info.CheckOAuth(AuthInfo))
+            {
+                string response = SendRequest(HttpMethod.GET, URLAccountInfo, headers: GetAuthHeaders());
+
+                if (!string.IsNullOrEmpty(response))
+                {
+                    account = JsonConvert.DeserializeObject<DropboxAccountInfo>(response);
+
+                    if (account != null)
+                    {
+                        AccountInfo = account;
+                    }
+                }
+            }
+
+            return account;
+        }
+
         public override UploadResult Upload(Stream stream, string fileName)
         {
             CheckEarlyURLCopy(UploadPath, fileName);
 
             return UploadFile(stream, UploadPath, fileName, AutoCreateShareableLink, ShareURLType);
+        }
+
+        public void LoadSettings()
+        {
+            SettingsFilePath = $"{Name}.json";
+            Config = DropboxSettings.Load(SettingsFilePath) as DropboxSettings;
+            dropboxControl = new DropboxControl();
+        }
+
+        public void SaveSettings()
+        {
+            Config.Save(SettingsFilePath);
         }
     }
 }

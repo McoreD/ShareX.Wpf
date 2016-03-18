@@ -27,6 +27,8 @@ namespace ShareX.UploadersLib
                     foreach (var uploader in plugins)
                     {
                         LeftDrawerContentItem o = new LeftDrawerContentItem() { Name = uploader.Name };
+                        uploader.LoadSettings();
+
                         o.Content = uploader.UI;
                         lbDrawer.Items.Add(o);
 
@@ -45,6 +47,7 @@ namespace ShareX.UploadersLib
         {
             foreach (var uploader in Uploaders)
             {
+                uploader.Value.SaveSettings();
             }
         }
     }

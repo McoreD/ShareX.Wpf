@@ -15,5 +15,7 @@
             <TextBox></TextBox>
             <Button>Select...</Button>
         </StackPanel>
+        <CheckBox Name="chkDropboxAutoCreateShareableLink">Create shareable URL:</CheckBox>
+        <TextBlock Name="lblDropboxStatus"></TextBlock>
     </StackPanel>
 </UserControl>

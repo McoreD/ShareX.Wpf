@@ -2,7 +2,7 @@
 
 namespace ShareX.UploadersLib.Dropbox
 {
-    public class DropboxConfig : UploaderConfig
+    public class DropboxSettings : SettingsBase<DropboxSettings>
     {
         public OAuth2Info DropboxOAuth2Info = null;
         public DropboxAccountInfo DropboxAccountInfo = null;

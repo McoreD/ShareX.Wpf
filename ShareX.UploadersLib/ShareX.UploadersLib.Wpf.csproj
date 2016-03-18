@@ -72,7 +72,6 @@
     <Compile Include="Enums.cs" />
     <Compile Include="FileUploader.cs" />
     <Compile Include="FixedSizedQueue.cs" />
-    <Compile Include="IShareXUploaderUI.cs" />
     <Compile Include="OAuth\IOAuth2Basic.cs" />
     <Compile Include="OAuth\IOAuthBase.cs" />
     <Compile Include="IShareXUploaderPlugin.cs" />
@@ -99,7 +98,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Uploader.cs" />
-    <Compile Include="UploaderConfig.cs" />
+    <Compile Include="UploaderSettings.cs" />
     <Compile Include="UploaderConfigWindow.xaml.cs">
       <DependentUpon>UploaderConfigWindow.xaml</DependentUpon>
     </Compile>

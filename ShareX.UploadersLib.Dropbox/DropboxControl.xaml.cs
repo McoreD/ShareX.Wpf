@@ -19,19 +19,34 @@ namespace ShareX.UploadersLib.Dropbox
     /// <summary>
     /// Interaction logic for DropboxControl.xaml
     /// </summary>
-    public partial class DropboxControl : UserControl, IShareXUploaderUI
+    public partial class DropboxControl : UserControl
     {
-        public DropboxConfig Config { get; private set; }
+        internal void UpdateDropboxStatus()
+        {
+            if (OAuth2Info.CheckOAuth(DropboxUploader.Config.DropboxOAuth2Info) && DropboxUploader.Config.DropboxAccountInfo != null)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine("Email: " + DropboxUploader.Config.DropboxAccountInfo.Email);
+                sb.AppendLine("Name: " + DropboxUploader.Config.DropboxAccountInfo.Display_name);
+                sb.AppendLine("ID: " + DropboxUploader.Config.DropboxAccountInfo.Uid.ToString());
+                // string uploadPath = GetDropboxUploadPath();
+                // sb.AppendLine("Upload path: " + uploadPath);
+                // sb.AppendLine("Download path: " + DropboxUploader.GetPublicURL(DropboxUploader.Config.DropboxAccountInfo.Uid, uploadPath + "Example.png"));
+                lblDropboxStatus.Text = sb.ToString();
+                // btnDropboxShowFiles.Enabled = true;
+            }
+            else
+            {
+                lblDropboxStatus.Text = string.Empty;
+            }
+        }
 
         public DropboxControl()
         {
             InitializeComponent();
+            UpdateDropboxStatus();
             oauth.OpenAuthorizePageClick += OAuth_OpenAuthorizePageClick;
-        }
-
-        public void Load(UploaderConfig config)
-        {
-            Config = DropboxConfig.Load($"{Name}.json") as DropboxConfig;
+            oauth.CompleteAuthorizationClick += OAuth_CompleteAuthorizationClick;
         }
 
         private void OAuth_OpenAuthorizePageClick(object sender, RoutedEventArgs e)
@@ -44,7 +59,7 @@ namespace ShareX.UploadersLib.Dropbox
 
                 if (!string.IsNullOrEmpty(url))
                 {
-                    Config.DropboxOAuth2Info = oauth;
+                    DropboxUploader.Config.DropboxOAuth2Info = oauth;
                     URLHelper.OpenURL(url);
                     DebugHelper.WriteLine("DropboxAuthOpen - Authorization URL is opened: " + url);
                 }
@@ -56,6 +71,51 @@ namespace ShareX.UploadersLib.Dropbox
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void OAuth_CompleteAuthorizationClick(string code)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(code) && DropboxUploader.Config.DropboxOAuth2Info != null)
+                {
+                    DropboxUploader dropbox = new DropboxUploader(DropboxUploader.Config.DropboxOAuth2Info);
+                    bool result = dropbox.GetAccessToken(code);
+
+                    if (result)
+                    {
+                        DropboxUploader.Config.DropboxAccountInfo = dropbox.GetAccountInfo();
+                        UpdateDropboxStatus();
+
+                        oauth.Status = OAuthLoginStatus.LoginSuccessful;
+
+                        if (DropboxUploader.Config.DropboxAccountInfo != null)
+                        {
+                            MessageBox.Show("Login was successful.", "ShareX", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Login was successful but failed to get account information", "ShareX",
+                                MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+
+                        return;
+                    }
+                    else
+                    {
+                        oauth.Status = OAuthLoginStatus.LoginFailed;
+                        MessageBox.Show("Login failed", "ShareX", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+
+                DropboxUploader.Config.DropboxAccountInfo = null;
+                UpdateDropboxStatus();
+            }
+            catch (Exception ex)
+            {
+                DebugHelper.WriteException(ex);
+                MessageBox.Show(ex.ToString(), "ShareX - Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

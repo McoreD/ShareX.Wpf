@@ -234,4 +234,4 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
-ShareX.UploadersLib/APIKeysLocal.cs
+ShareX.UploadersLib/APIKeys/APIKeysLocal.cs

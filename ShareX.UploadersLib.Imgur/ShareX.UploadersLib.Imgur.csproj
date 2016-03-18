@@ -55,7 +55,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ImgurConfig.cs" />
+    <Compile Include="ImgurSettings.cs" />
     <Compile Include="ImgurControl.xaml.cs">
       <DependentUpon>ImgurControl.xaml</DependentUpon>
     </Compile>

@@ -8,9 +8,9 @@ namespace ShareX.UploadersLib.Imgur
         public string Name { get; set; } = "Imgur";
         public string Publisher { get; } = "ShareX Team";
 
-        private ImgurConfig config = new ImgurConfig();
+        private ImgurSettings config = new ImgurSettings();
 
-        public UploaderConfig Config
+        public UploaderSettings Config
         {
             get
             {
@@ -19,7 +19,7 @@ namespace ShareX.UploadersLib.Imgur
 
             set
             {
-                config = value as ImgurConfig;
+                config = value as ImgurSettings;
             }
         }
 
@@ -29,6 +29,16 @@ namespace ShareX.UploadersLib.Imgur
             {
                 return new ImgurControl();
             }
+        }
+
+        public void LoadSettings()
+        {
+            //  throw new NotImplementedException();
+        }
+
+        public void SaveSettings()
+        {
+            // throw new NotImplementedException();
         }
     }
 }

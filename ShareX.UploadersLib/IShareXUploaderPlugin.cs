@@ -11,5 +11,9 @@ namespace ShareX.UploadersLib
     public interface IShareXUploaderPlugin : IShareXPluginBase
     {
         UserControl UI { get; }
+
+        void LoadSettings();
+
+        void SaveSettings();
     }
 }

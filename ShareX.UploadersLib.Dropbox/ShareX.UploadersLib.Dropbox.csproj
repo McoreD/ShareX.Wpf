@@ -59,7 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DropboxAccountInfo.cs" />
-    <Compile Include="DropboxConfig.cs" />
+    <Compile Include="DropboxSettings.cs" />
     <Compile Include="DropboxContentInfo.cs" />
     <Compile Include="DropboxControl.xaml.cs">
       <DependentUpon>DropboxControl.xaml</DependentUpon>
