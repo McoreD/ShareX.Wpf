@@ -49,7 +49,7 @@ Name: "CreateQuickLaunchIcon"; Description: "Create a quick launch shortcut"; Gr
 [Files]
 Source: "{#AppParentDirectory}\{#AppFilename}"; DestDir: {app}; Flags: ignoreversion
 Source: "{#AppParentDirectory}\*.dll"; DestDir: {app}; Flags: ignoreversion
-Source: "{#AppParentDirectory}\Plugins\ShareX.UploadersLib.*.dll"; DestDir: "{app}\Plugins"; Flags: ignoreversion
+Source: "{#AppParentDirectory}\Plugins\ShareX.UploadersLib.*.dll"; DestDir: "{userdocs}\{#AppName}\Uploaders"; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\{#AppName}"; Filename: "{app}\{#AppFilename}"; WorkingDir: "{app}"

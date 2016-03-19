@@ -29,9 +29,12 @@ namespace ShareX.UploadersLib
 
         public void SaveSettings()
         {
-            foreach (var plugin in Plugins)
+            if (Plugins != null)
             {
-                plugin.Value.SaveSettings();
+                foreach (var plugin in Plugins)
+                {
+                    plugin.Value.SaveSettings();
+                }
             }
         }
     }
