@@ -14,7 +14,7 @@ namespace ShareX.UploadersLib
 {
     public class Uploader
     {
-        public static string UploadersFolderPath { get; set; }
+        public static UploaderPluginsManager PluginManager { get; set; }
         private static readonly string UserAgent = "ShareX";
 
         public delegate void ProgressEventHandler(ProgressManager progress);

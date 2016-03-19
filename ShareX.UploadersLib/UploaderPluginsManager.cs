@@ -10,11 +10,15 @@ namespace ShareX.UploadersLib
 {
     public class UploaderPluginsManager
     {
+        public delegate void PluginsLoadedEventHandler();
+        public event PluginsLoadedEventHandler PluginsLoaded;
         public Dictionary<string, IShareXUploaderPlugin> Plugins { get; private set; }
 
-        public UploaderPluginsManager(string folderPath)
+        public void Init(string folderPath)
         {
             Plugins = PluginHelper<IShareXUploaderPlugin>.LoadPlugins(folderPath);
+
+            OnPluginsLoaded();
 
             if (Plugins != null)
             {
@@ -25,6 +29,11 @@ namespace ShareX.UploadersLib
                     uploader.LoadSettings(Path.ChangeExtension(uploader.Location, "json"));
                 }
             }
+        }
+
+        protected virtual void OnPluginsLoaded()
+        {
+            if (PluginsLoaded != null) PluginsLoaded();
         }
 
         public void SaveSettings()

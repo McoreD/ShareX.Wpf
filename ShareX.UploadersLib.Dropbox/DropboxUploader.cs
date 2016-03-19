@@ -40,13 +40,11 @@ namespace ShareX.UploadersLib.Dropbox
         private const string URLPublicDirect = "https://dl.dropboxusercontent.com/u";
         private const string URLShareDirect = "https://dl.dropboxusercontent.com/s";
 
-        private DropboxControl dropboxControl;
-
         public UserControl UI
         {
             get
             {
-                return dropboxControl;
+                return new DropboxControl();
             }
         }
 
@@ -238,7 +236,6 @@ namespace ShareX.UploadersLib.Dropbox
         public void LoadSettings(string filePath)
         {
             Config = DropboxSettings.Load(filePath) as DropboxSettings;
-            dropboxControl = new DropboxControl();
         }
 
         public void SaveSettings()

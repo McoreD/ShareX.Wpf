@@ -79,7 +79,7 @@ namespace ShareX
                     }
                     else
                     {
-                        uploadersConfigFolder = Path.Combine(PersonalFolder, "Uploaders");
+                        uploadersConfigFolder = "Plugins"; // Path.Combine(PersonalFolder, "Uploaders");
                     }
 
                     return uploadersConfigFolder;
@@ -167,10 +167,5 @@ namespace ShareX
         public static string ChromeHostManifestFilePath => Path.Combine(ToolsFolder, "Chrome-host-manifest.json");
 
         #endregion Paths
-
-        public App()
-        {
-            Uploader.UploadersFolderPath = UploadersFolderPath;
-        }
     }
 }

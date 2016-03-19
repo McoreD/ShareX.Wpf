@@ -11,17 +11,13 @@ namespace ShareX.UploadersLib
     /// </summary>
     public partial class UploaderConfigWindow : Window
     {
-        private UploaderPluginsManager PluginManager = null;
-
         public UploaderConfigWindow()
         {
             InitializeComponent();
 
-            PluginManager = new UploaderPluginsManager(Uploader.UploadersFolderPath);
-
-            if (PluginManager.Plugins != null)
+            if (Uploader.PluginManager.Plugins != null)
             {
-                foreach (var plugin in PluginManager.Plugins)
+                foreach (var plugin in Uploader.PluginManager.Plugins)
                 {
                     IShareXUploaderPlugin uploader = plugin.Value;
                     LeftDrawerContentItem o = new LeftDrawerContentItem() { Name = uploader.Name };
@@ -38,7 +34,7 @@ namespace ShareX.UploadersLib
 
         private void Window_Unloaded(object sender, RoutedEventArgs e)
         {
-            PluginManager.SaveSettings();
+            Uploader.PluginManager.SaveSettings();
         }
     }
 }

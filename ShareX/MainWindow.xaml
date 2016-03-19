@@ -117,16 +117,10 @@
                                 <materialDesign:PackIcon Kind="Floppy" />
                             </StackPanel>
                         </Button>
-                        <Button Name="btnUpload" Margin="5" Padding="0" Width="40" Height="40" Click="btnUpload_Click">
+                        <Button Name="btnUpload" Margin="5" Padding="0" Width="40" Height="40" Click="btnUpload_Click" ContextMenuClosing="btnUpload_ContextMenuClosing">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="CloudUpload" />
                             </StackPanel>
-                            <Button.ContextMenu>
-                                <ContextMenu>
-                                    <MenuItem Header="Dropbox" />
-                                    <MenuItem Header="Imgur" />
-                                </ContextMenu>
-                            </Button.ContextMenu>
                         </Button>
                     </StackPanel>
                 </StackPanel>
