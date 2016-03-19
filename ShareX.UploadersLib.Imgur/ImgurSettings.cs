@@ -1,6 +1,8 @@
-﻿namespace ShareX.UploadersLib.Imgur
+﻿using HelpersLib;
+
+namespace ShareX.UploadersLib.Imgur
 {
-    public class ImgurSettings : UploaderSettings
+    public class ImgurSettings : SettingsBase<ImgurSettings>
     {
     }
 }

@@ -67,7 +67,6 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="APIKeys\APIKeysLocal.cs" />
     <Compile Include="APIKeys\APIKeys.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="FileUploader.cs" />
@@ -99,7 +98,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Uploader.cs" />
-    <Compile Include="UploaderSettings.cs" />
     <Compile Include="UploaderConfigWindow.xaml.cs">
       <DependentUpon>UploaderConfigWindow.xaml</DependentUpon>
     </Compile>
