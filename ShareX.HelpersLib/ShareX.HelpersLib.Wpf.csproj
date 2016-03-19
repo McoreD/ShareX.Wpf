@@ -119,7 +119,7 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\StreamExtensions.cs" />
     <Compile Include="TaskEx.cs" />
-    <Compile Include="URLHelper.cs" />
+    <Compile Include="Helpers\URLHelper.cs" />
     <Compile Include="Vector2.cs" />
     <Compile Include="WritablePropertiesOnlyResolver.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

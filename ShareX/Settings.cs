@@ -19,7 +19,7 @@ namespace ShareX
         #endregion Paths
 
         [Category("Paths"), Description("Custom uploaders configuration path. If you have already configured this setting in another device and you are attempting to use the same location, then backup the file before configuring this setting and restore after exiting ShareX.")]
-        public string CustomUploadersConfigPath { get; set; }
+        public string CustomUploadersFolder { get; set; }
 
         [Category("Paths"), Description("Custom hotkeys configuration path. If you have already configured this setting in another device and you are attempting to use the same location, then backup the file before configuring this setting and restore after exiting ShareX.")]
         public string CustomHotkeysConfigPath { get; set; }

@@ -1,4 +1,5 @@
 ﻿using HelpersLib;
+using ShareX.UploadersLib;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -27,8 +28,8 @@ namespace ShareX
 
         #region Paths
 
-        public static readonly string DefaultPersonalFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ShareX");
-        private static readonly string PortablePersonalFolder = Helper.GetAbsolutePath("ShareX");
+        public static readonly string DefaultPersonalFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ShareX.Wpf");
+        private static readonly string PortablePersonalFolder = Helper.GetAbsolutePath("ShareX.Wpf");
         private static readonly string PortableAppsPersonalFolder = Helper.GetAbsolutePath("../../Data");
         private static readonly string PersonalPathConfigFilePath = Helper.GetAbsolutePath("PersonalPath.cfg");
         private static readonly string PortableCheckFilePath = Helper.GetAbsolutePath("Portable");
@@ -64,7 +65,7 @@ namespace ShareX
             }
         }
 
-        public static string UploadersConfigFilePath
+        public static string UploadersFolderPath
         {
             get
             {
@@ -72,16 +73,16 @@ namespace ShareX
                 {
                     string uploadersConfigFolder;
 
-                    if (Settings != null && !string.IsNullOrEmpty(Settings.CustomUploadersConfigPath))
+                    if (Settings != null && !string.IsNullOrEmpty(Settings.CustomUploadersFolder))
                     {
-                        uploadersConfigFolder = Helper.ExpandFolderVariables(Settings.CustomUploadersConfigPath);
+                        uploadersConfigFolder = Helper.ExpandFolderVariables(Settings.CustomUploadersFolder);
                     }
                     else
                     {
-                        uploadersConfigFolder = PersonalFolder;
+                        uploadersConfigFolder = Path.Combine(PersonalFolder, "Uploaders");
                     }
 
-                    return Path.Combine(uploadersConfigFolder, "UploadersConfig.json");
+                    return uploadersConfigFolder;
                 }
 
                 return null;
@@ -166,5 +167,10 @@ namespace ShareX
         public static string ChromeHostManifestFilePath => Path.Combine(ToolsFolder, "Chrome-host-manifest.json");
 
         #endregion Paths
+
+        public App()
+        {
+            Uploader.UploadersFolderPath = UploadersFolderPath;
+        }
     }
 }

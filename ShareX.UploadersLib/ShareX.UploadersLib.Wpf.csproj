@@ -83,6 +83,7 @@
     </Compile>
     <Compile Include="OAuth\OAuthInfo.cs" />
     <Compile Include="OAuth\OAuthManager.cs" />
+    <Compile Include="UploaderPluginsManager.cs" />
     <Compile Include="ProgressManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
