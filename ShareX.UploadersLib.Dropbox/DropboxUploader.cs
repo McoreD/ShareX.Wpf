@@ -44,7 +44,7 @@ namespace ShareX.UploadersLib.Dropbox
         {
             get
             {
-                return new DropboxControl();
+                return new DropboxControl(); //   public UserControl UI { get; } = new DropboxControl(); // initiates it instantly creating STA errors
             }
         }
 

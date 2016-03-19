@@ -10,7 +10,7 @@
         Title="MainWindow"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" WindowStartupLocation="CenterScreen" SizeToContent="Manual" Width="700" Height="500" MinWidth="700" MinHeight="500" Icon="ShareX_Icon.ico" Closing="Window_Closing">
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" Width="700" Height="500" MinWidth="700" MinHeight="500" Icon="ShareX_Icon.ico" Closing="Window_Closing">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -117,7 +117,7 @@
                                 <materialDesign:PackIcon Kind="Floppy" />
                             </StackPanel>
                         </Button>
-                        <Button Name="btnUpload" Margin="5" Padding="0" Width="40" Height="40" Click="btnUpload_Click" ContextMenuClosing="btnUpload_ContextMenuClosing">
+                        <Button Name="btnUpload" Margin="5" Padding="0" Width="40" Height="40" Click="btnUpload_Click">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="CloudUpload" />
                             </StackPanel>

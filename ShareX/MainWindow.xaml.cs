@@ -29,7 +29,19 @@ namespace ShareX
             {
                 Uploader.PluginManager = new UploaderPluginsManager();
                 Uploader.PluginManager.Init(App.UploadersFolderPath);
-            });
+            },
+            () =>
+            {
+                btnUpload.ContextMenu = new ContextMenu();
+                foreach (var plugin in Uploader.PluginManager.Plugins)
+                {
+                    btnUpload.ContextMenu.Items.Add(new MenuItem()
+                    {
+                        Header = plugin.Value.Name
+                    });
+                }
+            }
+            );
 
             editor.ImageLoaded += Editor_ImageLoaded;
 
@@ -235,16 +247,6 @@ namespace ShareX
         private void btnUpload_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
-
-            if (btnUpload.ContextMenu == null)
-            {
-                btnUpload.ContextMenu = new ContextMenu();
-                foreach (var plugin in Uploader.PluginManager.Plugins)
-                {
-                    btnUpload.ContextMenu.Items.Add(new MenuItem() { Header = plugin.Value.Name });
-                }
-            }
-
             btn.SetContextMenuOnMouseDown(e);
         }
 
@@ -254,10 +256,6 @@ namespace ShareX
         {
             UploaderConfigWindow dlg = new UploaderConfigWindow();
             dlg.Show();
-        }
-
-        private void btnUpload_ContextMenuClosing(object sender, ContextMenuEventArgs e)
-        {
         }
     }
 }
