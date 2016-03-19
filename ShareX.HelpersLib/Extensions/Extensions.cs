@@ -18,5 +18,10 @@ namespace HelpersLib
         {
             return new Version(Math.Max(version.Major, 0), Math.Max(version.Minor, 0), Math.Max(version.Build, 0), Math.Max(version.Revision, 0));
         }
+
+        public static long ToUnix(this DateTime dateTime)
+        {
+            return Helper.DateTimeToUnix(dateTime);
+        }
     }
 }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Windows;
 
 namespace HelpersLib
@@ -154,6 +155,54 @@ namespace HelpersLib
             return MimeTypes.DefaultMimeType;
         }
 
+        public static string AddZeroes(string input, int digits = 2)
+        {
+            return input.PadLeft(digits, '0');
+        }
+
+        public static string AddZeroes(int number, int digits = 2)
+        {
+            return AddZeroes(number.ToString(), digits);
+        }
+
+        public static string HourTo12(int hour)
+        {
+            if (hour == 0)
+            {
+                return 12.ToString();
+            }
+
+            if (hour > 12)
+            {
+                return AddZeroes(hour - 12);
+            }
+
+            return AddZeroes(hour);
+        }
+
+        public static string RepeatGenerator(int count, Func<string> generator)
+        {
+            string result = "";
+            for (int x = count; x > 0; x--)
+            {
+                result += generator();
+            }
+            return result;
+        }
+
+        public static DateTime UnixToDateTime(long unix)
+        {
+            long timeInTicks = unix * TimeSpan.TicksPerSecond;
+            return new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).AddTicks(timeInTicks);
+        }
+
+        public static long DateTimeToUnix(DateTime dateTime)
+        {
+            DateTime date = dateTime.ToUniversalTime();
+            long ticks = date.Ticks - new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).Ticks;
+            return ticks / TimeSpan.TicksPerSecond;
+        }
+
         public static char GetRandomChar(string chars)
         {
             return chars[MathHelper.Random(chars.Length - 1)];
@@ -180,6 +229,8 @@ namespace HelpersLib
         {
             return GetRandomString(Alphanumeric, length);
         }
+
+        #region ProductionVersion
 
         private static Version GetProductVersion()
         {
@@ -228,6 +279,78 @@ namespace HelpersLib
         public static int CompareApplicationVersion(string version)
         {
             return CompareVersion(version, ProductVersion.ToString());
+        }
+
+        #endregion ProductionVersion
+
+        public static string ExpandFolderVariables(string path)
+        {
+            if (!string.IsNullOrEmpty(path))
+            {
+                try
+                {
+                    // TODO: folderPath = folderPath.Replace($"%ShareX%", Program.ToolsFolder, StringComparison.InvariantCultureIgnoreCase));
+                    GetEnums<Environment.SpecialFolder>().ToList<Environment.SpecialFolder>().ForEach(x => path = path.Replace($"%{x}%", Environment.GetFolderPath(x), StringComparison.InvariantCultureIgnoreCase));
+                    path = Environment.ExpandEnvironmentVariables(path);
+                }
+                catch (Exception e)
+                {
+                    DebugHelper.WriteException(e);
+                }
+            }
+
+            return path;
+        }
+
+        public static string GetValidFileName(string fileName, string separator = "")
+        {
+            char[] invalidFileNameChars = Path.GetInvalidFileNameChars();
+            if (string.IsNullOrEmpty(separator))
+            {
+                return new string(fileName.Where(c => !invalidFileNameChars.Contains(c)).ToArray());
+            }
+            else
+            {
+                invalidFileNameChars.ToList<char>().ForEach(x => fileName = fileName.Replace(x.ToString(), separator));
+                return fileName.Trim().Replace(separator + separator, separator);
+            }
+        }
+
+        public static string GetValidFolderPath(string folderPath)
+        {
+            char[] invalidPathChars = Path.GetInvalidPathChars();
+            return new string(folderPath.Where(c => !invalidPathChars.Contains(c)).ToArray());
+        }
+
+        public static string GetValidFilePath(string filePath)
+        {
+            string folderPath = Path.GetDirectoryName(filePath);
+            string fileName = Path.GetFileName(filePath);
+            return GetValidFolderPath(folderPath) + Path.DirectorySeparatorChar + GetValidFileName(fileName);
+        }
+
+        public static string GetValidURL(string url, bool replaceSpace = false)
+        {
+            if (replaceSpace) url = url.Replace(' ', '_');
+            return HttpUtility.UrlPathEncode(url);
+        }
+
+        public static string GetAbsolutePath(string path)
+        {
+            path = ExpandFolderVariables(path);
+
+            if (!Path.IsPathRooted(path)) // Is relative path?
+            {
+                path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, path);
+            }
+
+            return Path.GetFullPath(path);
+        }
+
+        public static string GetTempPath(string extension)
+        {
+            string path = Path.GetTempFileName();
+            return Path.ChangeExtension(path, extension);
         }
     }
 }
