@@ -76,6 +76,7 @@
     <Compile Include="Extensions\UIElementExtensions.cs" />
     <Compile Include="HelperOptions.cs" />
     <Compile Include="Helpers\MathHelper.cs" />
+    <Compile Include="IPluginBase.cs" />
     <Compile Include="MimeTypes.cs" />
     <Compile Include="NameParser.cs" />
     <Compile Include="Native\NativeMethods_Helper.cs" />

@@ -72,6 +72,8 @@
     <Compile Include="Enums.cs" />
     <Compile Include="FileUploader.cs" />
     <Compile Include="FixedSizedQueue.cs" />
+    <Compile Include="ImageUploader.cs" />
+    <Compile Include="OAuth\IOAuth2.cs" />
     <Compile Include="OAuth\IOAuth2Basic.cs" />
     <Compile Include="OAuth\IOAuthBase.cs" />
     <Compile Include="IShareXUploaderPlugin.cs" />
@@ -129,10 +131,6 @@
     <ProjectReference Include="..\ShareX.HelpersLib\ShareX.HelpersLib.Wpf.csproj">
       <Project>{43b77ceb-6410-43ad-842e-726a129fa4bb}</Project>
       <Name>ShareX.HelpersLib.Wpf</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ShareX.PluginsLib\ShareX.PluginsLib.csproj">
-      <Project>{335a0a7d-ca08-4f7e-933f-94556991ddc2}</Project>
-      <Name>ShareX.PluginsLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShareX.PluginsLib
+namespace HelpersLib
 {
-    public interface IShareXPluginBase
+    public interface IPluginBase
     {
         string Name { get; set; }
         string Publisher { get; }

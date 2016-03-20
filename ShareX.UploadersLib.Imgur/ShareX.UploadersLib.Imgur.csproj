@@ -39,6 +39,10 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -55,6 +59,11 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums.cs" />
+    <Compile Include="ImgurAlbumData.cs" />
+    <Compile Include="ImgurErrorData.cs" />
+    <Compile Include="ImgurImageData.cs" />
+    <Compile Include="ImgurResponse.cs" />
     <Compile Include="ImgurSettings.cs" />
     <Compile Include="ImgurControl.xaml.cs">
       <DependentUpon>ImgurControl.xaml</DependentUpon>
@@ -79,14 +88,13 @@
       <Project>{43B77CEB-6410-43AD-842E-726A129FA4BB}</Project>
       <Name>ShareX.HelpersLib.Wpf</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ShareX.PluginsLib\ShareX.PluginsLib.csproj">
-      <Project>{335A0A7D-CA08-4F7E-933F-94556991DDC2}</Project>
-      <Name>ShareX.PluginsLib</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ShareX.UploadersLib\ShareX.UploadersLib.Wpf.csproj">
       <Project>{2dedaa33-86fd-4068-ab8f-450560c8ef41}</Project>
       <Name>ShareX.UploadersLib.Wpf</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

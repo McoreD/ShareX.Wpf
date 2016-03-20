@@ -1,15 +1,10 @@
-﻿using ShareX.PluginsLib;
-using System;
-using System.Collections.Generic;
+﻿using HelpersLib;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace ShareX.UploadersLib
 {
-    public interface IShareXUploaderPlugin : IShareXPluginBase
+    public interface IShareXUploaderPlugin : IPluginBase
     {
         string Location { get; set; }
 
