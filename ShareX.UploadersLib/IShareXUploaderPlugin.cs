@@ -1,6 +1,7 @@
 ﻿using ShareX.PluginsLib;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,8 @@ namespace ShareX.UploadersLib
         UserControl UI { get; }
 
         void LoadSettings(string filePath);
+
+        UploadResult Upload(Stream stream, string fileName);
 
         void SaveSettings();
     }

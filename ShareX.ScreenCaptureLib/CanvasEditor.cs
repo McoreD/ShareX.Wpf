@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -209,6 +210,17 @@ namespace ShareX.ScreenCaptureLib
             }
 
             return rtb;
+        }
+
+        public MemoryStream GetStream()
+        {
+            var stream = new MemoryStream();
+            PngBitmapEncoder encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(GetBitmap()));
+            encoder.Save(stream);
+            stream.Seek(0, SeekOrigin.Begin);
+
+            return stream;
         }
     }
 }

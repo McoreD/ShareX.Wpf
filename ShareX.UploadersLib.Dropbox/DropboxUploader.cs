@@ -18,9 +18,6 @@ namespace ShareX.UploadersLib.Dropbox
 
         public OAuth2Info AuthInfo { get; set; }
         private DropboxAccountInfo AccountInfo { get; set; }
-        public string UploadPath { get; set; }
-        public bool AutoCreateShareableLink { get; set; }
-        public DropboxURLType ShareURLType { get; set; }
 
         private const string APIVersion = "1";
         private const string Root = "dropbox"; // dropbox or sandbox
@@ -114,9 +111,19 @@ namespace ShareX.UploadersLib.Dropbox
             return "Upload path is private. Use \"Public\" folder to get public URL.";
         }
 
+        public static string TidyUploadPath(string uploadPath)
+        {
+            if (!string.IsNullOrEmpty(uploadPath))
+            {
+                return uploadPath.Trim().Replace('\\', '/').Trim('/') + "/";
+            }
+
+            return string.Empty;
+        }
+
         private void CheckEarlyURLCopy(string path, string fileName)
         {
-            if (OAuth2Info.CheckOAuth(AuthInfo) && !AutoCreateShareableLink)
+            if (OAuth2Info.CheckOAuth(AuthInfo) && !Config.DropboxAutoCreateShareableLink)
             {
                 string url = GetPublicURL(URLHelper.CombineURL(path, fileName));
                 OnEarlyURLCopyRequested(url);
@@ -228,14 +235,18 @@ namespace ShareX.UploadersLib.Dropbox
 
         public override UploadResult Upload(Stream stream, string fileName)
         {
+            string UploadPath = NameParser.Parse(NameParserType.URL, TidyUploadPath(Config.DropboxUploadPath));
+
             CheckEarlyURLCopy(UploadPath, fileName);
 
-            return UploadFile(stream, UploadPath, fileName, AutoCreateShareableLink, ShareURLType);
+            return UploadFile(stream, UploadPath, fileName, Config.DropboxAutoCreateShareableLink, Config.DropboxURLType);
         }
 
         public void LoadSettings(string filePath)
         {
             Config = DropboxSettings.Load(filePath) as DropboxSettings;
+            AuthInfo = Config.DropboxOAuth2Info;
+            AccountInfo = Config.DropboxAccountInfo;
         }
 
         public void SaveSettings()

@@ -35,10 +35,12 @@ namespace ShareX
                 btnUpload.ContextMenu = new ContextMenu();
                 foreach (var plugin in Uploader.PluginManager.Plugins)
                 {
-                    btnUpload.ContextMenu.Items.Add(new MenuItem()
+                    MenuItem miUploader = new MenuItem()
                     {
                         Header = plugin.Value.Name
-                    });
+                    };
+                    miUploader.Click += MiUploader_Click;
+                    btnUpload.ContextMenu.Items.Add(miUploader);
                 }
             }
             );
@@ -83,6 +85,20 @@ namespace ShareX
                     case AnnotationMode.Arrow:
                         btnAnnotate.Content = new PackIcon() { Kind = PackIconKind.CallMade };
                         break;
+                }
+            }
+        }
+
+        private void MiUploader_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem mi = sender as MenuItem;
+            IShareXUploaderPlugin uploader = Uploader.PluginManager.GetUploader(mi.Header.ToString());
+            if (uploader != null)
+            {
+                UploadResult result = uploader.Upload(editor.GetStream(), "Test.png");
+                if (result != null)
+                {
+                    Clipboard.SetText(result.URL);
                 }
             }
         }

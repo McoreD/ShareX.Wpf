@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Controls;
 
 namespace ShareX.UploadersLib.Imgur
@@ -25,6 +26,11 @@ namespace ShareX.UploadersLib.Imgur
         public void SaveSettings()
         {
             // throw new NotImplementedException();
+        }
+
+        public UploadResult Upload(Stream stream, string fileName)
+        {
+            throw new NotImplementedException();
         }
     }
 }

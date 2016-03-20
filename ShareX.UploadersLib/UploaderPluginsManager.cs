@@ -36,6 +36,17 @@ namespace ShareX.UploadersLib
             if (PluginsLoaded != null) PluginsLoaded();
         }
 
+        public IShareXUploaderPlugin GetUploader(string name)
+        {
+            foreach (var plugin in Plugins)
+            {
+                if (plugin.Value.Name == name)
+                    return plugin.Value;
+            }
+
+            return null;
+        }
+
         public void SaveSettings()
         {
             if (Plugins != null)
