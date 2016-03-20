@@ -3,19 +3,22 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:ShareX.UploadersLib.Dropbox"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300" Unloaded="UserControl_Unloaded">
     <StackPanel Orientation="Vertical">
         <Image Source="DropboxLogo.png" StretchDirection="DownOnly" />
         <UploadersLib:OAuthControl Name="oauth" Margin="5" />
-        <TextBlock>Upload path:</TextBlock>
-        <StackPanel Orientation="Horizontal">
+        <TextBlock Margin="5">Upload path:</TextBlock>
+        <StackPanel Orientation="Horizontal" Margin="5">
             <TextBox></TextBox>
             <Button>Select...</Button>
         </StackPanel>
-        <CheckBox Name="chkDropboxAutoCreateShareableLink">Create shareable URL:</CheckBox>
-        <TextBlock Name="lblDropboxStatus"></TextBlock>
+        <CheckBox Name="chkDropboxAutoCreateShareableLink" Margin="5">Create shareable URL</CheckBox>
+        <md:Card Margin="5">
+            <TextBlock Name="lblDropboxStatus" Margin="5"></TextBlock>
+        </md:Card>
     </StackPanel>
 </UserControl>

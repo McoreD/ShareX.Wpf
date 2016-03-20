@@ -15,7 +15,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{StaticResource MaterialDesignFont}"
 
-        Title="ShareX - Destination settings" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterOwner" Unloaded="Window_Unloaded">
+        Title="ShareX - Destination settings" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterOwner" Unloaded="Window_Unloaded" MinWidth="350">
 
     <Window.Resources>
         <ResourceDictionary>

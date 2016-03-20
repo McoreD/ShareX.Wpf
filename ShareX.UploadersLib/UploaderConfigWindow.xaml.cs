@@ -20,9 +20,14 @@ namespace ShareX.UploadersLib
                 foreach (var plugin in Uploader.PluginManager.Plugins)
                 {
                     IShareXUploaderPlugin uploader = plugin.Value;
-                    LeftDrawerContentItem o = new LeftDrawerContentItem() { Name = uploader.Name };
-                    o.Content = uploader.UI;
-                    lbDrawer.Items.Add(o);
+
+                    LeftDrawerContentItem lbItem = new LeftDrawerContentItem()
+                    {
+                        Name = uploader.Name,
+                        Content = uploader.UI
+                    };
+
+                    lbDrawer.Items.Add(lbItem);
                 }
             }
         }
