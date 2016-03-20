@@ -7,6 +7,9 @@ ShareX.Wpf is an attempt to reimagine ShareX using WPF.
 * System.Timer or System.Threading.Timer cannot be used to track mouse position due to cross-thread operation errors; 
 affects: Annotation.cs and RectangleLight.cs
 
-## Implementations in progress
+## Features currently being implemented
 * Uploaders plugin support
 * Image Editor
+
+## Featured to be implemented
+* Hotkey support
