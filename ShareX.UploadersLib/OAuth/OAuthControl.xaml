@@ -16,8 +16,8 @@
                 <TextBox Name="txtVerificationCode" Margin="5"></TextBox>
                 <Button Name="btnCompleteAuthorization" Margin="5" Click="btnCompleteAuthorization_Click">Step 2: Complete authorization</Button>
                 <TextBlock Name="lblLoginStatus" Text="Status:" Margin="5" />
-                <Button Name="btnClearAuthorization" Margin="5">Clear authorization</Button>
-                <Button Name="btnRefreshAuthorization" Margin="5">Refresh authorization</Button>
+                <Button Name="btnClearAuthorization" Margin="5" Click="btnClearAuthorization_Click">Clear authorization</Button>
+                <Button Name="btnRefreshAuthorization" Margin="5" Click="btnRefreshAuthorization_Click">Refresh authorization</Button>
             </StackPanel>
         </md:Card>
     </StackPanel>

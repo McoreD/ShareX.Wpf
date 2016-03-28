@@ -45,8 +45,7 @@ namespace ShareX.UploadersLib.Dropbox
         {
             InitializeComponent();
 
-            UpdateDropboxStatus();
-            chkDropboxAutoCreateShareableLink.IsChecked = DropboxUploader.Config.DropboxAutoCreateShareableLink;
+            LoadUI();
 
             oauth.OpenAuthorizePageClick += OAuth_OpenAuthorizePageClick;
             oauth.CompleteAuthorizationClick += OAuth_CompleteAuthorizationClick;
@@ -123,6 +122,17 @@ namespace ShareX.UploadersLib.Dropbox
         }
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            SaveUI();
+        }
+
+        public void LoadUI()
+        {
+            UpdateDropboxStatus();
+            chkDropboxAutoCreateShareableLink.IsChecked = DropboxUploader.Config.DropboxAutoCreateShareableLink;
+        }
+
+        public void SaveUI()
         {
             DropboxUploader.Config.DropboxAutoCreateShareableLink = (bool)chkDropboxAutoCreateShareableLink.IsChecked;
         }

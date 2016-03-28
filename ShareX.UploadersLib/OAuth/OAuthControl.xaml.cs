@@ -26,6 +26,9 @@ namespace ShareX.UploadersLib
         public delegate void CompleteAuthorizationClickEventHandler(string code);
         public event CompleteAuthorizationClickEventHandler CompleteAuthorizationClick;
 
+        public event RoutedEventHandler RefreshAuthorizationClick;
+        public event RoutedEventHandler ClearAuthorizationClick;
+
         private OAuthLoginStatus status;
         [DefaultValue(OAuthLoginStatus.LoginRequired)]
         public OAuthLoginStatus Status
@@ -74,6 +77,16 @@ namespace ShareX.UploadersLib
             {
                 CompleteAuthorizationClick(code);
             }
+        }
+
+        private void btnClearAuthorization_Click(object sender, RoutedEventArgs e)
+        {
+            if (ClearAuthorizationClick != null) ClearAuthorizationClick(sender, e);
+        }
+
+        private void btnRefreshAuthorization_Click(object sender, RoutedEventArgs e)
+        {
+            if (RefreshAuthorizationClick != null) RefreshAuthorizationClick(sender, e);
         }
     }
 }

@@ -15,11 +15,12 @@ namespace ShareX.UploadersLib.Imgur
         public string Publisher { get; } = "ShareX Team";
         public string Location { get; set; }
 
+        public static ImgurSettings Config { get; set; }
+
         public AccountType UploadMethod { get; set; }
         public OAuth2Info AuthInfo { get; set; }
         public ImgurThumbnailType ThumbnailType { get; set; }
         public string UploadAlbumID { get; set; }
-        public bool DirectLink { get; set; }
         public bool UseGIFV { get; set; }
 
         public UserControl UI
@@ -41,12 +42,13 @@ namespace ShareX.UploadersLib.Imgur
 
         public void LoadSettings(string filePath)
         {
-            //  throw new NotImplementedException();
+            Config = ImgurSettings.Load(filePath) as ImgurSettings;
+            AuthInfo = Config.ImgurOAuth2Info;
         }
 
         public void SaveSettings()
         {
-            // throw new NotImplementedException();
+            Config.Save();
         }
 
         public string GetAuthorizationURL()
@@ -206,7 +208,7 @@ namespace ShareX.UploadersLib.Imgur
 
                         if (imageData != null && !string.IsNullOrEmpty(imageData.link))
                         {
-                            if (DirectLink)
+                            if (Config.DirectLink)
                             {
                                 if (UseGIFV && !string.IsNullOrEmpty(imageData.gifv))
                                 {
