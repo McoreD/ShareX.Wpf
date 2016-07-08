@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -262,12 +263,8 @@ namespace HelpersLib
 
         public static bool IsNumber(this string text)
         {
-            foreach (char c in text)
-            {
-                if (!char.IsNumber(c)) return false;
-            }
-
-            return true;
+            double num;
+            return double.TryParse(text, NumberStyles.AllowExponent, CultureInfo.CurrentCulture, out num);
         }
 
         public static string[] Lines(this string text)

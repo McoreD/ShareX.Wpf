@@ -26,6 +26,9 @@ namespace HelpersLib
                     btn.Command = DialogHost.CloseDialogCommand;
                     btn.CommandParameter = i + 1;
 
+                    if (buttons.Length == 1)
+                        btn.IsDefault = true;
+
                     spButtons.Children.Add(btn);
                 }
             }
