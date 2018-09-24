@@ -264,7 +264,7 @@ namespace HelpersLib
         public static bool IsNumber(this string text)
         {
             double num;
-            return double.TryParse(text, NumberStyles.AllowExponent, CultureInfo.CurrentCulture, out num);
+            return double.TryParse(text, NumberStyles.AllowDecimalPoint | NumberStyles.AllowExponent, CultureInfo.CurrentCulture, out num);
         }
 
         public static string[] Lines(this string text)
